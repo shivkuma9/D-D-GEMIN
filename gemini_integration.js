@@ -1,4 +1,4 @@
-// gemini_integration.js - Live Gemini AI Dungeon Master Connector
+// gemini_integration.js - Live Gemini AI Dungeon Master Connector with Tobirama Lineage & Dynamic Branching Choices
 class GeminiDMConnector {
     constructor(stateManager) {
         this.state = stateManager;
@@ -30,34 +30,35 @@ class GeminiDMConnector {
         const char = this.state.character;
         const party = char.party;
 
-        const systemPrompt = `You are the master AI Dungeon Master running an immersive, cinematic D&D RPG campaign set in the Naruto universe at the beginning of the original story.
-Player:
+        const systemPrompt = `You are the master AI Dungeon Master running an immersive, cinematic D&D RPG campaign set in the Naruto universe at the beginning of the original story (Team 7 Bell Test with Kakashi).
+Player Character:
 - Name: ${char.name}
-- Clan: ${char.clan} (secret Senju Clan lineage, high vitality & water affinity)
+- Clan & Secret Lineage: DIRECT GRANDSON & SECRET HEIR OF THE SECOND HOKAGE (Tobirama Senju).
+- Appearance: Striking physical resemblance to Tobirama Senju — spiky silver hair, crimson facial marks on both cheeks and chin, dark blue lacquered samurai shinobi armor over ninja mesh, a luxurious white fur ruff collar mantle, and a Konoha forehead protector with steel happuri face-guards framing his face.
+- Combat Style & Bloodline: Innate mastery over Water Release (Suiton) like Tobirama, high-pressure hydraulic Taijutsu ("Surging Impact Fist"), and sensory perception.
 - Rank: ${char.rank} (Level ${char.level})
 - Nature: ${char.nature}
 - HP: ${char.hp}/${char.maxHp} | Chakra: ${char.chakra}/${char.maxChakra}
 - Inventory: ${char.inventory.map(i => `${i.name} (x${i.count})`).join(', ')}
 - Known Jutsu: ${char.jutsus.map(j => `${j.name}: ${j.desc}`).join('; ')}
-- Team 7 Status:
+- Team 7 Dynamics:
   * Naruto Uzumaki (Trust: ${party.naruto.trust}%, Status: ${party.naruto.status})
   * Sasuke Uchiha (Trust: ${party.sasuke.trust}%, Status: ${party.sasuke.status})
   * Sakura Haruno (Trust: ${party.sakura.trust}%, Status: ${party.sakura.status})
-  * Kakashi Hatake (Jonin Sensei, Bells Remaining: ${party.kakashi.bells})
+  * Kakashi Hatake (Jonin Sensei, Bells Remaining: ${party.kakashi.bells}) — Kakashi and the Third Hokage are secretly stunned by Shivkumar's uncanny resemblance and water prowess echoing Tobirama!
 
-DM Rules:
-1. Deliver dramatic anime prose matching the Naruto world, Kakashi's calculating wit, and Team 7 dynamics.
-2. Factor in the player's secret Senju bloodline, Water-Shadow Clone memory mechanics, and Surging Impact Fist.
-3. At the end of your response, output state change tags if applicable:
+DM Directives:
+1. Deliver dramatic anime prose matching Kishimoto's iconic storytelling style, Kakashi's calculating wit, and Team 7's banter.
+2. Acknowledge and react to Shivkumar's Tobirama-like appearance (the white fur collar, blue armor, happuri, and silver hair) and his water jutsu.
+3. Factor in the player's choices, tactical rolls, and Team 7 synergy.
+4. At the end of your response, output state change tags if applicable:
    - [HP_CHANGE: +/-number]
    - [CHAKRA_CHANGE: +/-number]
    - [EXP_GAIN: number]
    - [BELLS_ACQUIRED: number]
    - [TRUST_CHANGE: naruto/sasuke/sakura +/-number]
-   - [LOOT: item_name]
-4. Provide 2-3 tactical choice recommendations:
-   [CHOICE_A: label | approach (force/finesse/mind) | stat check]
-   [CHOICE_B: label | approach | stat check]
+5. Provide 2-3 dynamic tactical choice suggestions in this exact bracket format:
+   [CHOICE: Action Title | Description / Approach | Stat Check DC (e.g. TACTICS DC 14 or TAIJUTSU DC 13)]
 `;
 
         const requestBody = {
@@ -125,6 +126,20 @@ DM Rules:
         if (bellMatch) {
             this.state.mission.bellsSecured = Math.min(3, this.state.mission.bellsSecured + parseInt(bellMatch[1], 10));
         }
+    }
+
+    extractChoices(text) {
+        const choices = [];
+        const choiceRegex = /\[(?:CHOICE|CHOICE_[A-Z]):\s*([^|\]]+)\s*\|\s*([^|\]]+)(?:\s*\|\s*([^\]]+))?\]/gi;
+        let match;
+        while ((match = choiceRegex.exec(text)) !== null) {
+            choices.push({
+                label: match[1].trim(),
+                desc: match[2].trim(),
+                check: match[3] ? match[3].trim() : 'PROCEED'
+            });
+        }
+        return choices;
     }
 }
 

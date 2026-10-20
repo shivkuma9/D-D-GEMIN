@@ -1,4 +1,4 @@
-// character_state.js - Shinobi State Management Engine
+// character_state.js - Shinobi State Management Engine with Tobirama Lineage & Full Game Progress Persistence
 class ShinobiStateManager {
     constructor() {
         this.STORAGE_KEY = 'gemini_dnd_shinobi_save';
@@ -13,6 +13,9 @@ class ShinobiStateManager {
             bellsSecured: 0,
             status: 'IN PROGRESS'
         };
+        this.currentNode = 'bell_test_start';
+        this.savedNarrative = null;
+        this.savedChoices = null;
         this.history = [];
         this.load();
     }
@@ -20,8 +23,8 @@ class ShinobiStateManager {
     getDefaultCharacter() {
         return {
             name: 'Shivkumar Sanju',
-            clan: 'Senju Bloodline',
-            title: 'Water Release Tactician',
+            clan: 'Senju Clan (Direct Lineage of the 2nd Hokage)',
+            title: 'Heir of Tobirama // Water Prodigy',
             nature: 'Water (Suiton)',
             rank: 'Genin',
             level: 1,
@@ -33,6 +36,7 @@ class ShinobiStateManager {
             maxChakra: 100,
             ryo: 2400,
             avatar: 'assets/shivkumar_senju_portrait.jpg',
+            appearance: 'Striking physical resemblance to the Second Hokage (Tobirama Senju): spiky silver hair, crimson facial marks on both cheeks and chin, dark blue lacquered samurai armor over black mesh, white fur collar mantle, and Konoha forehead protector with steel happuri face-guards.',
             stats: {
                 ninjutsu: 68,
                 taijutsu: 72,
@@ -54,7 +58,7 @@ class ShinobiStateManager {
                     name: 'Water-Shadow Clone Jutsu',
                     cost: 25,
                     type: 'Ninjutsu Forbidden Variant',
-                    desc: 'Physical clone that transmits combat memories upon dispelling, exploding into a tidal wave when hit.'
+                    desc: 'Physical clone derived from Tobirama Senju\'s forbidden jutsu scrolls that transmits memories and bursts into a torrent when destroyed.'
                 },
                 {
                     id: 'body_substitution',
@@ -126,8 +130,10 @@ class ShinobiStateManager {
             this.character.stats.taijutsu += 3;
             this.character.stats.agility += 2;
             this.character.stats.chakraReserves += 4;
+            this.save();
             return true; // Leveled up
         }
+        this.save();
         return false;
     }
 
@@ -160,12 +166,23 @@ class ShinobiStateManager {
         this.save();
     }
 
+    saveCurrentLocation(nodeId, narrativeText = null, dynamicChoices = null) {
+        this.currentNode = nodeId;
+        if (narrativeText) this.savedNarrative = narrativeText;
+        if (dynamicChoices) this.savedChoices = dynamicChoices;
+        this.save();
+    }
+
     save() {
         try {
             const data = {
                 character: this.character,
                 mission: this.mission,
-                history: this.history
+                history: this.history,
+                currentNode: this.currentNode || 'bell_test_start',
+                savedNarrative: this.savedNarrative || null,
+                savedChoices: this.savedChoices || null,
+                savedAt: new Date().toISOString()
             };
             localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
         } catch (e) {
@@ -181,6 +198,9 @@ class ShinobiStateManager {
                 if (parsed.character) this.character = parsed.character;
                 if (parsed.mission) this.mission = parsed.mission;
                 if (parsed.history) this.history = parsed.history;
+                if (parsed.currentNode) this.currentNode = parsed.currentNode;
+                if (parsed.savedNarrative) this.savedNarrative = parsed.savedNarrative;
+                if (parsed.savedChoices) this.savedChoices = parsed.savedChoices;
             }
         } catch (e) {
             console.error('Load failed:', e);
@@ -191,6 +211,9 @@ class ShinobiStateManager {
         localStorage.removeItem(this.STORAGE_KEY);
         this.character = this.getDefaultCharacter();
         this.mission.bellsSecured = 0;
+        this.currentNode = 'bell_test_start';
+        this.savedNarrative = null;
+        this.savedChoices = null;
         this.history = [];
         this.save();
     }

@@ -5,7 +5,7 @@ class ShinobiRPGApp {
         this.audio = new window.ShinobiAudioEngine();
         this.gemini = new window.GeminiDMConnector(this.state);
         this.campaign = window.NarutoCampaignData;
-        this.currentNode = this.campaign.INITIAL_NODE;
+        this.currentNode = this.state.currentNode || this.campaign.INITIAL_NODE;
         this.isGeminiMode = false;
         this.lastD20Roll = null;
 
@@ -119,6 +119,7 @@ class ShinobiRPGApp {
         this.narrateStopBtnEl = document.getElementById('narrate-stop-btn');
         this.narrationStatusIndicatorEl = document.getElementById('narration-status-indicator');
         this.narrationStateLabelEl = document.getElementById('narration-state-label');
+        this.restartSagaBtnEl = document.getElementById('restart-saga-btn');
 
         this.audio.onStateChange = (state) => {
             this.updateAudioPlaybackUI(state);
@@ -299,6 +300,20 @@ class ShinobiRPGApp {
         if (this.narrateStopBtnEl) {
             this.narrateStopBtnEl.addEventListener('click', () => {
                 this.audio.stopSpeech();
+            });
+        }
+
+        // Restart Saga Confirmation
+        if (this.restartSagaBtnEl) {
+            this.restartSagaBtnEl.addEventListener('click', () => {
+                const confirmed = confirm("🔄 Restart your Shinobi Saga from the beginning?\n\nThis will reset your character level, bells, and story back to Act I (The Bell Test).");
+                if (confirmed) {
+                    this.state.reset();
+                    this.currentNode = this.campaign.INITIAL_NODE;
+                    this.audio.stopSpeech();
+                    this.renderAll();
+                    alert("Saga restarted! Team 7 stands ready before Kakashi-sensei.");
+                }
             });
         }
 
@@ -674,13 +689,26 @@ class ShinobiRPGApp {
 
         if (this.sceneChapterTitleEl) this.sceneChapterTitleEl.textContent = node.title;
         if (this.sceneActTagEl) this.sceneActTagEl.textContent = node.act || 'Tactical Scenario';
-        if (this.narrativeBodyEl) this.narrativeBodyEl.textContent = node.narrative;
+
+        // Check if there is a saved dynamic narrative for this exact location
+        if (this.state.savedNarrative && this.state.currentNode === this.currentNode) {
+            if (this.narrativeBodyEl) this.narrativeBodyEl.textContent = this.state.savedNarrative;
+        } else {
+            if (this.narrativeBodyEl) this.narrativeBodyEl.textContent = node.narrative;
+        }
 
         // Auto speak narrative only when authenticated
         if (this.audio.voiceEnabled && this.isAuthenticated) {
             setTimeout(() => {
-                this.audio.speak(node.narrative);
+                const textToSpeak = (this.narrativeBodyEl && this.narrativeBodyEl.textContent) ? this.narrativeBodyEl.textContent : node.narrative;
+                this.audio.speak(textToSpeak);
             }, 200);
+        }
+
+        // Check if there are saved dynamic choices
+        if (this.state.savedChoices && this.state.savedChoices.length > 0 && this.state.currentNode === this.currentNode) {
+            this.renderDynamicChoices(this.state.savedChoices);
+            return;
         }
 
         // Render Options
@@ -730,6 +758,105 @@ class ShinobiRPGApp {
         }
     }
 
+    renderDynamicChoices(choices) {
+        if (!this.choicesContainerEl) return;
+        this.choicesContainerEl.innerHTML = '';
+
+        choices.forEach((opt) => {
+            const btn = document.createElement('button');
+            btn.className = 'tactical-choice-btn';
+            btn.style.borderLeft = '3px solid var(--chakra-water)';
+            btn.innerHTML = `
+                <div class="choice-left">
+                    <span class="choice-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">${opt.tag || 'DYNAMIC TACTIC'}</span>
+                    <strong class="choice-label">${opt.label}</strong>
+                    ${opt.desc ? `<span class="choice-desc">${opt.desc}</span>` : ''}
+                </div>
+                ${opt.stat && opt.dc ? `
+                    <span class="choice-check-badge">${opt.stat.toUpperCase()} DC ${opt.dc}</span>
+                ` : '<span class="choice-check-badge">EXECUTE</span>'}
+            `;
+
+            btn.addEventListener('click', () => {
+                if (opt.costChakra && !this.state.useChakra(opt.costChakra)) {
+                    alert(`Insufficient Chakra! You need ${opt.costChakra} chakra to perform this action.`);
+                    return;
+                }
+
+                if (opt.stat && opt.dc) {
+                    const statVal = this.state.character.stats[opt.stat] || 50;
+                    const roll = Math.floor(Math.random() * 20) + 1;
+                    const mod = Math.floor((statVal - 50) / 5);
+                    const total = roll + mod;
+                    const success = total >= opt.dc || roll === 20;
+
+                    this.showDiceModal(roll, mod, total, opt.dc, opt.stat.toUpperCase(), success, () => {
+                        if (success) {
+                            this.state.addExperience(25);
+                            this.audio.playWaterSplash();
+                        } else {
+                            this.state.modifyHp(-5);
+                            this.audio.playKunaiClash();
+                        }
+
+                        if (this.gemini.enabled) {
+                            this.handleDynamicChoiceSubmit(opt.label, success);
+                        } else {
+                            const outcomeNarrative = `You executed: "${opt.label}".\n\n${success ? 'The tactical maneuver succeeds cleanly, shifting the momentum in your favor!' : 'Kakashi parries the maneuver cleanly, forcing you to reposition swiftly.'}`;
+                            this.narrativeBodyEl.textContent = outcomeNarrative;
+                            if (this.audio.voiceEnabled) this.audio.speak(outcomeNarrative);
+                            this.state.saveCurrentLocation(this.currentNode, outcomeNarrative, null);
+                            this.renderAll();
+                        }
+                    });
+                } else {
+                    if (this.gemini.enabled) {
+                        this.handleDynamicChoiceSubmit(opt.label, true);
+                    } else {
+                        this.audio.playWaterSplash();
+                        const outcomeNarrative = `You execute: "${opt.label}".\n\nThe clash between Team 7 and Kakashi-sensei continues to unfold with high intensity!`;
+                        this.narrativeBodyEl.textContent = outcomeNarrative;
+                        if (this.audio.voiceEnabled) this.audio.speak(outcomeNarrative);
+                        this.state.saveCurrentLocation(this.currentNode, outcomeNarrative, null);
+                        this.renderAll();
+                    }
+                }
+            });
+
+            this.choicesContainerEl.appendChild(btn);
+        });
+    }
+
+    async handleDynamicChoiceSubmit(choiceLabel, success) {
+        const text = `I choose: ${choiceLabel}. (Action check was ${success ? 'a SUCCESS' : 'DEFLECTED/FAILED'})`;
+        const currentNarrative = this.narrativeBodyEl.textContent;
+        this.narrativeBodyEl.textContent += `\n\n[Action Selected]: ${choiceLabel}\n\n[Dungeon Master (${this.gemini.model}) is formulating the narrative...]`;
+        try {
+            const response = await this.gemini.promptDungeonMaster(text, currentNarrative);
+            this.narrativeBodyEl.textContent = response;
+            if (this.audio.voiceEnabled) {
+                this.audio.speak(response);
+            }
+            const dynamicChoices = this.gemini.extractChoices(response);
+            if (dynamicChoices && dynamicChoices.length > 0) {
+                this.renderDynamicChoices(dynamicChoices);
+                this.state.saveCurrentLocation(this.currentNode, response, dynamicChoices);
+            } else {
+                const followUpChoices = [
+                    { label: 'Press into close-quarters combat', desc: 'Use Tobirama-style Water Fist to breach his defense.', tag: 'TAIJUTSU', stat: 'taijutsu', dc: 14 },
+                    { label: 'Coordinate with Sasuke\'s Fireball Jutsu', desc: 'Create steam cover to blind Kakashi\'s Sharingan.', tag: 'COMBO', stat: 'tactics', dc: 13 },
+                    { label: 'Reposition and observe for bell openings', desc: 'Analyze Kakashi\'s balance and bell pouch tether.', tag: 'ANALYSIS', stat: 'tactics', dc: 12 }
+                ];
+                this.renderDynamicChoices(followUpChoices);
+                this.state.saveCurrentLocation(this.currentNode, response, followUpChoices);
+            }
+            this.renderCharacterPanel();
+            this.renderTeamPanel();
+        } catch (err) {
+            alert(`Gemini DM Error: ${err.message}`);
+        }
+    }
+
     handleOptionSelect(opt) {
         this.audio.playDiceRoll();
 
@@ -754,6 +881,7 @@ class ShinobiRPGApp {
                     this.state.addExperience(25);
                     this.audio.playKunaiClash();
                 }
+                this.state.saveCurrentLocation(destination, null, null);
                 this.currentNode = destination;
                 this.renderAll();
             });
@@ -761,7 +889,9 @@ class ShinobiRPGApp {
         }
 
         // Direct advance
-        this.currentNode = opt.nextNode || opt.targetNode;
+        const destination = opt.nextNode || opt.targetNode || this.currentNode;
+        this.state.saveCurrentLocation(destination, null, null);
+        this.currentNode = destination;
         this.renderAll();
     }
 
@@ -792,6 +922,22 @@ class ShinobiRPGApp {
                 if (this.audio.voiceEnabled) {
                     this.audio.speak(response);
                 }
+
+                // Extract dynamic choices generated by Gemini DM
+                const dynamicChoices = this.gemini.extractChoices(response);
+                if (dynamicChoices && dynamicChoices.length > 0) {
+                    this.renderDynamicChoices(dynamicChoices);
+                    this.state.saveCurrentLocation(this.currentNode, response, dynamicChoices);
+                } else {
+                    const fallbackChoices = [
+                        { label: `Press the attack: Follow through on "${text.slice(0, 25)}..."`, desc: 'Capitalize on the momentary opening with a swift water or taijutsu strike.', tag: 'ADVANCE' },
+                        { label: 'Coordinate with Sasuke & Naruto', desc: 'Signal Team 7 to execute a flanking maneuver while Kakashi is engaged.', tag: 'TEAM COMBO', stat: 'tactics', dc: 13 },
+                        { label: 'Form Water Clone feint & reposition', desc: 'Create a fluid diversion using Tobirama-style clone technique.', tag: 'NINJUTSU', stat: 'ninjutsu', dc: 12, costChakra: 10 }
+                    ];
+                    this.renderDynamicChoices(fallbackChoices);
+                    this.state.saveCurrentLocation(this.currentNode, response, fallbackChoices);
+                }
+
                 this.renderCharacterPanel();
                 this.renderTeamPanel();
             } catch (err) {
@@ -806,15 +952,28 @@ class ShinobiRPGApp {
             const success = total >= 13;
 
             this.showDiceModal(roll, mod, total, 13, 'TACTICAL FREEFORM', success, () => {
+                let outcomeText = '';
                 if (success) {
                     this.state.addExperience(30);
                     this.audio.playWaterSplash();
-                    this.narrativeBodyEl.textContent = `You execute: "${text}" with flawless Senju timing!\n\nYour water chakra flows seamlessly into the maneuver. Kakashi is momentarily forced to readjust his stance, creating a vital tactical opening for Team 7!`;
+                    outcomeText = `You execute: "${text}" with flawless Senju timing!\n\nYour water chakra flows seamlessly into the maneuver. Kakashi is momentarily forced to readjust his stance, creating a vital tactical opening for Team 7!`;
                 } else {
                     this.state.modifyHp(-10);
                     this.audio.playKunaiClash();
-                    this.narrativeBodyEl.textContent = `You attempt: "${text}"!\n\nHowever, Kakashi's copy-ninja senses instantly read the flow of your chakra. With lightning reflexes, he deflects your maneuver, brushing you back with a stinging counter-strike! (-10 HP)`;
+                    outcomeText = `You attempt: "${text}"!\n\nHowever, Kakashi's copy-ninja senses instantly read the flow of your chakra. With lightning reflexes, he deflects your maneuver, brushing you back with a stinging counter-strike! (-10 HP)`;
                 }
+                this.narrativeBodyEl.textContent = outcomeText;
+                if (this.audio.voiceEnabled) {
+                    this.audio.speak(outcomeText);
+                }
+
+                const offlineChoices = [
+                    { label: 'Capitalize on the tactical shift', desc: 'Launch a rapid follow-up attack.', tag: 'STRIKE', stat: 'agility', dc: 14 },
+                    { label: 'Regroup with Naruto and Sakura', desc: 'Fall back behind tree cover and coordinate chakra reserves.', tag: 'TACTICS' },
+                    { label: 'Channel Water Severing Wave', desc: 'Unleash high-pressure water blade to test Kakashi\'s guard.', tag: 'SENJU SECRET', stat: 'ninjutsu', dc: 15, costChakra: 15 }
+                ];
+                this.renderDynamicChoices(offlineChoices);
+                this.state.saveCurrentLocation(this.currentNode, outcomeText, offlineChoices);
                 this.renderCharacterPanel();
             });
         }
