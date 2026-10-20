@@ -1,0 +1,13 @@
+{
+  "name": "gemini-dnd-rpg",
+  "version": "1.0.0",
+  "description": "Shinobi Chronicles: D&D Naruto RPG with Gemini AI Dungeon Master & Voice Narration",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve .",
+    "dev": "npx -y serve ."
+  },
+  "keywords": ["naruto", "dnd", "rpg", "gemini-ai", "voice-narration"],
+  "author": "Shivkumar",
+  "license": "ISC"
+}

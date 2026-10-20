@@ -1,0 +1,885 @@
+/* style.css - Shinobi Chronicles RPG Design System */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root {
+    --bg-dark: #080b11;
+    --bg-panel: rgba(15, 23, 42, 0.75);
+    --bg-card: rgba(30, 41, 59, 0.65);
+    --border-subtle: rgba(56, 189, 248, 0.2);
+    --border-accent: rgba(56, 189, 248, 0.5);
+    --border-glow: rgba(56, 189, 248, 0.8);
+
+    /* Shinobi Color Tokens */
+    --chakra-water: #38bdf8;
+    --chakra-water-glow: rgba(56, 189, 248, 0.4);
+    --konoha-leaf: #22c55e;
+    --konoha-leaf-glow: rgba(34, 197, 94, 0.35);
+    --senju-wood: #a16207;
+    --uchiha-fire: #ef4444;
+    --uchiha-fire-glow: rgba(239, 68, 68, 0.35);
+    --lightning-yellow: #eab308;
+    --bell-silver: #e2e8f0;
+    --ryo-gold: #f59e0b;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(34, 197, 94, 0.06) 0%, transparent 45%),
+        linear-gradient(180deg, #07090e 0%, #0c121d 100%);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(10, 15, 26, 0.8);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-accent);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--chakra-water);
+}
+
+/* Header */
+.top-header {
+    background: rgba(10, 15, 25, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.konoha-badge {
+    font-size: 1.6rem;
+    filter: drop-shadow(0 0 10px var(--konoha-leaf-glow));
+}
+
+.brand-titles h1 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+    color: #fff;
+    background: linear-gradient(90deg, #38bdf8, #22c55e, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-titles .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.pill-btn {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.pill-btn:hover {
+    border-color: var(--chakra-water);
+    box-shadow: 0 0 12px var(--chakra-water-glow);
+    transform: translateY(-1px);
+}
+
+.pill-btn.active {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(34, 197, 94, 0.25) 100%);
+    border-color: var(--chakra-water);
+    color: #fff;
+}
+
+/* App Main Layout Grid */
+.app-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr 340px;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    flex: 1;
+    max-width: 1750px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+@media (max-width: 1280px) {
+    .app-layout {
+        grid-template-columns: 280px 1fr 300px;
+        gap: 1rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Side Panels */
+.side-panel {
+    background: var(--bg-panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: var(--shadow-card);
+    height: fit-content;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+/* Character Profile Card */
+.character-header-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.character-header-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--chakra-water), var(--konoha-leaf));
+}
+
+.char-avatar-container {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid var(--chakra-water);
+    box-shadow: 0 0 15px var(--chakra-water-glow);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #000;
+}
+
+.char-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.char-meta h2 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 0.2rem;
+}
+
+.char-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.35rem;
+}
+
+.badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.badge-senju {
+    background: rgba(161, 98, 7, 0.25);
+    border: 1px solid var(--senju-wood);
+    color: #fde047;
+}
+
+.badge-water {
+    background: rgba(56, 189, 248, 0.2);
+    border: 1px solid var(--chakra-water);
+    color: #38bdf8;
+}
+
+.badge-genin {
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid var(--konoha-leaf);
+    color: #4ade80;
+}
+
+/* Stat Meters */
+.vitals-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.meter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.meter-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.meter-track {
+    height: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.meter-fill-hp {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    transition: width 0.4s ease;
+}
+
+.meter-fill-chakra {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #0284c7, #38bdf8);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    transition: width 0.4s ease;
+}
+
+.meter-fill-exp {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #d97706, #fbbf24);
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+    transition: width 0.4s ease;
+}
+
+/* Shinobi Attributes Grid */
+.attributes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+}
+
+.stat-box {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition-smooth);
+}
+
+.stat-box:hover {
+    border-color: var(--chakra-water);
+    background: rgba(56, 189, 248, 0.06);
+}
+
+.stat-name {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.stat-val {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Jutsu & Inventory Section */
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+}
+
+.jutsu-card {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.jutsu-card:hover {
+    border-color: var(--chakra-water);
+    transform: translateX(2px);
+}
+
+.jutsu-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--chakra-water);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.jutsu-cost {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--lightning-yellow);
+}
+
+.jutsu-desc {
+    font-size: 0.73rem;
+    color: var(--text-secondary);
+    line-height: 1.35;
+}
+
+.inventory-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.item-chip {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 0.3rem 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Center Terminal / Story Area */
+.story-terminal {
+    background: var(--bg-panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Scene Illustration Card */
+.scene-visual-frame {
+    width: 100%;
+    height: 260px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-subtle);
+    background: #000;
+}
+
+.scene-visual-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.scene-visual-frame:hover .scene-visual-img {
+    transform: scale(1.02);
+}
+
+.scene-overlay-badge {
+    position: absolute;
+    bottom: 0.85rem;
+    left: 0.85rem;
+    background: rgba(10, 15, 25, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-accent);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.scene-overlay-badge span {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--chakra-water);
+}
+
+/* Story Narrative Box */
+.narrative-container {
+    background: rgba(10, 15, 25, 0.6);
+    border-left: 3px solid var(--chakra-water);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.scene-chapter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.5rem;
+}
+
+.scene-chapter-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.scene-act-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--konoha-leaf);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.narrative-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    white-space: pre-line;
+}
+
+/* Tactical Choices Container */
+.choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tactical-choice-btn {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.tactical-choice-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--chakra-water);
+    opacity: 0.4;
+    transition: var(--transition-smooth);
+}
+
+.tactical-choice-btn:hover {
+    border-color: var(--chakra-water);
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(30, 41, 59, 0.95) 100%);
+    box-shadow: 0 0 15px var(--chakra-water-glow);
+    transform: translateY(-2px);
+}
+
+.tactical-choice-btn:hover::before {
+    opacity: 1;
+    width: 6px;
+}
+
+.choice-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    max-width: 80%;
+}
+
+.choice-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--chakra-water);
+    text-transform: uppercase;
+}
+
+.choice-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.choice-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.choice-check-badge {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-accent);
+    color: var(--lightning-yellow);
+    white-space: nowrap;
+}
+
+/* Freeform Shinobi Action Box */
+.freeform-action-card {
+    background: rgba(10, 15, 25, 0.7);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.freeform-input {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.9rem;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+.freeform-input:focus {
+    border-color: var(--chakra-water);
+    box-shadow: 0 0 10px var(--chakra-water-glow);
+}
+
+.freeform-btn {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    border: 1px solid var(--chakra-water);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.65rem 1.1rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.freeform-btn:hover {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    box-shadow: 0 0 15px var(--chakra-water-glow);
+    transform: translateY(-1px);
+}
+
+/* Right Sidebar: Team 7 & Mission Status */
+.team-member-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: var(--transition-smooth);
+}
+
+.team-member-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.member-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.member-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.member-role {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+.trust-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+.trust-bar {
+    height: 4px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.trust-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #38bdf8, #22c55e);
+    border-radius: 9999px;
+    transition: width 0.4s ease;
+}
+
+/* Mission Objective Box */
+.mission-box {
+    background: linear-gradient(180deg, rgba(234, 179, 8, 0.1) 0%, rgba(15, 23, 42, 0.7) 100%);
+    border: 1px solid rgba(234, 179, 8, 0.35);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bells-tracker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--bell-silver);
+}
+
+.bell-icon {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 0 5px rgba(226, 232, 240, 0.6));
+}
+
+/* Audio & Voice Pack Panel */
+.audio-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.audio-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.switch-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.voice-select {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+    width: 100%;
+    outline: none;
+}
+
+/* Animated Dice Overlay */
+.dice-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.dice-card {
+    background: #0f172a;
+    border: 2px solid var(--chakra-water);
+    box-shadow: 0 0 30px var(--chakra-water-glow);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.d20-display {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #38bdf8, #0369a1);
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+/* Modal styles for Gemini Live Settings */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+}
+
+.modal-content {
+    background: #0f172a;
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    max-width: 550px;
+    width: 90%;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.modal-close-btn:hover {
+    color: #fff;
+    border-color: #ef4444;
+}
