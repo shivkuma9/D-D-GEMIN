@@ -62,9 +62,28 @@ class ShinobiRPGApp {
         this.teamContainerEl = document.getElementById('team-container');
         this.bellsCounterEl = document.getElementById('bells-counter');
 
-        // Audio & Settings
-        this.voiceToggleBtnEl = document.getElementById('voice-toggle-btn');
+        // Voice Studio Modal
+        this.voiceSettingsBtnEl = document.getElementById('voice-settings-btn');
+        this.voiceModalEl = document.getElementById('voice-modal');
+        this.voiceCloseBtnEl = document.getElementById('voice-close-btn');
+        this.voiceTabBrowserEl = document.getElementById('voice-tab-browser');
+        this.voiceTabElevenLabsEl = document.getElementById('voice-tab-elevenlabs');
+        this.panelBrowserVoiceEl = document.getElementById('panel-browser-voice');
+        this.panelElevenLabsVoiceEl = document.getElementById('panel-elevenlabs-voice');
         this.voiceSelectEl = document.getElementById('voice-select');
+        this.voiceTestBtnEl = document.getElementById('voice-test-btn');
+        this.voiceRateSliderEl = document.getElementById('voice-rate-slider');
+        this.voicePitchSliderEl = document.getElementById('voice-pitch-slider');
+        this.voiceVolSliderEl = document.getElementById('voice-vol-slider');
+        this.rateValEl = document.getElementById('rate-val');
+        this.pitchValEl = document.getElementById('pitch-val');
+        this.volValEl = document.getElementById('vol-val');
+        this.elevenLabsVoiceSelectEl = document.getElementById('elevenlabs-voice-select');
+        this.elevenLabsKeyInputEl = document.getElementById('elevenlabs-key-input');
+        this.elevenLabsTestBtnEl = document.getElementById('elevenlabs-test-btn');
+        this.voiceSaveBtnEl = document.getElementById('voice-save-btn');
+
+        // Gemini Live Settings
         this.geminiSettingsBtnEl = document.getElementById('gemini-settings-btn');
         this.geminiModalEl = document.getElementById('gemini-modal');
         this.geminiCloseBtnEl = document.getElementById('gemini-close-btn');
@@ -78,6 +97,32 @@ class ShinobiRPGApp {
         this.diceRollValEl = document.getElementById('dice-roll-val');
         this.diceTitleEl = document.getElementById('dice-title');
         this.diceResultTextEl = document.getElementById('dice-result-text');
+    }
+
+    populateVoiceDropdown() {
+        if (!this.voiceSelectEl) return;
+        this.voiceSelectEl.innerHTML = '';
+        if (this.audio.availableVoices.length === 0) {
+            const opt = document.createElement('option');
+            opt.value = '';
+            opt.textContent = 'Detecting voices... (or default Windows voice)';
+            this.voiceSelectEl.appendChild(opt);
+            return;
+        }
+
+        this.audio.availableVoices.forEach((voice) => {
+            const opt = document.createElement('option');
+            opt.value = voice.voiceURI || voice.name;
+            const isNatural = /natural|online|neural/i.test(voice.name);
+            const badge = isNatural ? '🌟 [NATURAL] ' : '';
+            opt.textContent = `${badge}${voice.name} (${voice.lang})`;
+            if (this.audio.selectedVoiceURI && (voice.voiceURI === this.audio.selectedVoiceURI || voice.name === this.audio.selectedVoiceURI)) {
+                opt.selected = true;
+            } else if (!this.audio.selectedVoiceURI && this.audio.activeVoice === voice) {
+                opt.selected = true;
+            }
+            this.voiceSelectEl.appendChild(opt);
+        });
     }
 
     bindEvents() {
@@ -99,11 +144,117 @@ class ShinobiRPGApp {
             });
         }
 
-        // Voice Pack Selector
-        if (this.voiceSelectEl) {
-            this.voiceSelectEl.addEventListener('change', (e) => {
-                this.audio.voicePack = e.target.value;
-                this.audio.selectBestVoice();
+        // Voice Studio Modal Open
+        if (this.voiceSettingsBtnEl) {
+            this.voiceSettingsBtnEl.addEventListener('click', () => {
+                if (this.voiceModalEl) {
+                    this.voiceModalEl.style.display = 'flex';
+                    this.populateVoiceDropdown();
+                    if (this.elevenLabsKeyInputEl) this.elevenLabsKeyInputEl.value = this.audio.elevenLabsKey || '';
+                    if (this.elevenLabsVoiceSelectEl) this.elevenLabsVoiceSelectEl.value = this.audio.elevenLabsVoiceId || 'pNInz6obpgDQGcFmaJgB';
+                    if (this.voiceRateSliderEl) this.voiceRateSliderEl.value = this.audio.voiceRate || 1.0;
+                    if (this.voicePitchSliderEl) this.voicePitchSliderEl.value = this.audio.voicePitch || 1.0;
+                    if (this.voiceVolSliderEl) this.voiceVolSliderEl.value = this.audio.voiceVolume || 0.95;
+                    if (this.rateValEl) this.rateValEl.textContent = `${(this.audio.voiceRate || 1.0).toFixed(2)}x`;
+                    if (this.pitchValEl) this.pitchValEl.textContent = (this.audio.voicePitch || 1.0).toFixed(2);
+                    if (this.volValEl) this.volValEl.textContent = `${Math.round((this.audio.voiceVolume || 0.95) * 100)}%`;
+                }
+            });
+        }
+
+        if (this.voiceCloseBtnEl) {
+            this.voiceCloseBtnEl.addEventListener('click', () => {
+                if (this.voiceModalEl) this.voiceModalEl.style.display = 'none';
+            });
+        }
+
+        // Voice Tabs
+        if (this.voiceTabBrowserEl && this.voiceTabElevenLabsEl) {
+            this.voiceTabBrowserEl.addEventListener('click', () => {
+                this.voiceTabBrowserEl.style.borderColor = 'var(--chakra-water)';
+                this.voiceTabBrowserEl.style.background = 'rgba(56, 189, 248, 0.15)';
+                this.voiceTabBrowserEl.style.color = '#fff';
+                this.voiceTabElevenLabsEl.style.borderColor = 'var(--border-subtle)';
+                this.voiceTabElevenLabsEl.style.background = 'rgba(30, 41, 59, 0.5)';
+                this.voiceTabElevenLabsEl.style.color = 'var(--text-secondary)';
+                if (this.panelBrowserVoiceEl) this.panelBrowserVoiceEl.style.display = 'flex';
+                if (this.panelElevenLabsVoiceEl) this.panelElevenLabsVoiceEl.style.display = 'none';
+            });
+            this.voiceTabElevenLabsEl.addEventListener('click', () => {
+                this.voiceTabElevenLabsEl.style.borderColor = 'var(--chakra-water)';
+                this.voiceTabElevenLabsEl.style.background = 'rgba(56, 189, 248, 0.15)';
+                this.voiceTabElevenLabsEl.style.color = '#fff';
+                this.voiceTabBrowserEl.style.borderColor = 'var(--border-subtle)';
+                this.voiceTabBrowserEl.style.background = 'rgba(30, 41, 59, 0.5)';
+                this.voiceTabBrowserEl.style.color = 'var(--text-secondary)';
+                if (this.panelBrowserVoiceEl) this.panelBrowserVoiceEl.style.display = 'none';
+                if (this.panelElevenLabsVoiceEl) this.panelElevenLabsVoiceEl.style.display = 'flex';
+            });
+        }
+
+        // Sliders
+        if (this.voiceRateSliderEl && this.rateValEl) {
+            this.voiceRateSliderEl.addEventListener('input', (e) => {
+                this.rateValEl.textContent = `${parseFloat(e.target.value).toFixed(2)}x`;
+            });
+        }
+        if (this.voicePitchSliderEl && this.pitchValEl) {
+            this.voicePitchSliderEl.addEventListener('input', (e) => {
+                this.pitchValEl.textContent = parseFloat(e.target.value).toFixed(2);
+            });
+        }
+        if (this.voiceVolSliderEl && this.volValEl) {
+            this.voiceVolSliderEl.addEventListener('input', (e) => {
+                this.volValEl.textContent = `${Math.round(parseFloat(e.target.value) * 100)}%`;
+            });
+        }
+
+        // Test Voice buttons
+        if (this.voiceTestBtnEl) {
+            this.voiceTestBtnEl.addEventListener('click', () => {
+                const selectedURI = this.voiceSelectEl ? this.voiceSelectEl.value : '';
+                if (selectedURI) this.audio.setVoice(selectedURI);
+                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 1.0;
+                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 1.0;
+                const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 0.95;
+                this.audio.speak("Team Seven, focus! The Bell Test has officially begun.", { rate, pitch, volume: vol });
+            });
+        }
+
+        if (this.elevenLabsTestBtnEl) {
+            this.elevenLabsTestBtnEl.addEventListener('click', async () => {
+                const key = this.elevenLabsKeyInputEl ? this.elevenLabsKeyInputEl.value.trim() : '';
+                const voiceId = this.elevenLabsVoiceSelectEl ? this.elevenLabsVoiceSelectEl.value : 'pNInz6obpgDQGcFmaJgB';
+                if (!key) {
+                    alert('Please enter an ElevenLabs API Key first to test AI voice actors.');
+                    return;
+                }
+                this.audio.setElevenLabsConfig(key, voiceId, 'elevenlabs');
+                const prev = this.elevenLabsTestBtnEl.innerHTML;
+                this.elevenLabsTestBtnEl.innerHTML = '<span>⏳ Speaking...</span>';
+                await this.audio.speak("Shinobi tactical trial initialized. Kakashi is preparing his move.");
+                this.elevenLabsTestBtnEl.innerHTML = prev;
+            });
+        }
+
+        // Save Voice Settings
+        if (this.voiceSaveBtnEl) {
+            this.voiceSaveBtnEl.addEventListener('click', () => {
+                const selectedURI = this.voiceSelectEl ? this.voiceSelectEl.value : '';
+                if (selectedURI) this.audio.setVoice(selectedURI);
+                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 1.0;
+                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 1.0;
+                const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 0.95;
+                this.audio.setVoiceSettings(rate, pitch, vol);
+
+                const elevenKey = this.elevenLabsKeyInputEl ? this.elevenLabsKeyInputEl.value.trim() : '';
+                const elevenVoice = this.elevenLabsVoiceSelectEl ? this.elevenLabsVoiceSelectEl.value : 'pNInz6obpgDQGcFmaJgB';
+                const isElevenTab = this.panelElevenLabsVoiceEl && this.panelElevenLabsVoiceEl.style.display !== 'none';
+                const engine = (isElevenTab && elevenKey) ? 'elevenlabs' : 'browser';
+                this.audio.setElevenLabsConfig(elevenKey, elevenVoice, engine);
+
+                if (this.voiceModalEl) this.voiceModalEl.style.display = 'none';
+                alert('Audio & Voice settings saved successfully!');
             });
         }
 
@@ -143,9 +294,16 @@ class ShinobiRPGApp {
             });
         }
 
+        if (this.voiceModalEl) {
+            this.voiceModalEl.addEventListener('click', (e) => {
+                if (e.target === this.voiceModalEl) this.voiceModalEl.style.display = 'none';
+            });
+        }
+
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if (this.geminiModalEl) this.geminiModalEl.style.display = 'none';
+                if (this.voiceModalEl) this.voiceModalEl.style.display = 'none';
                 if (this.diceModalEl) this.diceModalEl.style.display = 'none';
             }
         });
@@ -156,6 +314,7 @@ class ShinobiRPGApp {
         this.renderTeamPanel();
         this.renderCurrentScene();
         this.updateGeminiStatus();
+        this.populateVoiceDropdown();
     }
 
     renderCharacterPanel() {

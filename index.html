@@ -23,8 +23,11 @@
             <button class="pill-btn active" id="voice-toggle-btn" title="Toggle Cinematic Voice Narration">
                 <span>🔊</span> <span class="btn-label">VOICE ON</span>
             </button>
+            <button class="pill-btn" id="voice-settings-btn" title="Configure Realistic Voice Studio & Sound FX">
+                <span>🎙️</span> <span>VOICE STUDIO</span>
+            </button>
             <button class="pill-btn" id="gemini-settings-btn" title="Configure Live Gemini AI Dungeon Master">
-                <span>⚡</span> <span>GEMINI PRO AI DM</span>
+                <span>⚡</span> <span>GEMINI AI DM</span>
             </button>
         </div>
     </header>
@@ -294,6 +297,110 @@
 
             <button class="freeform-btn" id="gemini-save-key-btn" style="justify-content: center;">
                 <span>SAVE & CONNECT GEMINI DM</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Voice Studio & Sound FX Modal -->
+    <div class="modal-backdrop" id="voice-modal">
+        <div class="modal-content" style="max-width: 620px;">
+            <button class="modal-close-btn" id="voice-close-btn">✕</button>
+            <h3 style="font-family: var(--font-heading); color: #fff; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+                <span>🎙️</span> <span>Shinobi Voice Studio & Narrator Packs</span>
+            </h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 0.2rem;">
+                Say goodbye to robotic voices! Choose from natural human neural voices, download offline voice packs, or connect ElevenLabs for Hollywood anime narration.
+            </p>
+
+            <!-- Guide Box: How to get real human voices -->
+            <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 0.75rem; font-size: 0.76rem; color: #bae6fd; line-height: 1.45;">
+                <div style="font-weight: bold; margin-bottom: 0.3rem; color: #38bdf8; display: flex; align-items: center; gap: 0.3rem;">
+                    <span>💡</span> <span>PRO-TIPS: How to get Ultra-Realistic Voices</span>
+                </div>
+                <div><strong>• Instant Free Natural Voice:</strong> Open this game in <strong>Microsoft Edge</strong>. Edge automatically comes with 40+ free Natural Voices (Microsoft Guy Natural, Christopher, Jenny) that sound like real human audiobook narrators!</div>
+                <div style="margin-top: 0.3rem;"><strong>• Windows Offline Voice Pack:</strong> In Windows Settings &rarr; <em>Time & Language &rarr; Speech</em>, click <em>"Add voices"</em> and install the <strong>English Natural Voice Pack</strong>.</div>
+                <div style="margin-top: 0.3rem;"><strong>• ElevenLabs AI Studio:</strong> Enter a free ElevenLabs API Key below for studio anime character voice acting.</div>
+            </div>
+
+            <!-- Voice Engine Switcher -->
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <label style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">Voice Engine Mode:</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button type="button" id="voice-tab-browser" style="flex: 1; padding: 0.55rem; border-radius: 6px; border: 1px solid var(--chakra-water); background: rgba(56, 189, 248, 0.15); color: #fff; font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;">
+                        🌟 Natural & System Voices
+                    </button>
+                    <button type="button" id="voice-tab-elevenlabs" style="flex: 1; padding: 0.55rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: rgba(30, 41, 59, 0.5); color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;">
+                        🎬 ElevenLabs Studio AI Actor
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel 1: Browser / System Voice Selector -->
+            <div id="panel-browser-voice" style="display: flex; flex-direction: column; gap: 0.6rem;">
+                <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                    <label style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">Available Voices Detected:</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <select id="voice-select" class="voice-select" style="flex: 1;">
+                            <option value="">Detecting available system voices...</option>
+                        </select>
+                        <button type="button" class="pill-btn" id="voice-test-btn" style="padding: 0 1rem; white-space: nowrap;">
+                            <span>▶️</span> <span>Test Voice</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sliders -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                    <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                        <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
+                            <span>Speech Speed:</span> <span id="rate-val">1.0x</span>
+                        </div>
+                        <input type="range" id="voice-rate-slider" min="0.75" max="1.3" step="0.05" value="1.0" style="accent-color: var(--chakra-water);">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                        <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
+                            <span>Voice Pitch:</span> <span id="pitch-val">1.0</span>
+                        </div>
+                        <input type="range" id="voice-pitch-slider" min="0.8" max="1.2" step="0.05" value="1.0" style="accent-color: var(--chakra-water);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 2: ElevenLabs Studio AI Actor -->
+            <div id="panel-elevenlabs-voice" style="display: none; flex-direction: column; gap: 0.6rem;">
+                <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                    <label style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">ElevenLabs Voice Actor:</label>
+                    <select id="elevenlabs-voice-select" class="voice-select">
+                        <option value="pNInz6obpgDQGcFmaJgB">Adam - Deep Epic DM & Sensei Narrator</option>
+                        <option value="ErXwobaYiN019PkySvjV">Antoni - Calm Shinobi Master</option>
+                        <option value="21m00Tcm4TlvDq8ikWAM">Rachel - Expressive Tactical Narrator</option>
+                        <option value="VR6AewLTigWG4xSOukaG">Arnold - Veteran Battlefield Commander</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                    <label style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">ElevenLabs API Key:</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="password" id="elevenlabs-key-input" class="freeform-input" placeholder="xi-...">
+                        <button type="button" class="pill-btn" id="elevenlabs-test-btn" style="padding: 0 1rem; white-space: nowrap;">
+                            <span>▶️</span> <span>Test AI</span>
+                        </button>
+                    </div>
+                    <span style="font-size: 0.7rem; color: var(--text-muted);">
+                        Get a free key at <a href="https://elevenlabs.io" target="_blank" style="color: var(--chakra-water);">ElevenLabs.io</a> (10,000 free chars/month). Key is saved locally.
+                    </span>
+                </div>
+            </div>
+
+            <!-- Master Volume Controls -->
+            <div style="display: flex; flex-direction: column; gap: 0.4rem; padding-top: 0.4rem; border-top: 1px solid var(--border-subtle);">
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">
+                    <span>Master Voice & Sound Volume:</span> <span id="vol-val">95%</span>
+                </div>
+                <input type="range" id="voice-vol-slider" min="0" max="1" step="0.05" value="0.95" style="accent-color: var(--chakra-water);">
+            </div>
+
+            <button class="freeform-btn" id="voice-save-btn" style="justify-content: center;">
+                <span>SAVE AUDIO & VOICE PREFERENCES</span>
             </button>
         </div>
     </div>
