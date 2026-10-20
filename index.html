@@ -190,8 +190,29 @@
             <!-- Story Narrative -->
             <div class="narrative-container">
                 <div class="scene-chapter-header">
-                    <h2 class="scene-chapter-title" id="scene-chapter-title">Act II: The Bell Test — Ready, Start!</h2>
-                    <span class="scene-act-tag" id="scene-act-tag">Act II - Tactical Crucible</span>
+                    <div>
+                        <h2 class="scene-chapter-title" id="scene-chapter-title">Act II: The Bell Test — Ready, Start!</h2>
+                        <span class="scene-act-tag" id="scene-act-tag">Act II - Tactical Crucible</span>
+                    </div>
+
+                    <!-- Audio Narration Playback Widget (Pause, Resume, Stop, Play) -->
+                    <div class="narration-playback-bar">
+                        <div class="narration-status" id="narration-status-indicator">
+                            <span class="audio-wave-dot"></span>
+                            <span id="narration-state-label" class="narration-state-label">Audio Ready</span>
+                        </div>
+                        <div class="narration-btn-group">
+                            <button type="button" class="audio-pill-btn" id="narrate-play-btn" title="Start / Replay Narration">
+                                <span>▶️</span> <span id="narrate-play-label">Play</span>
+                            </button>
+                            <button type="button" class="audio-pill-btn" id="narrate-pause-btn" title="Pause / Resume Audio">
+                                <span>⏸️</span> <span id="narrate-pause-label">Pause</span>
+                            </button>
+                            <button type="button" class="audio-pill-btn" id="narrate-stop-btn" title="Stop Audio">
+                                <span>⏹️</span> <span>Stop</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="narrative-body" id="narrative-body">
                     Loading tactical scenario...

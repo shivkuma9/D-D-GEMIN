@@ -110,6 +110,45 @@ class ShinobiRPGApp {
 
         this.currentPassword = localStorage.getItem('shinobi_gate_password') || 'shiva123';
         this.isAuthenticated = localStorage.getItem('shinobi_authenticated') === 'true';
+
+        // Narration Playback Bar Elements
+        this.narratePlayBtnEl = document.getElementById('narrate-play-btn');
+        this.narratePlayLabelEl = document.getElementById('narrate-play-label');
+        this.narratePauseBtnEl = document.getElementById('narrate-pause-btn');
+        this.narratePauseLabelEl = document.getElementById('narrate-pause-label');
+        this.narrateStopBtnEl = document.getElementById('narrate-stop-btn');
+        this.narrationStatusIndicatorEl = document.getElementById('narration-status-indicator');
+        this.narrationStateLabelEl = document.getElementById('narration-state-label');
+
+        this.audio.onStateChange = (state) => {
+            this.updateAudioPlaybackUI(state);
+        };
+    }
+
+    updateAudioPlaybackUI(state) {
+        if (!this.narrationStatusIndicatorEl) return;
+        this.narrationStatusIndicatorEl.classList.remove('speaking', 'paused');
+
+        if (state === 'speaking') {
+            this.narrationStatusIndicatorEl.classList.add('speaking');
+            const persona = this.audio.PERSONA_PRESETS[this.audio.currentPersona];
+            const pName = persona ? (persona.gender === 'female' ? 'Kunoichi' : 'Sensei') : 'Narrator';
+            if (this.narrationStateLabelEl) this.narrationStateLabelEl.textContent = `Speaking (${pName})...`;
+            if (this.narratePlayLabelEl) this.narratePlayLabelEl.textContent = 'Replay';
+            if (this.narratePauseLabelEl) this.narratePauseLabelEl.textContent = 'Pause';
+            if (this.narratePauseBtnEl) this.narratePauseBtnEl.classList.remove('active');
+        } else if (state === 'paused') {
+            this.narrationStatusIndicatorEl.classList.add('paused');
+            if (this.narrationStateLabelEl) this.narrationStateLabelEl.textContent = 'Narration Paused';
+            if (this.narratePauseLabelEl) this.narratePauseLabelEl.textContent = 'Resume';
+            if (this.narratePauseBtnEl) this.narratePauseBtnEl.classList.add('active');
+        } else {
+            // stopped or ended
+            if (this.narrationStateLabelEl) this.narrationStateLabelEl.textContent = 'Audio Idle';
+            if (this.narratePlayLabelEl) this.narratePlayLabelEl.textContent = 'Play';
+            if (this.narratePauseLabelEl) this.narratePauseLabelEl.textContent = 'Pause';
+            if (this.narratePauseBtnEl) this.narratePauseBtnEl.classList.remove('active');
+        }
     }
 
     checkAuth() {
@@ -237,6 +276,29 @@ class ShinobiRPGApp {
                 this.isAuthenticated = false;
                 localStorage.removeItem('shinobi_authenticated');
                 this.showLockScreen();
+            });
+        }
+
+        // Narration Playback Widget Controls (Start, Pause, Resume, Stop)
+        if (this.narratePlayBtnEl) {
+            this.narratePlayBtnEl.addEventListener('click', () => {
+                const node = this.campaign.chapters.find(c => c.id === this.currentNode) || this.campaign.chapters[0];
+                const textToSpeak = (node && node.narrative) ? node.narrative : this.audio.lastSpokenText;
+                if (textToSpeak) {
+                    this.audio.speak(textToSpeak);
+                }
+            });
+        }
+
+        if (this.narratePauseBtnEl) {
+            this.narratePauseBtnEl.addEventListener('click', () => {
+                this.audio.togglePause();
+            });
+        }
+
+        if (this.narrateStopBtnEl) {
+            this.narrateStopBtnEl.addEventListener('click', () => {
+                this.audio.stopSpeech();
             });
         }
 

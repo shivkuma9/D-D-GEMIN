@@ -64,6 +64,11 @@ class ShinobiAudioEngine {
         this.activeVoice = null;
         this.currentAudio = null;
 
+        this.isSpeaking = false;
+        this.isPaused = false;
+        this.lastSpokenText = '';
+        this.onStateChange = null;
+
         this.initAudioContext();
         this.initSpeechEngine();
     }
@@ -200,6 +205,60 @@ class ShinobiAudioEngine {
         localStorage.setItem('naruto_voice_engine', this.engineType);
     }
 
+    notifyState(state) {
+        if (typeof this.onStateChange === 'function') {
+            this.onStateChange(state);
+        }
+    }
+
+    pause() {
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.isPaused = true;
+            this.notifyState('paused');
+            return;
+        }
+        if ('speechSynthesis' in window && (window.speechSynthesis.speaking || this.isSpeaking)) {
+            window.speechSynthesis.pause();
+            this.isPaused = true;
+            this.notifyState('paused');
+        }
+    }
+
+    resume() {
+        if (this.currentAudio && this.isPaused) {
+            this.currentAudio.play();
+            this.isPaused = false;
+            this.notifyState('speaking');
+            return;
+        }
+        if ('speechSynthesis' in window && (window.speechSynthesis.paused || this.isPaused)) {
+            window.speechSynthesis.resume();
+            this.isPaused = false;
+            this.notifyState('speaking');
+        }
+    }
+
+    togglePause() {
+        if (this.isPaused) {
+            this.resume();
+            return false;
+        } else if (this.isSpeaking) {
+            this.pause();
+            return true;
+        } else if (this.lastSpokenText) {
+            this.speak(this.lastSpokenText);
+            return false;
+        }
+        return false;
+    }
+
+    replay() {
+        if (this.lastSpokenText) {
+            this.speak(this.lastSpokenText);
+        }
+    }
+
     async speak(text, options = {}) {
         if (!this.voiceEnabled) return;
         this.stopSpeech();
@@ -213,6 +272,8 @@ class ShinobiAudioEngine {
             .trim();
 
         if (!cleanText) return;
+
+        this.lastSpokenText = cleanText;
 
         // Try ElevenLabs AI Voice if configured
         if (this.engineType === 'elevenlabs' && this.elevenLabsKey) {
@@ -231,6 +292,41 @@ class ShinobiAudioEngine {
         utterance.rate = options.rate || this.voiceRate || 0.93;
         utterance.pitch = options.pitch || this.voicePitch || 0.92;
         utterance.volume = options.volume !== undefined ? options.volume : this.voiceVolume;
+
+        utterance.onstart = () => {
+            this.isSpeaking = true;
+            this.isPaused = false;
+            this.notifyState('speaking');
+        };
+
+        utterance.onpause = () => {
+            this.isPaused = true;
+            this.notifyState('paused');
+        };
+
+        utterance.onresume = () => {
+            this.isPaused = false;
+            this.notifyState('speaking');
+        };
+
+        utterance.onend = () => {
+            this.isSpeaking = false;
+            this.isPaused = false;
+            this.notifyState('ended');
+        };
+
+        utterance.onerror = (e) => {
+            if (e.error !== 'interrupted' && e.error !== 'canceled') {
+                console.warn('SpeechSynthesis error:', e.error);
+            }
+            this.isSpeaking = false;
+            this.isPaused = false;
+            this.notifyState('stopped');
+        };
+
+        this.isSpeaking = true;
+        this.isPaused = false;
+        this.notifyState('speaking');
 
         window.speechSynthesis.speak(utterance);
     }
@@ -267,6 +363,28 @@ class ShinobiAudioEngine {
             }
             this.currentAudio = new Audio(audioUrl);
             this.currentAudio.volume = this.voiceVolume;
+
+            this.currentAudio.onplay = () => {
+                this.isSpeaking = true;
+                this.isPaused = false;
+                this.notifyState('speaking');
+            };
+            this.currentAudio.onpause = () => {
+                if (this.isPaused) {
+                    this.notifyState('paused');
+                }
+            };
+            this.currentAudio.onended = () => {
+                this.isSpeaking = false;
+                this.isPaused = false;
+                this.notifyState('ended');
+            };
+            this.currentAudio.onerror = () => {
+                this.isSpeaking = false;
+                this.isPaused = false;
+                this.notifyState('stopped');
+            };
+
             await this.currentAudio.play();
             return true;
         } catch (err) {
@@ -284,6 +402,9 @@ class ShinobiAudioEngine {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
         }
+        this.isSpeaking = false;
+        this.isPaused = false;
+        this.notifyState('stopped');
     }
 
     // --- Synthesized Sound Effects (Pure Web Audio API) ---
