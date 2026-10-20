@@ -12,6 +12,7 @@ class ShinobiRPGApp {
         this.initDom();
         this.bindEvents();
         this.renderAll();
+        this.checkAuth();
     }
 
     initDom() {
@@ -97,6 +98,72 @@ class ShinobiRPGApp {
         this.diceRollValEl = document.getElementById('dice-roll-val');
         this.diceTitleEl = document.getElementById('dice-title');
         this.diceResultTextEl = document.getElementById('dice-result-text');
+
+        // Security Gatekeeper Elements
+        this.lockGateBackdropEl = document.getElementById('lock-gate-backdrop');
+        this.lockGateCardEl = document.getElementById('lock-gate-card');
+        this.gatePassInputEl = document.getElementById('gate-pass-input');
+        this.toggleGatePassBtnEl = document.getElementById('toggle-gate-pass-btn');
+        this.gateErrorMsgEl = document.getElementById('gate-error-msg');
+        this.gateUnlockBtnEl = document.getElementById('gate-unlock-btn');
+        this.lockTerminalBtnEl = document.getElementById('lock-terminal-btn');
+
+        this.currentPassword = localStorage.getItem('shinobi_gate_password') || 'shiva123';
+        this.isAuthenticated = localStorage.getItem('shinobi_authenticated') === 'true';
+    }
+
+    checkAuth() {
+        if (!this.isAuthenticated) {
+            this.showLockScreen();
+        } else {
+            this.hideLockScreen();
+        }
+    }
+
+    showLockScreen() {
+        if (this.lockGateBackdropEl) {
+            this.lockGateBackdropEl.classList.remove('hidden');
+            if (this.gatePassInputEl) {
+                this.gatePassInputEl.value = '';
+                setTimeout(() => this.gatePassInputEl.focus(), 120);
+            }
+            if (this.gateErrorMsgEl) this.gateErrorMsgEl.style.display = 'none';
+        }
+    }
+
+    hideLockScreen() {
+        if (this.lockGateBackdropEl) {
+            this.lockGateBackdropEl.classList.add('hidden');
+        }
+    }
+
+    attemptUnlock() {
+        if (!this.gatePassInputEl) return;
+        const entered = this.gatePassInputEl.value.trim();
+        if (entered === this.currentPassword) {
+            this.isAuthenticated = true;
+            localStorage.setItem('shinobi_authenticated', 'true');
+            if (this.gateErrorMsgEl) this.gateErrorMsgEl.style.display = 'none';
+            this.audio.playBellJingle();
+            this.hideLockScreen();
+
+            // Speak current scene if voice enabled
+            const node = this.campaign.chapters.find(c => c.id === this.currentNode) || this.campaign.chapters[0];
+            if (this.audio.voiceEnabled && node && node.narrative) {
+                setTimeout(() => {
+                    this.audio.speak(node.narrative);
+                }, 300);
+            }
+        } else {
+            if (this.gateErrorMsgEl) this.gateErrorMsgEl.style.display = 'block';
+            if (this.lockGateCardEl) {
+                this.lockGateCardEl.classList.add('shake-error');
+                setTimeout(() => this.lockGateCardEl.classList.remove('shake-error'), 450);
+            }
+            this.audio.playKunaiClash();
+            this.gatePassInputEl.value = '';
+            this.gatePassInputEl.focus();
+        }
     }
 
     populateVoiceDropdown() {
@@ -137,6 +204,42 @@ class ShinobiRPGApp {
     }
 
     bindEvents() {
+        // Security Gatekeeper Event Listeners
+        if (this.gateUnlockBtnEl) {
+            this.gateUnlockBtnEl.addEventListener('click', () => this.attemptUnlock());
+        }
+
+        if (this.gatePassInputEl) {
+            this.gatePassInputEl.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') this.attemptUnlock();
+            });
+        }
+
+        if (this.toggleGatePassBtnEl && this.gatePassInputEl) {
+            this.toggleGatePassBtnEl.addEventListener('click', () => {
+                const isPass = this.gatePassInputEl.type === 'password';
+                this.gatePassInputEl.type = isPass ? 'text' : 'password';
+                this.toggleGatePassBtnEl.textContent = isPass ? '🙈' : '👁️';
+            });
+        }
+
+        if (this.lockTerminalBtnEl) {
+            this.lockTerminalBtnEl.addEventListener('click', (e) => {
+                if (e.shiftKey) {
+                    const newPass = prompt("Set New Shinobi Security Passcode:");
+                    if (newPass && newPass.trim()) {
+                        this.currentPassword = newPass.trim();
+                        localStorage.setItem('shinobi_gate_password', this.currentPassword);
+                        alert("Passcode updated successfully!");
+                    }
+                    return;
+                }
+                this.isAuthenticated = false;
+                localStorage.removeItem('shinobi_authenticated');
+                this.showLockScreen();
+            });
+        }
+
         // Freeform action button
         if (this.freeformBtnEl && this.freeformInputEl) {
             this.freeformBtnEl.addEventListener('click', () => this.handleFreeformAction());
@@ -511,8 +614,8 @@ class ShinobiRPGApp {
         if (this.sceneActTagEl) this.sceneActTagEl.textContent = node.act || 'Tactical Scenario';
         if (this.narrativeBodyEl) this.narrativeBodyEl.textContent = node.narrative;
 
-        // Auto speak narrative
-        if (this.audio.voiceEnabled) {
+        // Auto speak narrative only when authenticated
+        if (this.audio.voiceEnabled && this.isAuthenticated) {
             setTimeout(() => {
                 this.audio.speak(node.narrative);
             }, 200);
@@ -604,6 +707,16 @@ class ShinobiRPGApp {
         const text = (this.freeformInputEl.value || '').trim();
         if (!text) return;
         this.freeformInputEl.value = '';
+
+        if (text.startsWith('/setpass ')) {
+            const newPass = text.slice(9).trim();
+            if (newPass) {
+                this.currentPassword = newPass;
+                localStorage.setItem('shinobi_gate_password', newPass);
+                alert("Security passcode updated successfully!");
+                return;
+            }
+        }
 
         this.audio.playWaterSplash();
 

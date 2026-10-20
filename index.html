@@ -9,6 +9,31 @@
 </head>
 <body>
 
+    <!-- Shinobi Security Gatekeeper Lock Screen -->
+    <div class="lock-gate-backdrop" id="lock-gate-backdrop">
+        <div class="lock-gate-card" id="lock-gate-card">
+            <div class="lock-seal-icon">🍃</div>
+            <h2 class="lock-title">KONOHA CLASSIFIED ARCHIVES</h2>
+            <div class="lock-subtitle">SHINOBI CHRONICLES // RESTRICTED ACCESS</div>
+
+            <div class="lock-input-group">
+                <input type="password" id="gate-pass-input" class="lock-input" placeholder="Enter Shinobi Passcode..." autocomplete="off">
+                <button type="button" id="toggle-gate-pass-btn" class="lock-eye-btn" title="Toggle Visibility">👁️</button>
+            </div>
+
+            <div id="gate-error-msg" class="lock-error-msg" style="display: none;">
+                ✕ Invalid Shinobi Passcode. Access Denied.
+            </div>
+
+            <button type="button" id="gate-unlock-btn" class="lock-unlock-btn">
+                <span>🔓</span> <span>AUTHENTICATE & ENTER REALM</span>
+            </button>
+            <div class="lock-footer-text">
+                Authorized Personnel Only // Team 7 Classified Records
+            </div>
+        </div>
+    </div>
+
     <!-- Top Navigation Header -->
     <header class="top-header">
         <div class="brand-section">
@@ -28,6 +53,9 @@
             </button>
             <button class="pill-btn" id="gemini-settings-btn" title="Configure Live Gemini AI Dungeon Master">
                 <span>⚡</span> <span>GEMINI AI DM</span>
+            </button>
+            <button class="pill-btn" id="lock-terminal-btn" title="Lock Game Terminal">
+                <span>🔒</span> <span>LOCK</span>
             </button>
         </div>
     </header>
