@@ -883,3 +883,30 @@ body {
     color: #fff;
     border-color: #ef4444;
 }
+
+/* Voice Persona Presets */
+.persona-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.persona-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.persona-btn[data-persona="sultry_female"]:hover {
+    border-color: #f43f5e !important;
+}
+
+.persona-btn[data-persona="sweet_kunoichi"]:hover {
+    border-color: #f472b6 !important;
+}
+
+.persona-btn[data-persona="femme_fatale"]:hover {
+    border-color: #c084fc !important;
+}
+
+.persona-btn[data-persona="shinobi_sensei"]:hover {
+    border-color: #38bdf8 !important;
+}
+

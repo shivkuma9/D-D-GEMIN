@@ -114,7 +114,18 @@ class ShinobiRPGApp {
             const opt = document.createElement('option');
             opt.value = voice.voiceURI || voice.name;
             const isNatural = /natural|online|neural/i.test(voice.name);
-            const badge = isNatural ? '🌟 [NATURAL] ' : '';
+            const isFem = this.audio.isFemaleVoice(voice);
+            let badge = '';
+            if (isFem && isNatural) {
+                badge = '💋🌟 [SEXY FEMALE NATURAL] ';
+            } else if (isFem) {
+                badge = '💋 [FEMALE] ';
+            } else if (isNatural) {
+                badge = '🌟 [MALE NATURAL] ';
+            } else {
+                badge = '🥷 [SYSTEM] ';
+            }
+
             opt.textContent = `${badge}${voice.name} (${voice.lang})`;
             if (this.audio.selectedVoiceURI && (voice.voiceURI === this.audio.selectedVoiceURI || voice.name === this.audio.selectedVoiceURI)) {
                 opt.selected = true;
@@ -150,17 +161,74 @@ class ShinobiRPGApp {
                 if (this.voiceModalEl) {
                     this.voiceModalEl.style.display = 'flex';
                     this.populateVoiceDropdown();
+
+                    // Sync persona active button
+                    const personaBtns = document.querySelectorAll('.persona-btn');
+                    personaBtns.forEach(btn => {
+                        const p = btn.getAttribute('data-persona');
+                        if (p === this.audio.currentPersona) {
+                            btn.classList.add('active');
+                            if (p === 'sultry_female') {
+                                btn.style.border = '1px solid #f43f5e';
+                                btn.style.background = 'rgba(244, 63, 94, 0.25)';
+                            } else {
+                                btn.style.border = '1px solid var(--chakra-water)';
+                                btn.style.background = 'rgba(56, 189, 248, 0.2)';
+                            }
+                        } else {
+                            btn.classList.remove('active');
+                            btn.style.border = '1px solid var(--border-subtle)';
+                            btn.style.background = 'rgba(30, 41, 59, 0.5)';
+                        }
+                    });
+
                     if (this.elevenLabsKeyInputEl) this.elevenLabsKeyInputEl.value = this.audio.elevenLabsKey || '';
-                    if (this.elevenLabsVoiceSelectEl) this.elevenLabsVoiceSelectEl.value = this.audio.elevenLabsVoiceId || 'pNInz6obpgDQGcFmaJgB';
-                    if (this.voiceRateSliderEl) this.voiceRateSliderEl.value = this.audio.voiceRate || 1.0;
-                    if (this.voicePitchSliderEl) this.voicePitchSliderEl.value = this.audio.voicePitch || 1.0;
-                    if (this.voiceVolSliderEl) this.voiceVolSliderEl.value = this.audio.voiceVolume || 0.95;
-                    if (this.rateValEl) this.rateValEl.textContent = `${(this.audio.voiceRate || 1.0).toFixed(2)}x`;
-                    if (this.pitchValEl) this.pitchValEl.textContent = (this.audio.voicePitch || 1.0).toFixed(2);
-                    if (this.volValEl) this.volValEl.textContent = `${Math.round((this.audio.voiceVolume || 0.95) * 100)}%`;
+                    if (this.elevenLabsVoiceSelectEl) this.elevenLabsVoiceSelectEl.value = this.audio.elevenLabsVoiceId || 'EXAVITQu4vr4xnSDxMaL';
+                    if (this.voiceRateSliderEl) this.voiceRateSliderEl.value = this.audio.voiceRate || 0.93;
+                    if (this.voicePitchSliderEl) this.voicePitchSliderEl.value = this.audio.voicePitch || 0.92;
+                    if (this.voiceVolSliderEl) this.voiceVolSliderEl.value = this.audio.voiceVolume || 1.0;
+                    if (this.rateValEl) this.rateValEl.textContent = `${(this.audio.voiceRate || 0.93).toFixed(2)}x`;
+                    if (this.pitchValEl) this.pitchValEl.textContent = (this.audio.voicePitch || 0.92).toFixed(2);
+                    if (this.volValEl) this.volValEl.textContent = `${Math.round((this.audio.voiceVolume || 1.0) * 100)}%`;
                 }
             });
         }
+
+        // Persona Preset Buttons (Sultry Female, Sweet, Femme Fatale, Sensei)
+        const personaBtns = document.querySelectorAll('.persona-btn');
+        personaBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const persona = btn.getAttribute('data-persona');
+                this.audio.setPersona(persona);
+
+                personaBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.style.border = '1px solid var(--border-subtle)';
+                    b.style.background = 'rgba(30, 41, 59, 0.5)';
+                });
+                btn.classList.add('active');
+                if (persona === 'sultry_female') {
+                    btn.style.border = '1px solid #f43f5e';
+                    btn.style.background = 'rgba(244, 63, 94, 0.25)';
+                } else {
+                    btn.style.border = '1px solid var(--chakra-water)';
+                    btn.style.background = 'rgba(56, 189, 248, 0.2)';
+                }
+
+                if (this.voiceRateSliderEl) this.voiceRateSliderEl.value = this.audio.voiceRate;
+                if (this.voicePitchSliderEl) this.voicePitchSliderEl.value = this.audio.voicePitch;
+                if (this.rateValEl) this.rateValEl.textContent = `${this.audio.voiceRate.toFixed(2)}x`;
+                if (this.pitchValEl) this.pitchValEl.textContent = this.audio.voicePitch.toFixed(2);
+                if (this.elevenLabsVoiceSelectEl) this.elevenLabsVoiceSelectEl.value = this.audio.elevenLabsVoiceId;
+
+                this.populateVoiceDropdown();
+
+                const preset = this.audio.PERSONA_PRESETS[persona];
+                if (preset) {
+                    this.audio.speak(preset.previewText);
+                }
+            });
+        });
 
         if (this.voiceCloseBtnEl) {
             this.voiceCloseBtnEl.addEventListener('click', () => {
@@ -214,17 +282,18 @@ class ShinobiRPGApp {
             this.voiceTestBtnEl.addEventListener('click', () => {
                 const selectedURI = this.voiceSelectEl ? this.voiceSelectEl.value : '';
                 if (selectedURI) this.audio.setVoice(selectedURI);
-                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 1.0;
-                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 1.0;
-                const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 0.95;
-                this.audio.speak("Team Seven, focus! The Bell Test has officially begun.", { rate, pitch, volume: vol });
+                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 0.93;
+                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 0.92;
+                const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 1.0;
+                const preset = this.audio.PERSONA_PRESETS[this.audio.currentPersona] || this.audio.PERSONA_PRESETS.sultry_female;
+                this.audio.speak(preset.previewText, { rate, pitch, volume: vol });
             });
         }
 
         if (this.elevenLabsTestBtnEl) {
             this.elevenLabsTestBtnEl.addEventListener('click', async () => {
                 const key = this.elevenLabsKeyInputEl ? this.elevenLabsKeyInputEl.value.trim() : '';
-                const voiceId = this.elevenLabsVoiceSelectEl ? this.elevenLabsVoiceSelectEl.value : 'pNInz6obpgDQGcFmaJgB';
+                const voiceId = this.elevenLabsVoiceSelectEl ? this.elevenLabsVoiceSelectEl.value : 'EXAVITQu4vr4xnSDxMaL';
                 if (!key) {
                     alert('Please enter an ElevenLabs API Key first to test AI voice actors.');
                     return;
@@ -232,7 +301,8 @@ class ShinobiRPGApp {
                 this.audio.setElevenLabsConfig(key, voiceId, 'elevenlabs');
                 const prev = this.elevenLabsTestBtnEl.innerHTML;
                 this.elevenLabsTestBtnEl.innerHTML = '<span>⏳ Speaking...</span>';
-                await this.audio.speak("Shinobi tactical trial initialized. Kakashi is preparing his move.");
+                const preset = this.audio.PERSONA_PRESETS[this.audio.currentPersona] || this.audio.PERSONA_PRESETS.sultry_female;
+                await this.audio.speak(preset.previewText);
                 this.elevenLabsTestBtnEl.innerHTML = prev;
             });
         }

@@ -1,17 +1,63 @@
-// audio_engine.js - High Fidelity Shinobi Sound FX & Voice Studio Engine
+// audio_engine.js - High Fidelity Shinobi Sound FX & Voice Studio Engine with Sexy Female Narrator Options
 class ShinobiAudioEngine {
     constructor() {
         this.ctx = null;
         this.voiceEnabled = true;
         this.sfxEnabled = true;
+
+        this.PERSONA_PRESETS = {
+            sultry_female: {
+                name: '💋 Sultry Kunoichi (Seductive & Alluring Female DM)',
+                gender: 'female',
+                pitch: 0.92,
+                rate: 0.93,
+                volume: 1.0,
+                elevenVoiceId: 'EXAVITQu4vr4xnSDxMaL', // Bella - soft, intimate, seductive female
+                voiceFilterRegex: /jenny|aria|sonia|michelle|samantha|zira|victoria|female/i,
+                previewText: "Welcome, shinobi... I will be your personal guide through the shadows. Shall we begin our trial?"
+            },
+            sweet_kunoichi: {
+                name: '🌸 Sweet Anime Maiden (Playful & Gentle Female)',
+                gender: 'female',
+                pitch: 1.08,
+                rate: 1.0,
+                volume: 0.95,
+                elevenVoiceId: '21m00Tcm4TlvDq8ikWAM', // Rachel
+                voiceFilterRegex: /jenny|aria|natasha|samantha|female/i,
+                previewText: "Hey there! Ready to show Kakashi-sensei what Team Seven can do? Let's go!"
+            },
+            femme_fatale: {
+                name: '👑 Femme Fatale (Dominant & Alluring Mistress)',
+                gender: 'female',
+                pitch: 0.88,
+                rate: 0.90,
+                volume: 1.0,
+                elevenVoiceId: 'AZnzlk1XvdvUeBnXmlld', // Domi - assertive, alluring
+                voiceFilterRegex: /aria|sonia|zira|female/i,
+                previewText: "Listen closely, ninja... In this world, only those with true resolve survive. Follow my lead."
+            },
+            shinobi_sensei: {
+                name: '🥷 Shinobi Sensei (Deep Tactical Male DM)',
+                gender: 'male',
+                pitch: 0.95,
+                rate: 0.95,
+                volume: 0.95,
+                elevenVoiceId: 'pNInz6obpgDQGcFmaJgB', // Adam
+                voiceFilterRegex: /guy|christopher|david|male/i,
+                previewText: "Team Seven, focus! The Bell Test has officially begun."
+            }
+        };
+
+        this.currentPersona = localStorage.getItem('naruto_voice_persona') || 'sultry_female'; // Default to sultry female!
         this.engineType = localStorage.getItem('naruto_voice_engine') || 'browser'; // 'browser' or 'elevenlabs'
         this.elevenLabsKey = localStorage.getItem('naruto_elevenlabs_key') || '';
-        this.elevenLabsVoiceId = localStorage.getItem('naruto_elevenlabs_voice_id') || 'pNInz6obpgDQGcFmaJgB'; // Adam
+        this.elevenLabsVoiceId = localStorage.getItem('naruto_elevenlabs_voice_id') || this.PERSONA_PRESETS[this.currentPersona].elevenVoiceId;
         this.selectedVoiceURI = localStorage.getItem('naruto_selected_voice_uri') || '';
         
-        this.voiceRate = parseFloat(localStorage.getItem('naruto_voice_rate')) || 1.0;
-        this.voicePitch = parseFloat(localStorage.getItem('naruto_voice_pitch')) || 1.0;
-        this.voiceVolume = parseFloat(localStorage.getItem('naruto_voice_volume')) || 0.95;
+        const preset = this.PERSONA_PRESETS[this.currentPersona] || this.PERSONA_PRESETS.sultry_female;
+        this.voiceRate = parseFloat(localStorage.getItem('naruto_voice_rate')) || preset.rate;
+        this.voicePitch = parseFloat(localStorage.getItem('naruto_voice_pitch')) || preset.pitch;
+        this.voiceVolume = parseFloat(localStorage.getItem('naruto_voice_volume')) || preset.volume;
         this.sfxVolume = parseFloat(localStorage.getItem('naruto_sfx_volume')) || 0.8;
 
         this.availableVoices = [];
@@ -52,23 +98,44 @@ class ShinobiAudioEngine {
         }
     }
 
+    isFemaleVoice(voice) {
+        const name = voice.name.toLowerCase();
+        return /jenny|aria|sonia|michelle|natasha|ana|zira|heera|samantha|victoria|karen|female|woman|girl|bella|rachel|domi/i.test(name);
+    }
+
     sortAndSelectBestVoice() {
         if (this.availableVoices.length === 0) return;
 
-        // Rank English voices: Natural/Online first, then Google, then SAPI
+        const preset = this.PERSONA_PRESETS[this.currentPersona] || this.PERSONA_PRESETS.sultry_female;
+        const wantFemale = preset.gender === 'female';
+
+        // Score voices based on user persona preference
         const scoreVoice = (v) => {
             let score = 0;
             const name = v.name.toLowerCase();
+            const isFem = this.isFemaleVoice(v);
+
             if (v.lang.startsWith('en')) score += 50;
-            if (name.includes('natural')) score += 100;
-            if (name.includes('online')) score += 80;
-            if (name.includes('neural')) score += 70;
-            if (name.includes('guy')) score += 40;
-            if (name.includes('christopher')) score += 35;
-            if (name.includes('jenny')) score += 30;
-            if (name.includes('aria')) score += 25;
-            if (name.includes('google')) score += 20;
-            if (name.includes('enhanced')) score += 15;
+            if (name.includes('natural')) score += 120;
+            if (name.includes('online')) score += 100;
+            if (name.includes('neural')) score += 90;
+
+            // Persona gender bonus
+            if (wantFemale && isFem) score += 200;
+            if (!wantFemale && !isFem) score += 200;
+
+            // Preferred female voices (Microsoft Jenny, Aria, Sonia, Google Female)
+            if (name.includes('jenny')) score += 60;
+            if (name.includes('aria')) score += 55;
+            if (name.includes('sonia')) score += 40;
+            if (name.includes('samantha')) score += 35;
+            if (name.includes('zira')) score += 20;
+
+            // Preferred male voices
+            if (name.includes('guy')) score += 45;
+            if (name.includes('christopher')) score += 40;
+            if (name.includes('david')) score += 20;
+
             return score;
         };
 
@@ -82,11 +149,30 @@ class ShinobiAudioEngine {
             }
         }
 
-        // Default to highest ranked natural voice
+        // Default to highest ranked voice for current persona
         this.activeVoice = this.availableVoices[0];
         if (this.activeVoice) {
             this.selectedVoiceURI = this.activeVoice.voiceURI || this.activeVoice.name;
         }
+    }
+
+    setPersona(personaKey) {
+        const preset = this.PERSONA_PRESETS[personaKey];
+        if (!preset) return;
+        this.currentPersona = personaKey;
+        this.voicePitch = preset.pitch;
+        this.voiceRate = preset.rate;
+        this.voiceVolume = preset.volume;
+        this.elevenLabsVoiceId = preset.elevenVoiceId;
+
+        localStorage.setItem('naruto_voice_persona', personaKey);
+        localStorage.setItem('naruto_voice_pitch', preset.pitch);
+        localStorage.setItem('naruto_voice_rate', preset.rate);
+        localStorage.setItem('naruto_voice_volume', preset.volume);
+        localStorage.setItem('naruto_elevenlabs_voice_id', preset.elevenVoiceId);
+
+        // Re-sort voices to match new persona (e.g. prioritize female voices)
+        this.sortAndSelectBestVoice();
     }
 
     setVoice(voiceURI) {
@@ -142,8 +228,8 @@ class ShinobiAudioEngine {
             utterance.voice = this.activeVoice;
         }
 
-        utterance.rate = options.rate || this.voiceRate || 1.0;
-        utterance.pitch = options.pitch || this.voicePitch || 1.0;
+        utterance.rate = options.rate || this.voiceRate || 0.93;
+        utterance.pitch = options.pitch || this.voicePitch || 0.92;
         utterance.volume = options.volume !== undefined ? options.volume : this.voiceVolume;
 
         window.speechSynthesis.speak(utterance);
@@ -152,7 +238,7 @@ class ShinobiAudioEngine {
     async playElevenLabs(text) {
         if (!this.elevenLabsKey) return false;
         try {
-            const voiceId = this.elevenLabsVoiceId || 'pNInz6obpgDQGcFmaJgB'; // Adam
+            const voiceId = this.elevenLabsVoiceId || 'EXAVITQu4vr4xnSDxMaL'; // Bella (Sultry Female)
             const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
                 method: 'POST',
                 headers: {
@@ -160,11 +246,11 @@ class ShinobiAudioEngine {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    text: text.slice(0, 500), // Cap length for speed & quota
+                    text: text.slice(0, 500),
                     model_id: 'eleven_turbo_v2_5',
                     voice_settings: {
-                        stability: 0.5,
-                        similarity_boost: 0.75
+                        stability: 0.45,
+                        similarity_boost: 0.80
                     }
                 })
             });

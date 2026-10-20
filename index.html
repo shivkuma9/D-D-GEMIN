@@ -322,6 +322,31 @@
                 <div style="margin-top: 0.3rem;"><strong>• ElevenLabs AI Studio:</strong> Enter a free ElevenLabs API Key below for studio anime character voice acting.</div>
             </div>
 
+            <!-- Voice Persona Presets (Alluring Female / Sweet / Sensei) -->
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <label style="font-family: var(--font-mono); font-size: 0.75rem; color: #f472b6; font-weight: bold; display: flex; align-items: center; gap: 0.4rem;">
+                    <span>💋</span> <span>NARRATOR PERSONA (VOICE STYLE):</span>
+                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;" id="persona-button-group">
+                    <button type="button" class="persona-btn active" data-persona="sultry_female" style="padding: 0.6rem; border-radius: 6px; border: 1px solid #f43f5e; background: rgba(244, 63, 94, 0.25); color: #fff; font-family: var(--font-mono); font-size: 0.73rem; text-align: left; cursor: pointer;">
+                        <strong style="color: #fda4af; display: block; font-size: 0.8rem;">💋 Sultry Kunoichi</strong>
+                        <span style="font-size: 0.68rem; color: #fecdd3;">Seductive, soft & alluring female DM</span>
+                    </button>
+                    <button type="button" class="persona-btn" data-persona="sweet_kunoichi" style="padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: rgba(30, 41, 59, 0.5); color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.73rem; text-align: left; cursor: pointer;">
+                        <strong style="color: #f9a8d4; display: block; font-size: 0.8rem;">🌸 Sweet Anime Maiden</strong>
+                        <span style="font-size: 0.68rem; color: var(--text-muted);">Playful, warm & cheerful female</span>
+                    </button>
+                    <button type="button" class="persona-btn" data-persona="femme_fatale" style="padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: rgba(30, 41, 59, 0.5); color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.73rem; text-align: left; cursor: pointer;">
+                        <strong style="color: #c084fc; display: block; font-size: 0.8rem;">👑 Femme Fatale</strong>
+                        <span style="font-size: 0.68rem; color: var(--text-muted);">Dominant & commanding mistress</span>
+                    </button>
+                    <button type="button" class="persona-btn" data-persona="shinobi_sensei" style="padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: rgba(30, 41, 59, 0.5); color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.73rem; text-align: left; cursor: pointer;">
+                        <strong style="color: #38bdf8; display: block; font-size: 0.8rem;">🥷 Shinobi Sensei</strong>
+                        <span style="font-size: 0.68rem; color: var(--text-muted);">Deep tactical male DM</span>
+                    </button>
+                </div>
+            </div>
+
             <!-- Voice Engine Switcher -->
             <div style="display: flex; flex-direction: column; gap: 0.4rem;">
                 <label style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">Voice Engine Mode:</label>
@@ -338,7 +363,7 @@
             <!-- Panel 1: Browser / System Voice Selector -->
             <div id="panel-browser-voice" style="display: flex; flex-direction: column; gap: 0.6rem;">
                 <div style="display: flex; flex-direction: column; gap: 0.3rem;">
-                    <label style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">Available Voices Detected:</label>
+                    <label style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">Available Voices (Filtered for Current Persona):</label>
                     <div style="display: flex; gap: 0.5rem;">
                         <select id="voice-select" class="voice-select" style="flex: 1;">
                             <option value="">Detecting available system voices...</option>
@@ -353,15 +378,15 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                     <div style="display: flex; flex-direction: column; gap: 0.2rem;">
                         <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
-                            <span>Speech Speed:</span> <span id="rate-val">1.0x</span>
+                            <span>Speech Speed:</span> <span id="rate-val">0.93x</span>
                         </div>
-                        <input type="range" id="voice-rate-slider" min="0.75" max="1.3" step="0.05" value="1.0" style="accent-color: var(--chakra-water);">
+                        <input type="range" id="voice-rate-slider" min="0.75" max="1.3" step="0.01" value="0.93" style="accent-color: #f43f5e;">
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 0.2rem;">
                         <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
-                            <span>Voice Pitch:</span> <span id="pitch-val">1.0</span>
+                            <span>Voice Pitch (Lower = Sultry):</span> <span id="pitch-val">0.92</span>
                         </div>
-                        <input type="range" id="voice-pitch-slider" min="0.8" max="1.2" step="0.05" value="1.0" style="accent-color: var(--chakra-water);">
+                        <input type="range" id="voice-pitch-slider" min="0.75" max="1.25" step="0.01" value="0.92" style="accent-color: #f43f5e;">
                     </div>
                 </div>
             </div>
@@ -371,10 +396,12 @@
                 <div style="display: flex; flex-direction: column; gap: 0.3rem;">
                     <label style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary);">ElevenLabs Voice Actor:</label>
                     <select id="elevenlabs-voice-select" class="voice-select">
-                        <option value="pNInz6obpgDQGcFmaJgB">Adam - Deep Epic DM & Sensei Narrator</option>
-                        <option value="ErXwobaYiN019PkySvjV">Antoni - Calm Shinobi Master</option>
-                        <option value="21m00Tcm4TlvDq8ikWAM">Rachel - Expressive Tactical Narrator</option>
-                        <option value="VR6AewLTigWG4xSOukaG">Arnold - Veteran Battlefield Commander</option>
+                        <option value="EXAVITQu4vr4xnSDxMaL" selected>💋 Bella - Soft, Sultry & Seductive Anime Kunoichi</option>
+                        <option value="AZnzlk1XvdvUeBnXmlld">👑 Domi - Alluring Femme Fatale & Mistress of Shadows</option>
+                        <option value="21m00Tcm4TlvDq8ikWAM">🌸 Rachel - Calm, Silky & Expressive Female Narrator</option>
+                        <option value="MF3mGyEYCl7XYWbV9V6O">✨ Elli - Playful & Gentle Anime Kunoichi</option>
+                        <option value="pNInz6obpgDQGcFmaJgB">🥷 Adam - Deep Tactical Shinobi Sensei (Male)</option>
+                        <option value="ErXwobaYiN019PkySvjV">🍃 Antoni - Calm Legendary Ninja (Male)</option>
                     </select>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.3rem;">
