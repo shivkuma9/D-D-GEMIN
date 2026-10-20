@@ -1,9 +1,9 @@
-// gemini_integration.js - Live Gemini AI Dungeon Master Connector (with Gemini Pro Support)
+// gemini_integration.js - Live Gemini AI Dungeon Master Connector
 class GeminiDMConnector {
     constructor(stateManager) {
         this.state = stateManager;
         this.apiKey = localStorage.getItem('gemini_dm_api_key') || '';
-        this.model = localStorage.getItem('gemini_dm_model') || 'gemini-1.5-pro';
+        this.model = localStorage.getItem('gemini_dm_model') || 'gemini-flash-latest';
         this.enabled = !!this.apiKey;
     }
 
@@ -18,7 +18,7 @@ class GeminiDMConnector {
     }
 
     setModel(modelName) {
-        this.model = modelName || 'gemini-1.5-pro';
+        this.model = modelName || 'gemini-flash-latest';
         localStorage.setItem('gemini_dm_model', this.model);
     }
 
@@ -30,11 +30,10 @@ class GeminiDMConnector {
         const char = this.state.character;
         const party = char.party;
 
-        // Enhanced prompt designed for Gemini Pro's massive reasoning & storytelling depth
         const systemPrompt = `You are the master AI Dungeon Master running an immersive, cinematic D&D RPG campaign set in the Naruto universe at the beginning of the original story.
-You are running this for player:
+Player:
 - Name: ${char.name}
-- Clan: ${char.clan} (secret Senju Clan lineage, great vitality and chakra control)
+- Clan: ${char.clan} (secret Senju Clan lineage, high vitality & water affinity)
 - Rank: ${char.rank} (Level ${char.level})
 - Nature: ${char.nature}
 - HP: ${char.hp}/${char.maxHp} | Chakra: ${char.chakra}/${char.maxChakra}
@@ -46,17 +45,17 @@ You are running this for player:
   * Sakura Haruno (Trust: ${party.sakura.trust}%, Status: ${party.sakura.status})
   * Kakashi Hatake (Jonin Sensei, Bells Remaining: ${party.kakashi.bells})
 
-DM Directives:
-1. Deliver vivid, high-tension anime prose capturing Kishimoto's iconic Naruto style, Kakashi's calculating wit, and Team 7's banter.
+DM Rules:
+1. Deliver dramatic anime prose matching the Naruto world, Kakashi's calculating wit, and Team 7 dynamics.
 2. Factor in the player's secret Senju bloodline, Water-Shadow Clone memory mechanics, and Surging Impact Fist.
-3. At the end of your narration, output structured state changes using these exact tags if applicable:
+3. At the end of your response, output state change tags if applicable:
    - [HP_CHANGE: +/-number]
    - [CHAKRA_CHANGE: +/-number]
    - [EXP_GAIN: number]
    - [BELLS_ACQUIRED: number]
    - [TRUST_CHANGE: naruto/sasuke/sakura +/-number]
    - [LOOT: item_name]
-4. Then provide 2-3 tactical choice suggestions for what the player can do next:
+4. Provide 2-3 tactical choice recommendations:
    [CHOICE_A: label | approach (force/finesse/mind) | stat check]
    [CHOICE_B: label | approach | stat check]
 `;

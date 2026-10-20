@@ -127,7 +127,7 @@ class ShinobiRPGApp {
         if (this.geminiSaveKeyBtnEl) {
             this.geminiSaveKeyBtnEl.addEventListener('click', () => {
                 const key = this.geminiApiKeyInputEl.value.trim();
-                const model = this.geminiModelSelectEl ? this.geminiModelSelectEl.value : 'gemini-1.5-pro';
+                const model = this.geminiModelSelectEl ? this.geminiModelSelectEl.value : 'gemini-flash-latest';
                 this.gemini.setApiKey(key);
                 this.gemini.setModel(model);
                 this.updateGeminiStatus();
