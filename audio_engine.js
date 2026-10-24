@@ -9,8 +9,8 @@ class ShinobiAudioEngine {
             sultry_female: {
                 name: '💋 Sultry Kunoichi (Seductive & Alluring Female DM)',
                 gender: 'female',
-                pitch: 0.92,
-                rate: 0.93,
+                pitch: 1.02,
+                rate: 0.96,
                 volume: 1.0,
                 elevenVoiceId: 'EXAVITQu4vr4xnSDxMaL', // Bella - soft, intimate, seductive female
                 voiceFilterRegex: /jenny|aria|sonia|michelle|samantha|zira|victoria|female/i,
@@ -21,7 +21,7 @@ class ShinobiAudioEngine {
                 gender: 'female',
                 pitch: 1.08,
                 rate: 1.0,
-                volume: 0.95,
+                volume: 1.0,
                 elevenVoiceId: '21m00Tcm4TlvDq8ikWAM', // Rachel
                 voiceFilterRegex: /jenny|aria|natasha|samantha|female/i,
                 previewText: "Hey there! Ready to show Kakashi-sensei what Team Seven can do? Let's go!"
@@ -29,8 +29,8 @@ class ShinobiAudioEngine {
             femme_fatale: {
                 name: '👑 Femme Fatale (Dominant & Alluring Mistress)',
                 gender: 'female',
-                pitch: 0.88,
-                rate: 0.90,
+                pitch: 0.98,
+                rate: 0.95,
                 volume: 1.0,
                 elevenVoiceId: 'AZnzlk1XvdvUeBnXmlld', // Domi - assertive, alluring
                 voiceFilterRegex: /aria|sonia|zira|female/i,
@@ -39,9 +39,9 @@ class ShinobiAudioEngine {
             shinobi_sensei: {
                 name: '🥷 Shinobi Sensei (Deep Tactical Male DM)',
                 gender: 'male',
-                pitch: 0.95,
-                rate: 0.95,
-                volume: 0.95,
+                pitch: 0.98,
+                rate: 0.96,
+                volume: 1.0,
                 elevenVoiceId: 'pNInz6obpgDQGcFmaJgB', // Adam
                 voiceFilterRegex: /guy|christopher|david|male/i,
                 previewText: "Team Seven, focus! The Bell Test has officially begun."
@@ -53,11 +53,12 @@ class ShinobiAudioEngine {
         this.elevenLabsKey = localStorage.getItem('naruto_elevenlabs_key') || '';
         this.elevenLabsVoiceId = localStorage.getItem('naruto_elevenlabs_voice_id') || this.PERSONA_PRESETS[this.currentPersona].elevenVoiceId;
         this.selectedVoiceURI = localStorage.getItem('naruto_selected_voice_uri') || '';
+        this.voiceBoost = localStorage.getItem('naruto_voice_boost') !== 'false'; // Default TRUE for loud, crystal-clear voice!
         
         const preset = this.PERSONA_PRESETS[this.currentPersona] || this.PERSONA_PRESETS.sultry_female;
         this.voiceRate = parseFloat(localStorage.getItem('naruto_voice_rate')) || preset.rate;
         this.voicePitch = parseFloat(localStorage.getItem('naruto_voice_pitch')) || preset.pitch;
-        this.voiceVolume = parseFloat(localStorage.getItem('naruto_voice_volume')) || preset.volume;
+        this.voiceVolume = parseFloat(localStorage.getItem('naruto_voice_volume')) || 1.0;
         this.sfxVolume = parseFloat(localStorage.getItem('naruto_sfx_volume')) || 0.8;
 
         this.availableVoices = [];
@@ -187,13 +188,15 @@ class ShinobiAudioEngine {
         if (found) this.activeVoice = found;
     }
 
-    setVoiceSettings(rate, pitch, volume) {
+    setVoiceSettings(rate, pitch, volume, boost = true) {
         this.voiceRate = rate;
         this.voicePitch = pitch;
         this.voiceVolume = volume;
+        this.voiceBoost = boost;
         localStorage.setItem('naruto_voice_rate', rate);
         localStorage.setItem('naruto_voice_pitch', pitch);
         localStorage.setItem('naruto_voice_volume', volume);
+        localStorage.setItem('naruto_voice_boost', boost ? 'true' : 'false');
     }
 
     setElevenLabsConfig(key, voiceId, engine) {
@@ -289,9 +292,10 @@ class ShinobiAudioEngine {
             utterance.voice = this.activeVoice;
         }
 
-        utterance.rate = options.rate || this.voiceRate || 0.93;
-        utterance.pitch = options.pitch || this.voicePitch || 0.92;
-        utterance.volume = options.volume !== undefined ? options.volume : this.voiceVolume;
+        utterance.rate = options.rate || this.voiceRate || 0.98;
+        utterance.pitch = options.pitch || this.voicePitch || 1.02;
+        // Maximum volume strictly 1.0 so speech is never muffled or small
+        utterance.volume = 1.0;
 
         utterance.onstart = () => {
             this.isSpeaking = true;
@@ -362,7 +366,22 @@ class ShinobiAudioEngine {
                 this.currentAudio.pause();
             }
             this.currentAudio = new Audio(audioUrl);
-            this.currentAudio.volume = this.voiceVolume;
+
+            // Connect through Web Audio API GainNode for loud volume boost
+            if (this.ctx) {
+                this.ensureContext();
+                try {
+                    const source = this.ctx.createMediaElementSource(this.currentAudio);
+                    const gainNode = this.ctx.createGain();
+                    gainNode.gain.value = (this.voiceVolume || 1.0) * (this.voiceBoost ? 1.5 : 1.1);
+                    source.connect(gainNode);
+                    gainNode.connect(this.ctx.destination);
+                } catch (e) {
+                    this.currentAudio.volume = Math.min(1.0, this.voiceVolume || 1.0);
+                }
+            } else {
+                this.currentAudio.volume = Math.min(1.0, this.voiceVolume || 1.0);
+            }
 
             this.currentAudio.onplay = () => {
                 this.isSpeaking = true;

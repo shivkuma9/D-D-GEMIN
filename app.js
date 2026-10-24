@@ -83,6 +83,7 @@ class ShinobiRPGApp {
         this.elevenLabsKeyInputEl = document.getElementById('elevenlabs-key-input');
         this.elevenLabsTestBtnEl = document.getElementById('elevenlabs-test-btn');
         this.voiceSaveBtnEl = document.getElementById('voice-save-btn');
+        this.voiceBoostBtnEl = document.getElementById('voice-boost-btn');
 
         // Gemini Live Settings
         this.geminiSettingsBtnEl = document.getElementById('gemini-settings-btn');
@@ -150,6 +151,14 @@ class ShinobiRPGApp {
             if (this.narratePauseLabelEl) this.narratePauseLabelEl.textContent = 'Pause';
             if (this.narratePauseBtnEl) this.narratePauseBtnEl.classList.remove('active');
         }
+    }
+
+    updateVoiceBoostUI() {
+        if (!this.voiceBoostBtnEl) return;
+        const isBoost = this.audio.voiceBoost;
+        this.voiceBoostBtnEl.textContent = isBoost ? 'BOOST ON' : 'BOOST OFF';
+        this.voiceBoostBtnEl.style.background = isBoost ? 'var(--chakra-water)' : 'rgba(100, 116, 139, 0.4)';
+        this.voiceBoostBtnEl.style.color = isBoost ? '#0f172a' : '#fff';
     }
 
     checkAuth() {
@@ -364,13 +373,27 @@ class ShinobiRPGApp {
 
                     if (this.elevenLabsKeyInputEl) this.elevenLabsKeyInputEl.value = this.audio.elevenLabsKey || '';
                     if (this.elevenLabsVoiceSelectEl) this.elevenLabsVoiceSelectEl.value = this.audio.elevenLabsVoiceId || 'EXAVITQu4vr4xnSDxMaL';
-                    if (this.voiceRateSliderEl) this.voiceRateSliderEl.value = this.audio.voiceRate || 0.93;
-                    if (this.voicePitchSliderEl) this.voicePitchSliderEl.value = this.audio.voicePitch || 0.92;
+                    if (this.voiceRateSliderEl) this.voiceRateSliderEl.value = this.audio.voiceRate || 0.98;
+                    if (this.voicePitchSliderEl) this.voicePitchSliderEl.value = this.audio.voicePitch || 1.02;
                     if (this.voiceVolSliderEl) this.voiceVolSliderEl.value = this.audio.voiceVolume || 1.0;
-                    if (this.rateValEl) this.rateValEl.textContent = `${(this.audio.voiceRate || 0.93).toFixed(2)}x`;
-                    if (this.pitchValEl) this.pitchValEl.textContent = (this.audio.voicePitch || 0.92).toFixed(2);
-                    if (this.volValEl) this.volValEl.textContent = `${Math.round((this.audio.voiceVolume || 1.0) * 100)}%`;
+                    if (this.rateValEl) this.rateValEl.textContent = `${(this.audio.voiceRate || 0.98).toFixed(2)}x`;
+                    if (this.pitchValEl) this.pitchValEl.textContent = (this.audio.voicePitch || 1.02).toFixed(2);
+                    const volPct = Math.round((this.audio.voiceVolume || 1.0) * 100);
+                    if (this.volValEl) this.volValEl.textContent = `${volPct}% ${volPct >= 100 ? '(LOUD)' : ''}`;
+                    this.updateVoiceBoostUI();
                 }
+            });
+        }
+
+        // Voice Boost Button
+        if (this.voiceBoostBtnEl) {
+            this.updateVoiceBoostUI();
+            this.voiceBoostBtnEl.addEventListener('click', () => {
+                this.audio.voiceBoost = !this.audio.voiceBoost;
+                localStorage.setItem('naruto_voice_boost', this.audio.voiceBoost ? 'true' : 'false');
+                this.updateVoiceBoostUI();
+                const preset = this.audio.PERSONA_PRESETS[this.audio.currentPersona] || this.audio.PERSONA_PRESETS.sultry_female;
+                this.audio.speak(this.audio.voiceBoost ? "Loud voice boost activated. Voice volume and presence maximized!" : "Voice boost normal.");
             });
         }
 
@@ -453,7 +476,8 @@ class ShinobiRPGApp {
         }
         if (this.voiceVolSliderEl && this.volValEl) {
             this.voiceVolSliderEl.addEventListener('input', (e) => {
-                this.volValEl.textContent = `${Math.round(parseFloat(e.target.value) * 100)}%`;
+                const pct = Math.round(parseFloat(e.target.value) * 100);
+                this.volValEl.textContent = `${pct}% ${pct >= 100 ? '(LOUD)' : ''}`;
             });
         }
 
@@ -462,8 +486,8 @@ class ShinobiRPGApp {
             this.voiceTestBtnEl.addEventListener('click', () => {
                 const selectedURI = this.voiceSelectEl ? this.voiceSelectEl.value : '';
                 if (selectedURI) this.audio.setVoice(selectedURI);
-                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 0.93;
-                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 0.92;
+                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 0.98;
+                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 1.02;
                 const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 1.0;
                 const preset = this.audio.PERSONA_PRESETS[this.audio.currentPersona] || this.audio.PERSONA_PRESETS.sultry_female;
                 this.audio.speak(preset.previewText, { rate, pitch, volume: vol });
@@ -492,21 +516,22 @@ class ShinobiRPGApp {
             this.voiceSaveBtnEl.addEventListener('click', () => {
                 const selectedURI = this.voiceSelectEl ? this.voiceSelectEl.value : '';
                 if (selectedURI) this.audio.setVoice(selectedURI);
-                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 1.0;
-                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 1.0;
-                const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 0.95;
-                this.audio.setVoiceSettings(rate, pitch, vol);
+                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 0.98;
+                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 1.02;
+                const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 1.0;
+                this.audio.setVoiceSettings(rate, pitch, vol, this.audio.voiceBoost);
 
                 const elevenKey = this.elevenLabsKeyInputEl ? this.elevenLabsKeyInputEl.value.trim() : '';
-                const elevenVoice = this.elevenLabsVoiceSelectEl ? this.elevenLabsVoiceSelectEl.value : 'pNInz6obpgDQGcFmaJgB';
+                const elevenVoice = this.elevenLabsVoiceSelectEl ? this.elevenLabsVoiceSelectEl.value : 'EXAVITQu4vr4xnSDxMaL';
                 const isElevenTab = this.panelElevenLabsVoiceEl && this.panelElevenLabsVoiceEl.style.display !== 'none';
                 const engine = (isElevenTab && elevenKey) ? 'elevenlabs' : 'browser';
                 this.audio.setElevenLabsConfig(elevenKey, elevenVoice, engine);
 
                 if (this.voiceModalEl) this.voiceModalEl.style.display = 'none';
-                alert('Audio & Voice settings saved successfully!');
+                alert('Audio & Voice settings saved successfully with Loud Boost!');
             });
         }
+
 
         // Gemini Settings Modal
         if (this.geminiSettingsBtnEl) {
@@ -676,8 +701,12 @@ class ShinobiRPGApp {
     }
 
     renderCurrentScene() {
-        const node = this.campaign.chapters.find(c => c.id === this.currentNode) || this.campaign.chapters[0];
-        if (!node) return;
+        let node = this.campaign.chapters.find(c => c.id === this.currentNode);
+        if (!node) {
+            console.warn(`Chapter '${this.currentNode}' not found! Transitioning forward.`);
+            node = this.campaign.chapters.find(c => c.id === 'ch3_teamwork_revelation') || this.campaign.chapters[0];
+            this.currentNode = node.id;
+        }
 
         if (this.sceneVisualImgEl && node.image) {
             this.sceneVisualImgEl.src = node.image;
@@ -876,20 +905,28 @@ class ShinobiRPGApp {
             const success = total >= opt.dc || roll === 20;
 
             this.showDiceModal(roll, mod, total, opt.dc, opt.stat.toUpperCase(), success, () => {
-                const destination = success ? (opt.successNode || opt.nextNode) : (opt.failNode || opt.nextNode);
+                let target = success ? (opt.successNode || opt.nextNode) : (opt.failNode || opt.nextNode);
+                if (!this.campaign.chapters.some(c => c.id === target)) {
+                    console.warn(`Target chapter '${target}' not found, advancing forward to ch3_teamwork_revelation.`);
+                    target = 'ch3_teamwork_revelation';
+                }
                 if (success) {
                     this.state.addExperience(25);
                     this.audio.playKunaiClash();
                 }
-                this.state.saveCurrentLocation(destination, null, null);
-                this.currentNode = destination;
+                this.state.saveCurrentLocation(target, null, null);
+                this.currentNode = target;
                 this.renderAll();
             });
             return;
         }
 
         // Direct advance
-        const destination = opt.nextNode || opt.targetNode || this.currentNode;
+        let destination = opt.nextNode || opt.targetNode || this.currentNode;
+        if (!this.campaign.chapters.some(c => c.id === destination)) {
+            console.warn(`Target chapter '${destination}' not found, advancing forward to ch3_teamwork_revelation.`);
+            destination = 'ch3_teamwork_revelation';
+        }
         this.state.saveCurrentLocation(destination, null, null);
         this.currentNode = destination;
         this.renderAll();
