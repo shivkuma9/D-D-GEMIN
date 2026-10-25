@@ -102,6 +102,19 @@ class ShinobiRPGApp {
         this.diceRollValEl = document.getElementById('dice-roll-val');
         this.diceTitleEl = document.getElementById('dice-title');
         this.diceResultTextEl = document.getElementById('dice-result-text');
+        this.diceCloseBtnEl = document.getElementById('dice-close-btn');
+
+        // Combat Power & Power Tier
+        this.charCombatPowerEl = document.getElementById('char-combat-power');
+        this.charPowerTierEl = document.getElementById('char-power-tier');
+
+        // Manual Dice & Mobile Controls
+        this.manualDiceBtnEl = document.getElementById('manual-dice-btn');
+        this.mobileDiceBtnEl = document.getElementById('mobile-dice-btn');
+        this.mobileVoiceBtnEl = document.getElementById('mobile-voice-btn');
+        this.gameToastEl = document.getElementById('game-toast');
+        this.appLayoutEl = document.querySelector('.app-layout');
+        this.mobileNavBtns = document.querySelectorAll('.mobile-nav-btn[data-tab]');
 
         // Security Gatekeeper Elements
         this.lockGateBackdropEl = document.getElementById('lock-gate-backdrop');
@@ -625,6 +638,67 @@ class ShinobiRPGApp {
                 if (this.diceModalEl) this.diceModalEl.style.display = 'none';
             }
         });
+
+        // Manual D20 Roll Buttons
+        const triggerManualD20 = () => {
+            const roll = Math.floor(Math.random() * 20) + 1;
+            const stats = this.state.character.stats;
+            const highestStatKey = Object.entries(stats).sort((a, b) => b[1] - a[1])[0][0];
+            const statVal = stats[highestStatKey] || 70;
+            const mod = Math.floor((statVal - 50) / 10);
+            const total = roll + mod;
+            const isCrit = roll === 20;
+            const isCritFail = roll === 1;
+            const isSuccess = isCrit || (roll + mod >= 12 && !isCritFail);
+
+            this.audio.playDiceRoll();
+            this.showDiceModal(roll, mod, total, 12, highestStatKey.toUpperCase(), isSuccess, () => {
+                const label = isCrit ? '🌟 NATURAL 20! CRITICAL SUCCESS!' : (isCritFail ? '💥 NATURAL 1! CRITICAL FAIL!' : (isSuccess ? '★ ROLL SUCCESS!' : '✕ DEFLECTED / MISSED'));
+                this.showToast(`D20 Check: [${roll}] + ${mod >= 0 ? '+' : ''}${mod} = ${total} // ${label}`);
+            });
+        };
+
+        if (this.manualDiceBtnEl) {
+            this.manualDiceBtnEl.addEventListener('click', triggerManualD20);
+        }
+        if (this.mobileDiceBtnEl) {
+            this.mobileDiceBtnEl.addEventListener('click', triggerManualD20);
+        }
+
+        // Mobile Voice Settings Button
+        if (this.mobileVoiceBtnEl) {
+            this.mobileVoiceBtnEl.addEventListener('click', () => {
+                if (this.voiceModalEl) {
+                    this.voiceModalEl.style.display = 'flex';
+                    this.populateVoiceDropdown();
+                }
+            });
+        }
+
+        // Dice Modal Close Button
+        if (this.diceCloseBtnEl) {
+            this.diceCloseBtnEl.addEventListener('click', () => {
+                if (this.diceModalEl) this.diceModalEl.style.display = 'none';
+            });
+        }
+
+        // Mobile Bottom Navigation Tab Switching
+        if (this.mobileNavBtns && this.mobileNavBtns.length > 0) {
+            if (this.appLayoutEl) this.appLayoutEl.classList.add('tab-story');
+            this.mobileNavBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tab = btn.dataset.tab;
+                    if (!tab) return;
+                    this.mobileNavBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    if (this.appLayoutEl) {
+                        this.appLayoutEl.classList.remove('tab-story', 'tab-hero', 'tab-team');
+                        this.appLayoutEl.classList.add(`tab-${tab}`);
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        }
     }
 
     renderAll() {
@@ -677,6 +751,14 @@ class ShinobiRPGApp {
         if (this.statCharmEl) this.statCharmEl.textContent = char.stats.charm || 82;
         if (this.statSerpentEl) this.statSerpentEl.textContent = char.stats.serpentSense || 75;
 
+        // Combat Power & Power Tier
+        if (this.charCombatPowerEl) {
+            this.charCombatPowerEl.textContent = this.state.calculateCombatPower().toLocaleString();
+        }
+        if (this.charPowerTierEl) {
+            this.charPowerTierEl.textContent = this.state.getPowerTier();
+        }
+
         // Jutsus
         if (this.jutsuListEl) {
             this.jutsuListEl.innerHTML = '';
@@ -694,13 +776,37 @@ class ShinobiRPGApp {
             });
         }
 
-        // Inventory
+        // Interactive Inventory
         if (this.inventoryListEl) {
             this.inventoryListEl.innerHTML = '';
             char.inventory.forEach(i => {
                 const chip = document.createElement('div');
                 chip.className = 'item-chip';
-                chip.innerHTML = `<span>${i.icon || '📦'}</span> <span>${i.name} (x${i.count})</span>`;
+                const isConsumable = i.heals || i.restores || i.id === 'smoke_bomb';
+                chip.innerHTML = `
+                    <div class="item-chip-top">
+                        <span class="item-chip-name">${i.icon || '📦'} ${i.name}</span>
+                        <span class="item-chip-count">x${i.count}</span>
+                    </div>
+                    <div class="item-chip-desc">${i.desc || ''}</div>
+                    ${isConsumable ? `<button type="button" class="item-chip-use-btn" data-item-id="${i.id}">USE ITEM</button>` : ''}
+                `;
+                if (isConsumable) {
+                    const useBtn = chip.querySelector('.item-chip-use-btn');
+                    if (useBtn) {
+                        useBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const res = this.state.useInventoryItem(i.id);
+                            if (res.success) {
+                                this.audio.playBellJingle();
+                                this.renderCharacterPanel();
+                                this.showToast(res.message);
+                            } else {
+                                this.showToast(res.message);
+                            }
+                        });
+                    }
+                }
                 this.inventoryListEl.appendChild(chip);
             });
         }
@@ -1077,9 +1183,19 @@ class ShinobiRPGApp {
         }
     }
 
+    showToast(message) {
+        if (!this.gameToastEl) return;
+        this.gameToastEl.textContent = message;
+        this.gameToastEl.classList.add('show');
+        if (this.toastTimeout) clearTimeout(this.toastTimeout);
+        this.toastTimeout = setTimeout(() => {
+            if (this.gameToastEl) this.gameToastEl.classList.remove('show');
+        }, 3200);
+    }
+
     showDiceModal(roll, mod, total, dc, label, isSuccess, callback) {
         if (!this.diceModalEl) {
-            callback();
+            if (callback) callback();
             return;
         }
 
@@ -1093,9 +1209,10 @@ class ShinobiRPGApp {
             </div>
         `;
 
-        setTimeout(() => {
+        if (this.diceTimeout) clearTimeout(this.diceTimeout);
+        this.diceTimeout = setTimeout(() => {
             this.diceModalEl.style.display = 'none';
-            callback();
+            if (callback) callback();
         }, 1600);
     }
 

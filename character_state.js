@@ -86,11 +86,13 @@ class ShinobiStateManager {
                 }
             ],
             inventory: [
-                { id: 'kunai', name: 'Shinobi Kunai', count: 5, icon: '🗡️' },
-                { id: 'shuriken', name: 'Star Shuriken', count: 5, icon: '⭐' },
-                { id: 'ninja_wire', name: 'Steel Ninja Wire', count: 2, icon: '🪢' },
-                { id: 'smoke_bomb', name: 'Phosphor Smoke Bomb', count: 2, icon: '💨' },
-                { id: 'soldier_pill', name: 'Military Ration Pill', count: 2, icon: '💊', heals: 25 }
+                { id: 'kunai', name: 'Shinobi Kunai', count: 5, icon: '🗡️', desc: 'Versatile steel throwing & parrying blade' },
+                { id: 'shuriken', name: 'Star Shuriken', count: 5, icon: '⭐', desc: 'Precision curved throwing stars' },
+                { id: 'ninja_wire', name: 'Steel Ninja Wire', count: 2, icon: '🪢', desc: 'High-tensile monofilament chakra wire' },
+                { id: 'smoke_bomb', name: 'Phosphor Smoke Bomb', count: 2, icon: '💨', desc: 'Instantly creates a dense smokescreen' },
+                { id: 'soldier_pill', name: 'Military Ration Pill', count: 2, icon: '💊', heals: 35, desc: 'Herbal stimulant that heals +35 HP' },
+                { id: 'chakra_pill', name: 'Chakra Restoration Pill', count: 2, icon: '🧪', restores: 40, desc: 'Refined reagent that restores +40 Chakra' },
+                { id: 'heaven_scroll', name: 'Heaven Scroll', count: 1, icon: '📜', desc: 'Chunin Exam trial scroll. Protect with your life!' }
             ],
             party: {
                 naruto: {
@@ -213,6 +215,60 @@ class ShinobiStateManager {
             else this.character.party[targetKey].romanceRank = 'C';
             this.save();
         }
+    }
+
+    calculateCombatPower() {
+        const s = this.character.stats;
+        const base = (s.ninjutsu * 2.2) + (s.taijutsu * 2.0) + (s.genjutsu * 1.2) + 
+                     (s.agility * 1.8) + (s.chakraReserves * 2.5) + (s.tactics * 1.8) + 
+                     ((s.charm || 80) * 1.2) + ((s.serpentSense || 75) * 1.5);
+        const levelMult = 1 + ((this.character.level - 1) * 0.12);
+        return Math.round(base * levelMult);
+    }
+
+    getPowerTier() {
+        const power = this.calculateCombatPower();
+        if (power < 1000) return 'Genin Trainee';
+        if (power < 1400) return 'Standard Genin';
+        if (power < 1800) return 'High-Genin [Chunin Candidate]';
+        if (power < 2500) return 'Chunin Elite';
+        if (power < 3500) return 'Special Jonin';
+        if (power < 5000) return 'Jonin Master';
+        return 'Kage / Legend';
+    }
+
+    useInventoryItem(itemId) {
+        const item = this.character.inventory.find(i => i.id === itemId);
+        if (!item || item.count <= 0) {
+            return { success: false, message: 'Item not available!' };
+        }
+
+        let message = '';
+        if (itemId === 'soldier_pill') {
+            const heal = item.heals || 35;
+            this.character.hp = Math.min(this.character.maxHp, this.character.hp + heal);
+            item.count -= 1;
+            message = `Consumed Military Ration Pill! Restored +${heal} HP. Current HP: ${this.character.hp}/${this.character.maxHp}`;
+        } else if (itemId === 'chakra_pill') {
+            const restore = item.restores || 40;
+            this.character.chakra = Math.min(this.character.maxChakra, this.character.chakra + restore);
+            item.count -= 1;
+            message = `Swallowed Soldier Chakra Pill! Restored +${restore} Chakra. Current Chakra: ${this.character.chakra}/${this.character.maxChakra}`;
+        } else if (itemId === 'smoke_bomb') {
+            item.count -= 1;
+            message = `Detonated Phosphor Smoke Bomb! Created a dense smokescreen (+5 to your next Evasion roll).`;
+        } else if (itemId === 'heaven_scroll' || itemId === 'earth_scroll') {
+            message = `Inspecting ${item.name}: Sacred Chunin Exam sealing document. Must NOT be opened until reaching the Tower!`;
+        } else {
+            message = `Inspected ${item.name} (x${item.count}). Standard ninja tool ready for combat.`;
+        }
+
+        if (item.count <= 0) {
+            this.character.inventory = this.character.inventory.filter(i => i.count > 0);
+        }
+
+        this.save();
+        return { success: true, message };
     }
 
     addItem(item) {

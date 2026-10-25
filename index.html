@@ -48,6 +48,9 @@
             <button class="pill-btn active" id="voice-toggle-btn" title="Toggle Cinematic Voice Narration">
                 <span>🔊</span> <span class="btn-label">VOICE ON</span>
             </button>
+            <button class="pill-btn" id="manual-dice-btn" title="Roll D20 Check with Dynamic Attributes">
+                <span>🎲</span> <span>ROLL D20</span>
+            </button>
             <button class="pill-btn" id="voice-settings-btn" title="Configure Realistic Voice Studio & Sound FX">
                 <span>🎙️</span> <span>VOICE STUDIO</span>
             </button>
@@ -67,7 +70,7 @@
     <main class="app-layout">
 
         <!-- LEFT SIDEBAR: Character Sheet & Vitals -->
-        <aside class="side-panel">
+        <aside class="side-panel" id="hero-panel">
             <!-- Profile Card -->
             <div class="character-header-card">
                 <div class="char-avatar-container">
@@ -82,6 +85,10 @@
                         <span class="badge badge-water" id="char-nature">Suiton + Serpent</span>
                         <span class="badge badge-genin" id="char-rank">Genin (Lvl 1)</span>
                     </div>
+                </div>
+                <div class="combat-power-container">
+                    <span class="combat-power-title">⚡ COMBAT POWER: <strong id="char-combat-power" class="combat-power-val">1,520</strong></span>
+                    <span class="tier-tag" id="char-power-tier">High-Genin [Chunin Candidate]</span>
                 </div>
             </div>
 
@@ -190,7 +197,7 @@
         </aside>
 
         <!-- CENTER: Narrative & Tactical Action Console -->
-        <section class="story-terminal">
+        <section class="story-terminal" id="story-panel">
             <!-- Scene Illustration -->
             <div class="scene-visual-frame">
                 <img src="assets/team7_bell_test_arena.jpg" alt="Scene Illustration" class="scene-visual-img" id="scene-visual-img">
@@ -251,7 +258,7 @@
         </section>
 
         <!-- RIGHT SIDEBAR: Team 7 Roster, Mission Tracker & Voice Audio Panel -->
-        <aside class="side-panel">
+        <aside class="side-panel" id="team-panel">
             <!-- Mission Objective -->
             <div class="mission-box">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -317,6 +324,9 @@
             <div id="dice-result-text" style="font-family: var(--font-mono); font-size: 0.88rem; color: var(--text-secondary);">
                 Rolling D20...
             </div>
+            <button type="button" class="pill-btn active" id="dice-close-btn" style="margin-top: 0.5rem; background: #0284c7; color: #fff; padding: 0.4rem 1.2rem; cursor: pointer;">
+                <span>✅</span> <span>CONTINUE</span>
+            </button>
         </div>
     </div>
 
@@ -536,6 +546,28 @@
             </button>
         </div>
     </div>
+
+    <!-- Floating Game Notification Toast -->
+    <div id="game-toast" class="game-toast"></div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav" id="mobile-nav-bar">
+        <button type="button" class="mobile-nav-btn active" id="nav-btn-story" data-tab="story">
+            <span>📜</span><span>Story</span>
+        </button>
+        <button type="button" class="mobile-nav-btn" id="nav-btn-hero" data-tab="hero">
+            <span>👤</span><span>Hero</span>
+        </button>
+        <button type="button" class="mobile-nav-btn" id="nav-btn-team" data-tab="team">
+            <span>👥</span><span>Team</span>
+        </button>
+        <button type="button" class="mobile-nav-btn" id="mobile-dice-btn">
+            <span>🎲</span><span>Roll D20</span>
+        </button>
+        <button type="button" class="mobile-nav-btn" id="mobile-voice-btn">
+            <span>🎙️</span><span>Voice</span>
+        </button>
+    </nav>
 
     <!-- Scripts -->
     <script src="audio_engine.js"></script>

@@ -1156,5 +1156,267 @@ body {
     color: #fda4af;
 }
 
+/* Combat Power Rating Card */
+.combat-power-container {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(15, 23, 42, 0.8));
+    border: 1px solid rgba(234, 179, 8, 0.4);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.4rem;
+}
+.combat-power-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #facc15;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.combat-power-val {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+}
+.tier-tag {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(234, 179, 8, 0.2);
+    border: 1px solid #facc15;
+    color: #fef08a;
+    font-weight: bold;
+}
 
+/* Interactive Inventory Item Cards */
+.inventory-tags {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.45rem;
+}
+.item-chip {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 0.45rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+.item-chip:hover {
+    border-color: var(--chakra-water);
+    background: rgba(56, 189, 248, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+}
+.item-chip-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.item-chip-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+}
+.item-chip-count {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--chakra-water);
+    background: rgba(56, 189, 248, 0.15);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+}
+.item-chip-desc {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+.item-chip-use-btn {
+    margin-top: 0.2rem;
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.68rem;
+    padding: 0.2rem 0.4rem;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    text-align: center;
+}
+.item-chip-use-btn:hover {
+    background: #0284c7;
+}
 
+/* Mobile Bottom Navigation Bar */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 15, 26, 0.96);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.4rem 0.75rem calc(0.4rem + env(safe-area-inset-bottom, 0px));
+    z-index: 100;
+    justify-content: space-around;
+    align-items: center;
+}
+.mobile-nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    transition: var(--transition-smooth);
+}
+.mobile-nav-btn span:first-child {
+    font-size: 1.25rem;
+}
+.mobile-nav-btn.active, .mobile-nav-btn:hover {
+    color: var(--chakra-water);
+    background: rgba(56, 189, 248, 0.12);
+}
+
+/* Mobile & Tablet Media Queries */
+@media (max-width: 1024px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.85rem;
+    }
+    .side-panel {
+        max-height: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+        padding: 0.6rem 0.85rem;
+    }
+    .header-controls {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        justify-content: center;
+    }
+    .pill-btn {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.65rem;
+    }
+    .mobile-bottom-nav {
+        display: flex;
+    }
+    body {
+        padding-bottom: 70px;
+    }
+    .tactical-choice-btn {
+        padding: 0.85rem;
+    }
+    .choice-label {
+        font-size: 0.86rem;
+    }
+    .choice-desc {
+        font-size: 0.75rem;
+    }
+    .attributes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+    }
+    .scene-narrative-card {
+        padding: 1rem;
+    }
+    .modal-content {
+        width: 95% !important;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-titles h1 {
+        font-size: 1.05rem;
+    }
+    .brand-sub {
+        font-size: 0.65rem;
+    }
+    .char-avatar-container {
+        width: 58px;
+        height: 58px;
+    }
+    .attributes-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Floating Game Notification Toast */
+.game-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid var(--chakra-water);
+    box-shadow: 0 4px 25px rgba(56, 189, 248, 0.4);
+    color: #fff;
+    padding: 0.75rem 1.4rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 999;
+    max-width: 90%;
+    text-align: center;
+}
+.game-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Mobile Tab Switching rules for <= 768px */
+@media (max-width: 768px) {
+    .app-layout.tab-story #hero-panel,
+    .app-layout.tab-story #team-panel {
+        display: none !important;
+    }
+    .app-layout.tab-story #story-panel {
+        display: flex !important;
+    }
+
+    .app-layout.tab-hero #story-panel,
+    .app-layout.tab-hero #team-panel {
+        display: none !important;
+    }
+    .app-layout.tab-hero #hero-panel {
+        display: flex !important;
+    }
+
+    .app-layout.tab-team #story-panel,
+    .app-layout.tab-team #hero-panel {
+        display: none !important;
+    }
+    .app-layout.tab-team #team-panel {
+        display: flex !important;
+    }
+}

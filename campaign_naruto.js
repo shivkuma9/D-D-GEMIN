@@ -1360,11 +1360,609 @@ Your Senju lineage remains hidden, but your power and tactical brilliance have e
                             "tag": "📜 ADVANCE TO ACT IV: THE CHUNIN EXAMS",
                             "label": "Return to the Hidden Leaf Village and register Team 7 for the Chunin Selection Exams and the Forest of Death!",
                             "actionType": "advance",
-                            "nextNode": "waves_ch8_bridge_triumph"
+                            "nextNode": "chunin_ch1_registration_rivals"
                     }
             ]
     }
-    ]
+    ,
+
+{
+        "id": "chunin_ch1_registration_rivals",
+        "title": "Act IV: The Chunin Selection Exams — Rivalries Ignite",
+        "act": "Act IV - Chunin Exams: Registration & Confrontation",
+        "location": "Konoha Academy — Room 301 Corridor",
+        "atmosphere": "Corridors swarming with lethal genin from all Five Great Shinobi Nations; killing intent thick as lead; Sand Siblings watching from the stairwell.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch1_registration_rivals.mp3",
+        "illustration": {
+            "title": "Gathering of Rivals",
+            "badge": "ACT IV COMMENCES",
+            "badgeClass": "threat-moderate",
+            "icon": "🔥",
+            "quote": "\"Hey, silver hair! You carry the eyes of a serpent and the presence of a Hokage... Who are you?!\"",
+            "tags": [
+                "Sand Siblings",
+                "Rock Lee",
+                "Ino Yamanaka",
+                "Room 301"
+            ]
+        },
+        "narrative": "Following your triumphant return from the Land of Waves, Kakashi Hatake officially recommends Team 7 for the grueling Chunin Selection Exams!\n\nThe third-floor corridors of the Konoha Academy are packed with dangerous foreign genin from the Hidden Sand, Grass, Rain, and Waterfall. The air vibrates with suppressed killing intent.\n\nSuddenly, a boy in a green jumpsuit with bowl-cut hair—Rock Lee—leaps into the hall, challenging Sasuke to an impromptu duel:\n\"I am Rock Lee of Team Guy! I wish to test my Lotus taijutsu against the genius Uchiha... and you, silver-haired Senju!\"\n\nOn the upper stairs, Gaara of the Desert stands with arms folded across his massive sand gourd, his soulless turquoise eyes locked onto your serpentine amber gaze. Beside him, Temari smirks, running a slender hand along her iron fan:\n\"Well now... Konoha certainly produces handsome prodigies. Look at those cheek marks and regal silver hair.\"\n\nBefore Sasuke can ignite his Sharingan, Ino Yamanaka pushes through the crowd, laughing playfully at Sakura:\n\"Oh Sakura, still clinging to Sasuke when the real royal prince of the Leaf is right here? Hello, Shivkumar-kun! Are you going to protect little old me during the exams?\"\n\nSakura's cheeks flush scarlet as she steps closer to your side, glaring at Ino. Sasuke's jaw clenches in bitter jealousy at the kunoichi swooning over you!",
+        "options": [
+            {
+                "approach": "charm",
+                "tag": "💋 SUAVE ROGUE CHARISMA",
+                "label": "Flash an alluring rogue grin, playfully teasing Ino while returning Temari's intrigued gaze to establish romantic dominance over the room (+15 Ino, +10 Sakura).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 13,
+                "successNode": "chunin_ch2_written_exam_ninjutsu",
+                "failNode": "chunin_ch2_written_exam_ninjutsu"
+            },
+            {
+                "approach": "mind",
+                "tag": "🐍 SERPENT SENSORY THREAT SCAN",
+                "label": "Activate thermal sensory vision to dissect Gaara's terrifying sand chakra and Rock Lee's concealed leg-weight velocity before the brawl escalates.",
+                "actionType": "check",
+                "stat": "serpentSense",
+                "dc": 14,
+                "successNode": "chunin_ch2_written_exam_ninjutsu",
+                "failNode": "chunin_ch2_written_exam_ninjutsu"
+            },
+            {
+                "approach": "taijutsu",
+                "tag": "⚡ WATER-CUSHIONED PALM INTERCEPT",
+                "label": "Glide with fluid serpentine speed between Sasuke and Rock Lee, parrying the Leaf Hurricane with hydraulic water palms to assert dominance.",
+                "actionType": "check",
+                "stat": "taijutsu",
+                "dc": 14,
+                "successNode": "chunin_ch2_written_exam_ninjutsu",
+                "failNode": "chunin_ch2_written_exam_ninjutsu"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch2_written_exam_ninjutsu",
+        "title": "Act IV: The First Exam — The Art of Shinobi Espionage",
+        "act": "Act IV - Chunin Exams: The Written Test",
+        "location": "Konoha Academy — Examination Hall 301",
+        "atmosphere": "Absolute silence punctured by scribbling pens; intimidating Chunin sentinels watching like hawks along every wall with clipboards ready to disqualify.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch2_written_exam_ninjutsu.mp3",
+        "illustration": {
+            "title": "Espionage or Failure",
+            "badge": "EXAM TRIAL 1",
+            "badgeClass": "threat-moderate",
+            "icon": "📝",
+            "quote": "\"In the shinobi world, information is deadlier than steel. Those caught cheating five times... fail immediately!\"",
+            "tags": [
+                "Ibiki Morino",
+                "Ninjutsu Cheating",
+                "Tenth Question"
+            ]
+        },
+        "narrative": "The terrifying scarred proctor, Ibiki Morino—Commander of Konoha's Torture and Interrogation Force—slams his hand against the blackboard!\n\n\"The rules are simple: Ten questions. You have one hour. If you are caught cheating five times by my Chunin sentries, you and your entire three-man cell are disqualified immediately!\"\n\nYou flip over your exam paper. The questions are mathematically impossible for normal genin—calculating complex shuriken parabolic vectors, encrypted chakra wave frequencies, and cipher matrices.\nThe true objective is obvious to a tactical mind: *Cheat using ninjutsu without getting detected by the Chunin watchers!*\n\nAround the hall, the geniuses make their moves: Sasuke mirrors handwriting with his Sharingan; Gaara manifests a floating Third Eye of sand; Neji channels Byakugan vision through his skull.\nNaruto, having studied nothing, sweats profusely as his pencil snaps in panic.\n\nThen comes Ibiki's psychological trap: The Tenth Question!\n\"If you choose to take Question Ten and fail... you will be stripped of your headband and barred from ever taking the Chunin Exam for the rest of your life! If you choose not to take it, you fail today and can try next year. Decide now!\"\n\nSeveral genin break down in tears and leave. But before fear can consume the room, Naruto slams his hand on the wooden desk, roaring with unyielding fire:\n\"I don't care if I'm stuck as a genin forever! I never go back on my word—that's my nindo, my ninja way!\"\n\nIbiki grins beneath his bandana. All remaining candidates have passed!",
+        "options": [
+            {
+                "approach": "ninjutsu",
+                "tag": "🌊 HYDRO-PRISM SIGHT REFRACTION",
+                "label": "Condense microscopic droplets of moisture in the air to bend ambient light, projecting the answers from the proctor's master key onto your paper.",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 14,
+                "successNode": "chunin_ch3_forest_of_death_entry",
+                "failNode": "chunin_ch3_forest_of_death_entry"
+            },
+            {
+                "approach": "mind",
+                "tag": "🐍 SERPENTINE ACOUSTIC RESONANCE",
+                "label": "Rest your jaw along the desk surface, using Hebi acoustic bone conduction to decode the exact pen strokes of the two planted chunin test-takers.",
+                "actionType": "check",
+                "stat": "serpentSense",
+                "dc": 14,
+                "successNode": "chunin_ch3_forest_of_death_entry",
+                "failNode": "chunin_ch3_forest_of_death_entry"
+            },
+            {
+                "approach": "tactics",
+                "tag": "🔥 SENJU WILL OF FIRE STAND",
+                "label": "Lock eyes with Ibiki Morino, exuding Tobirama's calm ancestral authority and reassuring trembling Sakura with a confident squeeze of her hand.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 13,
+                "successNode": "chunin_ch3_forest_of_death_entry",
+                "failNode": "chunin_ch3_forest_of_death_entry"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch3_forest_of_death_entry",
+        "title": "Act IV: The 44th Training Ground — The Forest of Death",
+        "act": "Act IV - Chunin Exams: The Second Stage",
+        "location": "Forest of Death — Perimeter Gate 44",
+        "atmosphere": "Towering gargantuan trees blocking the sun; screeching carnivorous birds; barbed wire fences stretching across forty-four locked steel gates.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch3_forest_of_death_entry.mp3",
+        "illustration": {
+            "title": "The Primordial Crucible",
+            "badge": "STAGE 2 COMMENCES",
+            "badgeClass": "threat-high",
+            "icon": "🌲",
+            "quote": "\"Sign the consent waivers, kiddos! People die in this forest every year... Don't let me down!\"",
+            "tags": [
+                "Anko Mitarashi",
+                "Gate 44",
+                "Heaven Scroll",
+                "Survival Trial"
+            ]
+        },
+        "narrative": "Special Jonin Anko Mitarashi stands atop the chain-link barricade, tossing kunai with wild, sadistic glee!\n\n\"Welcome to the 44th Training Ground—affectionately known as the Forest of Death! Twenty kilometers across, filled with venomous insects, giant man-eating beasts, and fifty rival squads looking to slit your throats!\"\n\nThe rules of the Second Stage are ruthless:\nHalf the qualifying teams receive a Scroll of Heaven; the other half receive a Scroll of Earth. To pass, a cell must seize the matching scroll from another squad and reach the central tower in the heart of the jungle within 120 hours.\n\nTeam 7 signs their liability waivers. Anko hands your squad the sacred **Heaven Scroll**. You secure the scroll deep inside your armored flak jacket, your fingers grazing your kunai holster.\n\nSakura trembles as a bloodcurdling shriek echoes from deep within the primordial canopy.\n\"Shivkumar-kun... this place feels like a graveyard...\"\n\nYou place a steady hand on her shoulder, your amber eyes glinting in the twilight:\n\"Stay close to me, Sakura. With my serpent senses, nothing in this jungle moves without me knowing.\"\n\nSasuke scowls coldly as he draws his blade, though he nods in acknowledgment.\nAt exactly 2:00 PM, the heavy iron chain on Gate 44 rattles open—and Team 7 darts into the abyss!",
+        "options": [
+            {
+                "approach": "mind",
+                "tag": "🐍 THERMAL VANGUARD TRACKING",
+                "label": "Lead the formation at high canopy level, utilizing thermal pit sensory vision to avoid lethal sinkholes and track rival team chakra signatures.",
+                "actionType": "check",
+                "stat": "serpentSense",
+                "dc": 14,
+                "successNode": "chunin_ch4_orochimaru_giant_serpent",
+                "failNode": "chunin_ch4_orochimaru_giant_serpent"
+            },
+            {
+                "approach": "tactics",
+                "tag": "🪢 MONOFILAMENT TRIPWIRE AMBUSH",
+                "label": "Set up decoy water-clones and explosive ninja wire traps along the riverbank to catch incoming ambush squads off guard.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "chunin_ch4_orochimaru_giant_serpent",
+                "failNode": "chunin_ch4_orochimaru_giant_serpent"
+            },
+            {
+                "approach": "charm",
+                "tag": "🌸 TACTICAL REASSURANCE & RATION PILL",
+                "label": "Feed Sakura a military ration pill to calm her nerves, offering charismatic words of courage while Sasuke glares in silent romantic rivalry.",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 13,
+                "successNode": "chunin_ch4_orochimaru_giant_serpent",
+                "failNode": "chunin_ch4_orochimaru_giant_serpent"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch4_orochimaru_giant_serpent",
+        "title": "Act IV: The Serpent Sannin — Shadow of Orochimaru",
+        "act": "Act IV - Chunin Exams: The Sannin's Shadow",
+        "location": "Deep Jungle Canopy — Giant Hollow Banyan Tree",
+        "atmosphere": "The forest falls deathly silent; suffocating killing intent paralyzes every muscle; an unnatural gale smells of formaldehyde and ancient rot.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch4_orochimaru_giant_serpent.mp3",
+        "illustration": {
+            "title": "Predator of Legends",
+            "badge": "S-RANK THREAT",
+            "badgeClass": "threat-critical",
+            "icon": "🐍",
+            "quote": "\"To think... Tobirama's grandson was reborn with the ancient Hebi bloodline. What an exquisite, delicious specimen!\"",
+            "tags": [
+                "Orochimaru",
+                "Killing Intent",
+                "Giant Summoning Snake"
+            ]
+        },
+        "narrative": "A sudden deafening gust of wind blows through the ancient trees, tearing Naruto away from the squad!\nBefore you and Sasuke can regroup, the temperature drops below freezing. The hair on the back of your neck stands straight up.\n\nFrom the dark canopy descends a Grass Village kunoichi with an eerily pale face. She opens her mouth unnaturally wide—and swallows an Earth Scroll whole like a python swallowing prey!\n\nSuddenly, an ocean of unadulterated killing intent crashes down upon you. Sasuke falls to his knees, vomiting from visceral terror as illusions of his own decapitation flash through his mind. Sakura is frozen in weeping paralysis.\n\nThe Grass ninja laughs—a rasping, sinister voice that sends chills through your soul. She peels away her face like melted wax, revealing long raven hair, pale alabaster skin, and piercing golden snake eyes with purple markings!\n\n**Orochimaru. One of the Legendary Sannin.**\n\nBeneath you, the earth tears apart as a monstrous brown summoning python the size of a castle wall erupts, snapping its jaws straight toward Team 7!\n\nOrochimaru's tongue slithers out, licking his lips as he gazes hungrily at your silver hair and amber eyes:\n\"I came to test the fledgling Uchiha... but what a marvelous bonus. The blood of the Second Hokage fused with the lost royal lineage of the Hebi Clan! Show me your fangs, boy!\"",
+        "options": [
+            {
+                "approach": "ninjutsu",
+                "tag": "🌊 HIDDEN SHADOW WATER SNAKE STRIKE",
+                "label": "Detonate twin giant pressurized water vipers from your sleeves, wrapping around the summoning python's neck to violently drag its jaws away from Sakura!",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 15,
+                "successNode": "chunin_ch5_curse_mark_stand",
+                "failNode": "chunin_ch5_curse_mark_stand"
+            },
+            {
+                "approach": "tactics",
+                "tag": "🗡️ SHINOBI WILLPOWER COUNTER-STRIKE",
+                "label": "Drive a kunai through your own thigh to shatter Orochimaru's paralyzing killing intent with pain, drawing your steel blade to shield Sasuke.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 15,
+                "successNode": "chunin_ch5_curse_mark_stand",
+                "failNode": "chunin_ch5_curse_mark_stand"
+            },
+            {
+                "approach": "agility",
+                "tag": "💨 WATER RELEASE: SLITHERING SURGE",
+                "label": "Liquefy your footwork along the tree trunk, evading the Sannin's crushing tail sweep and detonating three explosive tags right against Orochimaru's chest.",
+                "actionType": "check",
+                "stat": "agility",
+                "dc": 14,
+                "successNode": "chunin_ch5_curse_mark_stand",
+                "failNode": "chunin_ch5_curse_mark_stand"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch5_curse_mark_stand",
+        "title": "Act IV: The Cursed Seal of Heaven — Desperate Stand",
+        "act": "Act IV - Chunin Exams: The Curse of Orochimaru",
+        "location": "Shattered Canopy — Burning Redwood Clearing",
+        "atmosphere": "Fires raging along shattered trunks; ozone and charred bark; Sasuke gasping in agony under the brand of black flames.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch5_curse_mark_stand.mp3",
+        "illustration": {
+            "title": "The Brand of Heaven",
+            "badge": "CURSE MARK AWAKENED",
+            "badgeClass": "threat-critical",
+            "icon": "⚡",
+            "quote": "\"Sasuke will seek me out in search of power... and you, grandson of Tobirama, will find that blood cannot escape its destiny.\"",
+            "tags": [
+                "Curse Mark of Heaven",
+                "Desperate Defense",
+                "Team in Ruins"
+            ]
+        },
+        "narrative": "Naruto bursts out of the giant snake's belly with Shadow Clones, raging with crimson Nine-Tails fox chakra!\nYet with a wave of his hand, Orochimaru slams the Five Elements Seal onto Naruto's stomach, cutting off his chakra and hurling him unconscious into the branches.\n\nSasuke awakens his Sharingan, spewing a furious torrent of Dragon Fire along monofilament wire lines. The blaze engulfs the Sannin—yet Orochimaru sheds his skin like a serpent, stepping out completely uninjured!\n\n\"Magnificent Sharingan... you will make a glorious vessel, Sasuke-kun!\"\n\nOrochimaru's neck stretches twenty yards like a striking viper, his fangs aimed straight for Sasuke's throat!\nYou dive forward with everything you have, unleashing a hydraulic wave to deflect the strike. The Sannin's fangs graze your collarbone, his toxic chakra sizzling against your Hebi venom immunity.\n\nBefore you can strike back, Orochimaru's head whips sideways and sinks his fangs deep into Sasuke's left shoulder!\nSasuke screams in agony as three black tomoe markings burn into his skin—the **Curse Mark of Heaven**!\n\nOrochimaru laughs sickeningly as his body melts into the banyan tree:\n\"He will survive... and when his hunger for power consumes him, he will seek me out! Sleep now, little shinobi...\"\n\nBoth Sasuke and Naruto collapse into the muddy soil, burning with fever. Only you and Sakura remain standing!",
+        "options": [
+            {
+                "approach": "mind",
+                "tag": "🌿 HOLLOW OAK SHELTER & SCENT MASKING",
+                "label": "Carry Sasuke and Naruto into the safety of a hollow ancient oak, masking the entrance with river clay and wet fern leaves to conceal their scent.",
+                "actionType": "check",
+                "stat": "serpentSense",
+                "dc": 14,
+                "successNode": "chunin_ch6_sakura_hair_determination",
+                "failNode": "chunin_ch6_sakura_hair_determination"
+            },
+            {
+                "approach": "chakra",
+                "tag": "🌀 HEBI VENOM PURGE & CHAKRA RECOVERY",
+                "label": "Channel your innate Hebi bloodline resistance to neutralize the residual Orochimaru toxins burning inside your bloodstream (+40 Chakra recovery).",
+                "actionType": "check",
+                "stat": "chakraReserves",
+                "dc": 15,
+                "successNode": "chunin_ch6_sakura_hair_determination",
+                "failNode": "chunin_ch6_sakura_hair_determination"
+            },
+            {
+                "approach": "charm",
+                "tag": "🌸 PROTECTIVE VOW TO SAKURA",
+                "label": "Wrap a comforting arm around weeping Sakura, wiping away her tears and swearing on your grandfather's honor to keep Team 7 alive (+20 Sakura Affection).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 13,
+                "successNode": "chunin_ch6_sakura_hair_determination",
+                "failNode": "chunin_ch6_sakura_hair_determination"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch6_sakura_hair_determination",
+        "title": "Act IV: Sakura's Resolve — Blood and Cherry Blossoms",
+        "act": "Act IV - Chunin Exams: The Sound Trio Ambush",
+        "location": "Hollow Oak Hideout — Dawn in the Forest of Death",
+        "atmosphere": "Pale morning light breaking through mist; rain dripping from leaves; three sinister Sound genin stepping out with executioner intent.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch6_sakura_hair_determination.mp3",
+        "illustration": {
+            "title": "Severed Ribbons",
+            "badge": "BOND OF BLOSSOMS",
+            "badgeClass": "threat-high",
+            "icon": "🌸",
+            "quote": "\"I've always looked at their backs from behind... But this time, it's my turn to protect the boys I love!\"",
+            "tags": [
+                "Sakura Hair Cut",
+                "Team Dosu",
+                "Ino-Shika-Cho"
+            ]
+        },
+        "narrative": "All night long, you and Sakura keep vigil over the burning fever of Sasuke and Naruto, applying cold water compresses to their foreheads.\n\nAt daybreak, twigs snap outside the hollow root system. Three genin wearing Otogakure forehead protectors step into the clearing:\nDosu Kinuta with his resonator gauntlet, Zaku Abumi with supersonic wind tubes in his palms, and Kin Tsuchi twirling senbon needles with bells.\n\n\"Step aside, girl,\" Dosu rasps. \"Lord Orochimaru gave us orders to kill Sasuke Uchiha.\"\n\nSakura triggers her log traps and earth pits, but the Sound trio easily bypasses them. Kin leaps behind Sakura, grabbing her long pink hair by the fistful and slamming her backward:\n\"Look at this pampered little Leaf princess! Caring more about styling her hair than sharpening her weapons!\"\n\nTears stream down Sakura's bruised face. She looks at you, leaning against the tree roots exhausted from the Sannin's venom.\n\"I was always the weak link... Always hiding behind Sasuke and Shivkumar...\"\n\nSakura draws her kunai. With a resolute cry, she slashes the blade clean through her own pink hair!\nShorn locks scatter on the morning breeze. Sakura spins, driving her kunai into Kin's thigh!\n\nFrom the bushes, Team 10 (Ino, Shikamaru, and Choji) leaps into the clearing! Ino cries out:\n\"Sakura, you idiot! Look what you did to your beautiful hair! Ino-Shika-Cho cell, move in!\"\n\nYour Senju and Hebi blood surges with fierce protective fire. It is time to crush the Sound cell!",
+        "options": [
+            {
+                "approach": "taijutsu",
+                "tag": "🥊 SURGING IMPACT FIST COUNTER",
+                "label": "Leap between Dosu and Sakura, detonating a full-power Surging Fist to smash Dosu's vibrating gauntlet into jagged scrap (+20 Sakura Affection)!",
+                "actionType": "check",
+                "stat": "taijutsu",
+                "dc": 14,
+                "successNode": "chunin_ch7_curse_mark_eruption",
+                "failNode": "chunin_ch7_curse_mark_eruption"
+            },
+            {
+                "approach": "ninjutsu",
+                "tag": "🐍 DUAL WATER SNAKE DISARM ON KIN",
+                "label": "Lash twin pressurized water snakes from your sleeves, wrapping Kin's limbs to disarm her needles while winking at Ino (+20 Ino Affection)!",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 14,
+                "successNode": "chunin_ch7_curse_mark_eruption",
+                "failNode": "chunin_ch7_curse_mark_eruption"
+            },
+            {
+                "approach": "tactics",
+                "tag": "♟️ SHIKAMARU SHADOW PIN COORDINATION",
+                "label": "Signal Shikamaru to trap Zaku with Shadow Possession while Choji crushes him with Human Boulder, neutralizing the supersonic wind blasts.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 13,
+                "successNode": "chunin_ch7_curse_mark_eruption",
+                "failNode": "chunin_ch7_curse_mark_eruption"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch7_curse_mark_eruption",
+        "title": "Act IV: The Awakening Demon — Sasuke's Purple Flame",
+        "act": "Act IV - Chunin Exams: The Dark Awakening",
+        "location": "Hollow Oak Clearing — Trembling Forest Floor",
+        "atmosphere": "The clearing shakes with toxic purple chakra; black flame tattoos crawling across Sasuke's skin; sadistic laughter echoing through the trees.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch7_curse_mark_eruption.mp3",
+        "illustration": {
+            "title": "Wrath of the Avenger",
+            "badge": "CURSE MARK ERUPTS",
+            "badgeClass": "threat-critical",
+            "icon": "🔥",
+            "quote": "\"Who did this to you, Sakura? Which one of these bastards laid a finger on you?!\"",
+            "tags": [
+                "Sasuke Awakening",
+                "Broken Arms",
+                "Calming the Demon"
+            ]
+        },
+        "narrative": "A wave of suffocating, demonic purple chakra suddenly erupts from the hollow tree trunk!\nThe ambient air turns ice-cold. Rocks and dead leaves float upward under the immense gravitational pressure of the dark energy.\n\nSasuke steps into the daylight.\nBlack flame markings crawl across his neck, face, and chest. His Sharingan blazes with unhinged, sadistic malice.\n\"Sakura... who did this to your hair? Which of these insects made you bleed?\"\n\nZaku Abumi smirks arrogantly: \"I did! And I'm going to blow you away with my Supersonic Slicing Waves!\"\nZaku points both palm vents—but in a fraction of a second, Sasuke vanishes in a blur of black fire.\n\nSasuke reappears behind Zaku. He grabs both of Zaku's arms, places his heel firmly against Zaku's spine, and pulls backward with terrifying demonic strength!\n**CRACK! SNAP!**\nZaku screams in agony as both arm bones shatter like dry kindling. Sasuke drops the screaming Sound ninja and slowly turns toward Dosu, smiling like a demon of the underworld:\n\"You're the only one left... It looks like you're going to suffer the most.\"\n\nSakura weeps in horror. She rushes forward and throws her arms around Sasuke's torso, burying her face into his back:\n\"Stop it, Sasuke-kun! Please stop! This isn't you!\"\n\nThe purple flames flicker. You step forward, placing your hand on Sasuke's chest, channeling pure tranquil Suiton chakra to soothe the raging seal!",
+        "options": [
+            {
+                "approach": "chakra",
+                "tag": "🌊 TRANQUIL SUITON CHAKRA PURGE",
+                "label": "Flow tranquil Senju water chakra into the cursed seal, forcing the black flame markings to recede back into Sasuke's shoulder.",
+                "actionType": "check",
+                "stat": "chakraReserves",
+                "dc": 14,
+                "successNode": "chunin_ch8_gaara_sand_slaughter",
+                "failNode": "chunin_ch8_gaara_sand_slaughter"
+            },
+            {
+                "approach": "mind",
+                "tag": "🐍 HEBI DOMINANCE AURA",
+                "label": "Unleash your royal Hebi ancestral presence, mentally commanding Orochimaru's residual seal chakra to submit and shut down.",
+                "actionType": "check",
+                "stat": "serpentSense",
+                "dc": 15,
+                "successNode": "chunin_ch8_gaara_sand_slaughter",
+                "failNode": "chunin_ch8_gaara_sand_slaughter"
+            },
+            {
+                "approach": "charm",
+                "tag": "👑 SENJU LEAF PRIDE ULTIMATUM",
+                "label": "Speak with the commanding authority of Tobirama: \"Control yourself, Sasuke! You are a ninja of the Leaf, not a mad dog on Orochimaru's leash!\"",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 14,
+                "successNode": "chunin_ch8_gaara_sand_slaughter",
+                "failNode": "chunin_ch8_gaara_sand_slaughter"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch8_gaara_sand_slaughter",
+        "title": "Act IV: The Demon of the Sand — Gaara's Bloodlust",
+        "act": "Act IV - Chunin Exams: The Monster of the Sand",
+        "location": "Muddy Riverbank — 10 Miles South of the Central Tower",
+        "atmosphere": "Dense jungle mist; blood splattered thirty feet high on tree trunks; the smell of copper and wet sand.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch8_gaara_sand_slaughter.mp3",
+        "illustration": {
+            "title": "Sand Tsunami Imperial Funeral",
+            "badge": "EXTREME PERIL",
+            "badgeClass": "threat-critical",
+            "icon": "⏳",
+            "quote": "\"Mother wants blood... She whispers to me that your deaths will satisfy her hunger.\"",
+            "tags": [
+                "Gaara of the Desert",
+                "Sand Coffin",
+                "One-Tail Shukaku"
+            ]
+        },
+        "narrative": "Team Dosu surrenders their Earth Scroll in terror and retreats into the brush.\nTeam 7 now possesses both scrolls! However, as you lead your battered squad through the wetlands toward the central tower, your serpent thermal vision flares in alarm!\n\nFour hundred meters ahead, a squad of three Hidden Rain genin surround a lone red-haired boy with black-ringed eyes:\nGaara of the Desert.\n\nThe Rain ninja hurl hundreds of senbon needles from umbrellas—yet an impenetrable shield of dense sand rises automatically, deflecting every blade!\nGaara doesn't even move an inch. His arms remain crossed over his chest as he whispers cold, soulless words:\n\"Sand Coffin.\"\n\nA tidal wave of heavy brown sand surges forward, engulfing the screaming Rain ninja in midair until only their faces remain exposed!\nGaara raises his right fist into the air, slowly curling his fingers shut:\n\"Sand Waterfall Imperial Funeral.\"\n\n**SPLAT!**\nThe sand violently implodes with crushing hydraulic force. A sickening rain of crimson blood and bone fragments showers down across the jungle ferns!\n\nDeep inside your stomach, your serpentine bloodline recoils in instinctual horror. The chakra coiled inside Gaara is not normal human energy—it is the colossal, monstrous spirit of **Shukaku, the One-Tailed Sand Beast**!\nBeside you, Sasuke clutches his burning curse mark in silent shock, realizing the horrifying monster waiting in the tournament!",
+        "options": [
+            {
+                "approach": "agility",
+                "tag": "🌫️ SILENT THERMAL SHADOW RETREAT",
+                "label": "Signal Team 7 to mask their chakra breathing, slipping through the damp undergrowth without displacing a single blade of grass.",
+                "actionType": "check",
+                "stat": "agility",
+                "dc": 14,
+                "successNode": "chunin_ch9_tower_arrival_unsealed",
+                "failNode": "chunin_ch9_tower_arrival_unsealed"
+            },
+            {
+                "approach": "tactics",
+                "tag": "💧 TACTICAL SAND WEAKNESS FORMULATION",
+                "label": "Analyze the moisture absorption rate of Gaara's sand, calculating how heavy Suiton water techniques can dilute and weigh down his defense.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 15,
+                "successNode": "chunin_ch9_tower_arrival_unsealed",
+                "failNode": "chunin_ch9_tower_arrival_unsealed"
+            },
+            {
+                "approach": "charm",
+                "tag": "🛡️ PROTECTIVE COMFORT FOR SAKURA",
+                "label": "Quietly pull trembling Sakura against your chest, whispering reassuring words into her ear to keep her steady (+15 Sakura Affection).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 13,
+                "successNode": "chunin_ch9_tower_arrival_unsealed",
+                "failNode": "chunin_ch9_tower_arrival_unsealed"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch9_tower_arrival_unsealed",
+        "title": "Act IV: The Central Tower — Unsealing Heaven and Earth",
+        "act": "Act IV - Chunin Exams: The Tower of Trials",
+        "location": "Central Tower — Circular Sealing Chamber",
+        "atmosphere": "High stone vaults; massive painted kanji along the walls; incense burning in iron censers.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch9_tower_arrival_unsealed.mp3",
+        "illustration": {
+            "title": "Trial of the Scrolls",
+            "badge": "STAGE 2 CLEARED",
+            "badgeClass": "threat-low",
+            "icon": "📜",
+            "quote": "\"If Heaven lacks virtue, cultivate intellect. If Earth lacks strength, harden the body. Together, they reveal the path.\"",
+            "tags": [
+                "Central Tower",
+                "Iruka Sensei",
+                "Stage 2 Complete"
+            ]
+        },
+        "narrative": "On the evening of the fourth day, bruised, exhausted, but alive and united, Team 7 pushes through the double iron doors of the Central Tower!\n\nInside the vast empty stone rotunda, torches burn in sconces. On the high stone wall, an ancient tablet is inscribed in gold:\n*\"If Heaven lacks virtue, cultivate intellect. If Earth lacks strength, harden the body. When Heaven and Earth are united, the true path will be revealed.\"*\n\nYou pull the **Heaven Scroll** and the **Earth Scroll** from your flak jacket.\n\"Sakura, Naruto, Sasuke... we have to open both scrolls simultaneously.\"\n\nTogether, your hands break the wax seals and unfurl the parchment!\nIn the center of the scrolls, summoning runes burst with blinding golden light. A cloud of thick white smoke billows through the chamber.\n\n\"Poof!\"\nStanding before you with arms crossed and a beaming smile is **Iruka Sensei**!\n\n\"Congratulations, Team 7! You have officially cleared the Forest of Death! As Chunin, you will be leaders of squads—which is why this trial required both brains (Heaven) and brawn (Earth) to overcome.\"\n\nNaruto immediately jumps onto Iruka in tears, begging for pork ramen. Sakura smiles warmly at you, her cheeks blushing as your fingers touch.\nTeam 7 has survived the hell of the Forest of Death!",
+        "options": [
+            {
+                "approach": "tactics",
+                "tag": "📜 TOBIRAMA ANCESTRAL SEAL CIPHER",
+                "label": "Decipher the hidden sealing formula inside the scroll parchment, discovering an ancestral chakra-stabilization trick used by the Second Hokage.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "chunin_ch10_preliminaries_bracket",
+                "failNode": "chunin_ch10_preliminaries_bracket"
+            },
+            {
+                "approach": "chakra",
+                "tag": "♨️ TOWER NATURAL SPRING RECUPERATION",
+                "label": "Soak in the tower's underground mineral springs, fully replenishing your HP and Chakra reserves before the tournament begins.",
+                "actionType": "check",
+                "stat": "chakraReserves",
+                "dc": 13,
+                "successNode": "chunin_ch10_preliminaries_bracket",
+                "failNode": "chunin_ch10_preliminaries_bracket"
+            },
+            {
+                "approach": "charm",
+                "tag": "🍜 RAMEN FEAST & TRIUMPH BANTER",
+                "label": "Celebrate with Iruka and the squad, teasing Sasuke about his moody scowl while sharing sweet dango with Sakura (+15 Sakura Affection).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 13,
+                "successNode": "chunin_ch10_preliminaries_bracket",
+                "failNode": "chunin_ch10_preliminaries_bracket"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch10_preliminaries_bracket",
+        "title": "Act IV: The Chunin Preliminaries — Dropping the Weights",
+        "act": "Act IV - Chunin Exams: The Preliminary Tournament",
+        "location": "Central Tower — Grand Combat Arena",
+        "atmosphere": "Lord Hokage smoking his pipe on the high dais; digital electronic scoreboard clicking rapidly; coughing proctor Hayate Gekko standing in the ring.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch10_preliminaries_bracket.mp3",
+        "illustration": {
+            "title": "Clash of the Prodigies",
+            "badge": "PRELIMINARY DUEL",
+            "badgeClass": "threat-high",
+            "icon": "⚔️",
+            "quote": "\"Drop the weights, Lee! It's time to show the world the power of your youth!\"",
+            "tags": [
+                "Hayate Gekko",
+                "Rock Lee Weights",
+                "Arena Duel"
+            ]
+        },
+        "narrative": "Because an unprecedented seven teams survived the Forest of Death, Lord Hokage Hiruzen Sarutobi announces immediate sudden-death preliminary duels!\nSickly Jonin proctor Hayate Gekko steps forward, coughing into his hand:\n\"The electronic board will choose two fighters at random... Matches are one-on-one, no rules, until death or surrender.\"\n\nLegendary matches rock the arena:\nSasuke overcomes his cursed mark to defeat Yoroi Akadou with the Lion Combo.\nSakura and Ino battle to an honorable double-knockout, reconciling their childhood rivalry.\nNaruto outsmarts Kiba and Akamaru with shadow clones and a hilarious fart counter.\n\nThen comes the battle of legends: **Rock Lee vs. Gaara of the Desert**!\nUnable to pierce Gaara's sand armor, Guy Sensei shouts from the balcony:\n\"Lee! Take them off!\"\n\"B-but Guy Sensei! You said I could only do that to protect the most important people!\"\n\"It's fine! I give you permission!\"\n\nLee unbuckles the heavy orange weights from his shins and drops them.\n**BOOM!!**\nThe concrete arena floor explodes under the sheer astronomical weight of the training weights!\nLee vanishes into a sonic boom, smashing through Gaara's sand shield and opening the Five Inner Gates in a blazing display of pure willpower that stuns every ninja in the building!\n\nSuddenly, the scoreboard buzzes:\n**Shivkumar Senju vs. Sound Vanguard Dosu!**\nHayate calls you down to the ring!",
+        "options": [
+            {
+                "approach": "taijutsu",
+                "tag": "⚡ WATER-COMPRESSED SURGING FIST",
+                "label": "Evade Dosu's sonic resonance blast with serpentine slithering, closing the distance to bury a crushing hydraulic fist into his solar plexus!",
+                "actionType": "check",
+                "stat": "taijutsu",
+                "dc": 15,
+                "successNode": "chunin_ch11_finals_qualification",
+                "failNode": "chunin_ch11_finals_qualification"
+            },
+            {
+                "approach": "ninjutsu",
+                "tag": "🌊 HIDDEN SHADOW WATER SNAKE CRUSH",
+                "label": "Manifest four pressurized water serpents from your sleeves to snare Dosu's sound gauntlet, smashing him into the concrete arena wall!",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 15,
+                "successNode": "chunin_ch11_finals_qualification",
+                "failNode": "chunin_ch11_finals_qualification"
+            },
+            {
+                "approach": "tactics",
+                "tag": "🧠 SOUND-DEFLECTING HYDRO-BARRIER",
+                "label": "Form a dense acoustic water wall to reflect Dosu's sonic frequency back into his own eardrums, rendering him unconscious!",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "chunin_ch11_finals_qualification",
+                "failNode": "chunin_ch11_finals_qualification"
+            }
+        ]
+    },
+    {
+        "id": "chunin_ch11_finals_qualification",
+        "title": "Act IV: Finalists of the Leaf — Meeting the Toad Sage",
+        "act": "Act IV - Chunin Exams: The Sage's Mentorship",
+        "location": "Konoha Hot Springs & Hokage Monument",
+        "atmosphere": "Steaming bathhouse waters; cherry blossoms floating in the evening breeze; a tall white-haired sage laughing boisterously with binoculars.",
+        "image": "assets/team7_bell_test_arena.jpg",
+        "audio": "assets/audio/narration/chunin_ch11_finals_qualification.mp3",
+        "illustration": {
+            "title": "The Pervy Sage Emerges",
+            "badge": "ACT IV TRIUMPH",
+            "badgeClass": "threat-low",
+            "icon": "🐸",
+            "quote": "\"Heh! So you're Tobirama's grandson with the snake blood... and a fellow connoisseur of beautiful kunoichi? Kid, I'm going to teach you something legendary!\"",
+            "tags": [
+                "Jiraiya",
+                "Finals Qualified",
+                "Toad Sage Training"
+            ]
+        },
+        "narrative": "Hayate Gekko raises his hand:\n\"Winner of the final match: **Shivkumar Senju**!\"\n\nThe entire arena erupts in thunderous cheering! The Lord Hokage nods approvingly from the balcony.\nYou, Sasuke, Naruto, Gaara, Shikamaru, Temari, Kankuro, Neji, and Shino have officially qualified for the **Chunin Selection Exam Finals** in one month!\n\nFrom the spectators' rail, Ino blows you a playful kiss: \"Congratulations, Shivkumar-kun! You were so dreamy down there!\"\nSakura runs down with a towel and water bottle, her cheeks glowing pink with proud affection.\n\nWhile Kakashi takes Sasuke away to train him in the Chidori, you head to the natural Hot Springs to master water-walking over boiling thermal springs.\nWhile practicing on the bubbling surface, you spot an enormous man with wild spiky white hair, a red kabuki face coat, and a horn headband perched atop the women's wooden fence, scribbling notes with a telescope for his *Icha Icha Tactics* novel!\n\nIt is **Jiraiya the Toad Sage—one of the Legendary Sannin**!\n\nJiraiya turns around with a boisterous laugh, eyeing your silver hair, Senju facial markings, and amber snake eyes:\n\"Gwahahaha! Well, well! If it isn't the Second Hokage's grandson! I've been watching you in the Forest of Death, kid. You've got Tobirama's tactical brain, the wild blood of the serpents, and... a sharp eye for pretty kunoichi just like me!\"\n\nJiraiya folds his arms with a confident grin:\n\"What do you say, kid? In one month, the Finals will shake the world. Ready to train with the great Toad Sage Jiraiya?\"\n\nAct IV is complete! The Stage is set for the Finals!",
+        "options": [
+            {
+                "approach": "charm",
+                "tag": "💋 SAGE & ROGUE BROTHERHOOD",
+                "label": "Exchange a sly rogue smirk and share your tactical kunoichi notes with Jiraiya to win the Toad Sage's immediate favoritism!",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 14,
+                "successNode": "chunin_ch11_finals_qualification",
+                "failNode": "chunin_ch11_finals_qualification"
+            },
+            {
+                "approach": "chakra",
+                "tag": "🐸 TOAD SUMMONING PACT PREPARATION",
+                "label": "Unleash your massive chakra pool across the steaming hot springs to prove your worthiness to sign the legendary Toad Contract!",
+                "actionType": "check",
+                "stat": "chakraReserves",
+                "dc": 15,
+                "successNode": "chunin_ch11_finals_qualification",
+                "failNode": "chunin_ch11_finals_qualification"
+            },
+            {
+                "approach": "mind",
+                "tag": "📜 TOBIRAMA SPACE-TIME INQUIRY",
+                "label": "Ask Jiraiya about your grandfather Tobirama's Flying Thunder God and forbidden Suiton techniques to prepare for Gaara and the Finals!",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 15,
+                "successNode": "chunin_ch11_finals_qualification",
+                "failNode": "chunin_ch11_finals_qualification"
+            }
+        ]
+    }
+]
 };
 
 window.NarutoCampaignData = NarutoCampaignData;
