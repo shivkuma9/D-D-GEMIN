@@ -69,24 +69,21 @@ class ShinobiRPGApp {
         this.voiceSettingsBtnEl = document.getElementById('voice-settings-btn');
         this.voiceModalEl = document.getElementById('voice-modal');
         this.voiceCloseBtnEl = document.getElementById('voice-close-btn');
-        this.voiceTabBrowserEl = document.getElementById('voice-tab-browser');
+        this.voiceTabPackEl = document.getElementById('voice-tab-pack');
         this.voiceTabElevenLabsEl = document.getElementById('voice-tab-elevenlabs');
-        this.panelBrowserVoiceEl = document.getElementById('panel-browser-voice');
+        this.panelVoicePackEl = document.getElementById('panel-voice-pack');
         this.panelElevenLabsVoiceEl = document.getElementById('panel-elevenlabs-voice');
-        this.voiceSelectEl = document.getElementById('voice-select');
-        this.voiceTestBtnEl = document.getElementById('voice-test-btn');
-        this.voiceRateSliderEl = document.getElementById('voice-rate-slider');
-        this.voicePitchSliderEl = document.getElementById('voice-pitch-slider');
         this.voiceVolSliderEl = document.getElementById('voice-vol-slider');
-        this.rateValEl = document.getElementById('rate-val');
-        this.pitchValEl = document.getElementById('pitch-val');
         this.volValEl = document.getElementById('vol-val');
         this.elevenLabsVoiceSelectEl = document.getElementById('elevenlabs-voice-select');
         this.elevenLabsKeyInputEl = document.getElementById('elevenlabs-key-input');
         this.elevenLabsTestBtnEl = document.getElementById('elevenlabs-test-btn');
+        this.toggleElevenLabsKeyBtnEl = document.getElementById('toggle-elevenlabs-key-btn');
+        this.elevenLabsTestStatusEl = document.getElementById('elevenlabs-test-status');
         this.voiceSaveBtnEl = document.getElementById('voice-save-btn');
         this.voiceBoostBtnEl = document.getElementById('voice-boost-btn');
         this.toggleVoicePackBtnEl = document.getElementById('toggle-voice-pack-btn');
+        this.sidebarVoiceStudioBtnEl = document.getElementById('sidebar-voice-studio-btn');
 
         // Gemini Live Settings
         this.geminiSettingsBtnEl = document.getElementById('gemini-settings-btn');
@@ -95,6 +92,10 @@ class ShinobiRPGApp {
         this.geminiApiKeyInputEl = document.getElementById('gemini-api-key-input');
         this.geminiModelSelectEl = document.getElementById('gemini-model-select');
         this.geminiSaveKeyBtnEl = document.getElementById('gemini-save-key-btn');
+        this.geminiClearKeyBtnEl = document.getElementById('gemini-clear-key-btn');
+        this.geminiTestKeyBtnEl = document.getElementById('gemini-test-key-btn');
+        this.toggleGeminiKeyBtnEl = document.getElementById('toggle-gemini-key-btn');
+        this.geminiTestStatusEl = document.getElementById('gemini-test-status');
         this.geminiStatusBadgeEl = document.getElementById('gemini-status-badge');
 
         // Dice Modal
@@ -386,45 +387,25 @@ class ShinobiRPGApp {
         }
 
         // Voice Studio Modal Open
+        const openVoiceModal = () => {
+            if (this.voiceModalEl) {
+                this.voiceModalEl.style.display = 'flex';
+                if (this.elevenLabsKeyInputEl) this.elevenLabsKeyInputEl.value = this.audio.elevenLabsKey || '';
+                if (this.elevenLabsVoiceSelectEl) this.elevenLabsVoiceSelectEl.value = this.audio.elevenLabsVoiceId || 'EXAVITQu4vr4xnSDxMaL';
+                if (this.voiceVolSliderEl) this.voiceVolSliderEl.value = this.audio.voiceVolume || 1.0;
+                const volPct = Math.round((this.audio.voiceVolume || 1.0) * 100);
+                if (this.volValEl) this.volValEl.textContent = `${volPct}% ${volPct >= 100 ? '(LOUD)' : ''}`;
+                this.updateVoiceBoostUI();
+                this.updateVoicePackUI();
+                if (this.elevenLabsTestStatusEl) this.elevenLabsTestStatusEl.style.display = 'none';
+            }
+        };
+
         if (this.voiceSettingsBtnEl) {
-            this.voiceSettingsBtnEl.addEventListener('click', () => {
-                if (this.voiceModalEl) {
-                    this.voiceModalEl.style.display = 'flex';
-                    this.populateVoiceDropdown();
-
-                    // Sync persona active button
-                    const personaBtns = document.querySelectorAll('.persona-btn');
-                    personaBtns.forEach(btn => {
-                        const p = btn.getAttribute('data-persona');
-                        if (p === this.audio.currentPersona) {
-                            btn.classList.add('active');
-                            if (p === 'sultry_female') {
-                                btn.style.border = '1px solid #f43f5e';
-                                btn.style.background = 'rgba(244, 63, 94, 0.25)';
-                            } else {
-                                btn.style.border = '1px solid var(--chakra-water)';
-                                btn.style.background = 'rgba(56, 189, 248, 0.2)';
-                            }
-                        } else {
-                            btn.classList.remove('active');
-                            btn.style.border = '1px solid var(--border-subtle)';
-                            btn.style.background = 'rgba(30, 41, 59, 0.5)';
-                        }
-                    });
-
-                    if (this.elevenLabsKeyInputEl) this.elevenLabsKeyInputEl.value = this.audio.elevenLabsKey || '';
-                    if (this.elevenLabsVoiceSelectEl) this.elevenLabsVoiceSelectEl.value = this.audio.elevenLabsVoiceId || 'EXAVITQu4vr4xnSDxMaL';
-                    if (this.voiceRateSliderEl) this.voiceRateSliderEl.value = this.audio.voiceRate || 0.98;
-                    if (this.voicePitchSliderEl) this.voicePitchSliderEl.value = this.audio.voicePitch || 1.02;
-                    if (this.voiceVolSliderEl) this.voiceVolSliderEl.value = this.audio.voiceVolume || 1.0;
-                    if (this.rateValEl) this.rateValEl.textContent = `${(this.audio.voiceRate || 0.98).toFixed(2)}x`;
-                    if (this.pitchValEl) this.pitchValEl.textContent = (this.audio.voicePitch || 1.02).toFixed(2);
-                    const volPct = Math.round((this.audio.voiceVolume || 1.0) * 100);
-                    if (this.volValEl) this.volValEl.textContent = `${volPct}% ${volPct >= 100 ? '(LOUD)' : ''}`;
-                    this.updateVoiceBoostUI();
-                    this.updateVoicePackUI();
-                }
-            });
+            this.voiceSettingsBtnEl.addEventListener('click', openVoiceModal);
+        }
+        if (this.sidebarVoiceStudioBtnEl) {
+            this.sidebarVoiceStudioBtnEl.addEventListener('click', openVoiceModal);
         }
 
         // Voice Boost Button
@@ -507,41 +488,31 @@ class ShinobiRPGApp {
             });
         }
 
-        // Voice Tabs
-        if (this.voiceTabBrowserEl && this.voiceTabElevenLabsEl) {
-            this.voiceTabBrowserEl.addEventListener('click', () => {
-                this.voiceTabBrowserEl.style.borderColor = 'var(--chakra-water)';
-                this.voiceTabBrowserEl.style.background = 'rgba(56, 189, 248, 0.15)';
-                this.voiceTabBrowserEl.style.color = '#fff';
+        // Voice Studio Tabs (Pack vs ElevenLabs)
+        if (this.voiceTabPackEl && this.voiceTabElevenLabsEl) {
+            this.voiceTabPackEl.addEventListener('click', () => {
+                this.voiceTabPackEl.style.borderColor = '#22c55e';
+                this.voiceTabPackEl.style.background = 'rgba(34, 197, 94, 0.15)';
+                this.voiceTabPackEl.style.color = '#fff';
                 this.voiceTabElevenLabsEl.style.borderColor = 'var(--border-subtle)';
                 this.voiceTabElevenLabsEl.style.background = 'rgba(30, 41, 59, 0.5)';
                 this.voiceTabElevenLabsEl.style.color = 'var(--text-secondary)';
-                if (this.panelBrowserVoiceEl) this.panelBrowserVoiceEl.style.display = 'flex';
+                if (this.panelVoicePackEl) this.panelVoicePackEl.style.display = 'flex';
                 if (this.panelElevenLabsVoiceEl) this.panelElevenLabsVoiceEl.style.display = 'none';
             });
             this.voiceTabElevenLabsEl.addEventListener('click', () => {
                 this.voiceTabElevenLabsEl.style.borderColor = 'var(--chakra-water)';
                 this.voiceTabElevenLabsEl.style.background = 'rgba(56, 189, 248, 0.15)';
                 this.voiceTabElevenLabsEl.style.color = '#fff';
-                this.voiceTabBrowserEl.style.borderColor = 'var(--border-subtle)';
-                this.voiceTabBrowserEl.style.background = 'rgba(30, 41, 59, 0.5)';
-                this.voiceTabBrowserEl.style.color = 'var(--text-secondary)';
-                if (this.panelBrowserVoiceEl) this.panelBrowserVoiceEl.style.display = 'none';
+                this.voiceTabPackEl.style.borderColor = 'var(--border-subtle)';
+                this.voiceTabPackEl.style.background = 'rgba(30, 41, 59, 0.5)';
+                this.voiceTabPackEl.style.color = 'var(--text-secondary)';
+                if (this.panelVoicePackEl) this.panelVoicePackEl.style.display = 'none';
                 if (this.panelElevenLabsVoiceEl) this.panelElevenLabsVoiceEl.style.display = 'flex';
             });
         }
 
-        // Sliders
-        if (this.voiceRateSliderEl && this.rateValEl) {
-            this.voiceRateSliderEl.addEventListener('input', (e) => {
-                this.rateValEl.textContent = `${parseFloat(e.target.value).toFixed(2)}x`;
-            });
-        }
-        if (this.voicePitchSliderEl && this.pitchValEl) {
-            this.voicePitchSliderEl.addEventListener('input', (e) => {
-                this.pitchValEl.textContent = parseFloat(e.target.value).toFixed(2);
-            });
-        }
+        // Master Volume Slider
         if (this.voiceVolSliderEl && this.volValEl) {
             this.voiceVolSliderEl.addEventListener('input', (e) => {
                 const pct = Math.round(parseFloat(e.target.value) * 100);
@@ -549,84 +520,181 @@ class ShinobiRPGApp {
             });
         }
 
-        // Test Voice buttons
-        if (this.voiceTestBtnEl) {
-            this.voiceTestBtnEl.addEventListener('click', () => {
-                const selectedURI = this.voiceSelectEl ? this.voiceSelectEl.value : '';
-                if (selectedURI) this.audio.setVoice(selectedURI);
-                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 0.98;
-                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 1.02;
-                const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 1.0;
-                const preset = this.audio.PERSONA_PRESETS[this.audio.currentPersona] || this.audio.PERSONA_PRESETS.sultry_female;
-                this.audio.speak(preset.previewText, { rate, pitch, volume: vol });
+        // ElevenLabs Key Visibility Toggle
+        if (this.toggleElevenLabsKeyBtnEl && this.elevenLabsKeyInputEl) {
+            this.toggleElevenLabsKeyBtnEl.addEventListener('click', () => {
+                const isPass = this.elevenLabsKeyInputEl.type === 'password';
+                this.elevenLabsKeyInputEl.type = isPass ? 'text' : 'password';
+                this.toggleElevenLabsKeyBtnEl.textContent = isPass ? '🙈' : '👁️';
             });
         }
 
+        // ElevenLabs Live Test Button
         if (this.elevenLabsTestBtnEl) {
             this.elevenLabsTestBtnEl.addEventListener('click', async () => {
-                const key = this.elevenLabsKeyInputEl ? this.elevenLabsKeyInputEl.value.trim() : '';
+                const key = (this.elevenLabsKeyInputEl ? this.elevenLabsKeyInputEl.value : '').trim();
                 const voiceId = this.elevenLabsVoiceSelectEl ? this.elevenLabsVoiceSelectEl.value : 'EXAVITQu4vr4xnSDxMaL';
                 if (!key) {
-                    alert('Please enter an ElevenLabs API Key first to test AI voice actors.');
+                    if (this.elevenLabsTestStatusEl) {
+                        this.elevenLabsTestStatusEl.style.display = 'block';
+                        this.elevenLabsTestStatusEl.style.background = 'rgba(239, 68, 68, 0.15)';
+                        this.elevenLabsTestStatusEl.style.border = '1px solid #ef4444';
+                        this.elevenLabsTestStatusEl.style.color = '#fca5a5';
+                        this.elevenLabsTestStatusEl.textContent = '✕ Please paste an ElevenLabs API Key first (from elevenlabs.io).';
+                    }
                     return;
                 }
-                this.audio.setElevenLabsConfig(key, voiceId, 'elevenlabs');
-                const prev = this.elevenLabsTestBtnEl.innerHTML;
-                this.elevenLabsTestBtnEl.innerHTML = '<span>⏳ Speaking...</span>';
-                const preset = this.audio.PERSONA_PRESETS[this.audio.currentPersona] || this.audio.PERSONA_PRESETS.sultry_female;
-                await this.audio.speak(preset.previewText);
-                this.elevenLabsTestBtnEl.innerHTML = prev;
+
+                if (this.elevenLabsTestStatusEl) {
+                    this.elevenLabsTestStatusEl.style.display = 'block';
+                    this.elevenLabsTestStatusEl.style.background = 'rgba(56, 189, 248, 0.15)';
+                    this.elevenLabsTestStatusEl.style.border = '1px solid var(--chakra-water)';
+                    this.elevenLabsTestStatusEl.style.color = '#bae6fd';
+                    this.elevenLabsTestStatusEl.textContent = '⏳ Calling ElevenLabs AI TTS & streaming audio sample...';
+                }
+
+                const prevText = this.elevenLabsTestBtnEl.innerHTML;
+                this.elevenLabsTestBtnEl.innerHTML = '<span>⏳ Testing...</span>';
+                const res = await this.audio.testElevenLabs(key, voiceId);
+                this.elevenLabsTestBtnEl.innerHTML = prevText;
+
+                if (res.success) {
+                    this.audio.setElevenLabsConfig(key, voiceId, 'elevenlabs');
+                    if (this.elevenLabsTestStatusEl) {
+                        this.elevenLabsTestStatusEl.style.background = 'rgba(34, 197, 94, 0.15)';
+                        this.elevenLabsTestStatusEl.style.border = '1px solid #22c55e';
+                        this.elevenLabsTestStatusEl.style.color = '#86efac';
+                        this.elevenLabsTestStatusEl.textContent = `✅ ElevenLabs Connected! Latency: ${res.latencyMs}ms. Voice actor sample playing now!`;
+                    }
+                    this.showToast('✅ ElevenLabs AI Voice Validated & Saved!');
+                } else {
+                    if (this.elevenLabsTestStatusEl) {
+                        this.elevenLabsTestStatusEl.style.background = 'rgba(239, 68, 68, 0.15)';
+                        this.elevenLabsTestStatusEl.style.border = '1px solid #ef4444';
+                        this.elevenLabsTestStatusEl.style.color = '#fca5a5';
+                        this.elevenLabsTestStatusEl.textContent = `✕ ElevenLabs Error: ${res.error}`;
+                    }
+                }
             });
         }
 
         // Save Voice Settings
         if (this.voiceSaveBtnEl) {
             this.voiceSaveBtnEl.addEventListener('click', () => {
-                const selectedURI = this.voiceSelectEl ? this.voiceSelectEl.value : '';
-                if (selectedURI) this.audio.setVoice(selectedURI);
-                const rate = this.voiceRateSliderEl ? parseFloat(this.voiceRateSliderEl.value) : 0.98;
-                const pitch = this.voicePitchSliderEl ? parseFloat(this.voicePitchSliderEl.value) : 1.02;
                 const vol = this.voiceVolSliderEl ? parseFloat(this.voiceVolSliderEl.value) : 1.0;
-                this.audio.setVoiceSettings(rate, pitch, vol, this.audio.voiceBoost);
+                this.audio.setVoiceSettings(0.98, 1.02, vol, this.audio.voiceBoost);
 
                 const elevenKey = this.elevenLabsKeyInputEl ? this.elevenLabsKeyInputEl.value.trim() : '';
                 const elevenVoice = this.elevenLabsVoiceSelectEl ? this.elevenLabsVoiceSelectEl.value : 'EXAVITQu4vr4xnSDxMaL';
                 const isElevenTab = this.panelElevenLabsVoiceEl && this.panelElevenLabsVoiceEl.style.display !== 'none';
-                const engine = (isElevenTab && elevenKey) ? 'elevenlabs' : 'browser';
+                const engine = (isElevenTab && elevenKey) ? 'elevenlabs' : 'voice_pack';
                 this.audio.setElevenLabsConfig(elevenKey, elevenVoice, engine);
 
                 if (this.voiceModalEl) this.voiceModalEl.style.display = 'none';
-                alert('Audio & Voice settings saved successfully with Loud Boost!');
+                this.showToast('🎙️ Audio & Voice Preferences Saved!');
             });
         }
 
-
-        // Gemini Settings Modal
+        // Gemini Settings Modal Open
         if (this.geminiSettingsBtnEl) {
             this.geminiSettingsBtnEl.addEventListener('click', () => {
-                this.geminiModalEl.style.display = 'flex';
-                this.geminiApiKeyInputEl.value = this.gemini.apiKey;
-                if (this.geminiModelSelectEl) {
-                    this.geminiModelSelectEl.value = this.gemini.model;
+                if (this.geminiModalEl) {
+                    this.geminiModalEl.style.display = 'flex';
+                    if (this.geminiApiKeyInputEl) this.geminiApiKeyInputEl.value = this.gemini.apiKey || '';
+                    if (this.geminiModelSelectEl) this.geminiModelSelectEl.value = this.gemini.model || 'gemini-1.5-flash';
+                    if (this.geminiTestStatusEl) this.geminiTestStatusEl.style.display = 'none';
+                    this.updateGeminiStatus();
                 }
+            });
+        }
+
+        // Gemini Key Visibility Toggle
+        if (this.toggleGeminiKeyBtnEl && this.geminiApiKeyInputEl) {
+            this.toggleGeminiKeyBtnEl.addEventListener('click', () => {
+                const isPass = this.geminiApiKeyInputEl.type === 'password';
+                this.geminiApiKeyInputEl.type = isPass ? 'text' : 'password';
+                this.toggleGeminiKeyBtnEl.textContent = isPass ? '🙈' : '👁️';
+            });
+        }
+
+        // Gemini Live Test Connection Button
+        if (this.geminiTestKeyBtnEl) {
+            this.geminiTestKeyBtnEl.addEventListener('click', async () => {
+                const key = (this.geminiApiKeyInputEl ? this.geminiApiKeyInputEl.value : '').trim();
+                const model = this.geminiModelSelectEl ? this.geminiModelSelectEl.value : 'gemini-1.5-flash';
+                if (!key) {
+                    if (this.geminiTestStatusEl) {
+                        this.geminiTestStatusEl.style.display = 'block';
+                        this.geminiTestStatusEl.style.background = 'rgba(239, 68, 68, 0.15)';
+                        this.geminiTestStatusEl.style.border = '1px solid #ef4444';
+                        this.geminiTestStatusEl.style.color = '#fca5a5';
+                        this.geminiTestStatusEl.textContent = '✕ Please paste a Google Gemini API Key first.';
+                    }
+                    return;
+                }
+
+                if (this.geminiTestStatusEl) {
+                    this.geminiTestStatusEl.style.display = 'block';
+                    this.geminiTestStatusEl.style.background = 'rgba(56, 189, 248, 0.15)';
+                    this.geminiTestStatusEl.style.border = '1px solid var(--chakra-water)';
+                    this.geminiTestStatusEl.style.color = '#bae6fd';
+                    this.geminiTestStatusEl.textContent = `⏳ Pinging Google Gemini API (${model})...`;
+                }
+
+                const prevText = this.geminiTestKeyBtnEl.innerHTML;
+                this.geminiTestKeyBtnEl.innerHTML = '<span>⏳ Testing...</span>';
+                const res = await this.gemini.testConnection(key, model);
+                this.geminiTestKeyBtnEl.innerHTML = prevText;
+
+                if (res.success) {
+                    this.gemini.setApiKey(key);
+                    this.gemini.setModel(model);
+                    this.updateGeminiStatus();
+                    if (this.geminiTestStatusEl) {
+                        this.geminiTestStatusEl.style.background = 'rgba(34, 197, 94, 0.15)';
+                        this.geminiTestStatusEl.style.border = '1px solid #22c55e';
+                        this.geminiTestStatusEl.style.color = '#86efac';
+                        this.geminiTestStatusEl.textContent = `✅ SUCCESS! Connected to Google Gemini (${res.model}) in ${res.latencyMs}ms. AI DM is active and ready!`;
+                    }
+                    this.showToast('✅ Google Gemini API Connected & Saved!');
+                } else {
+                    if (this.geminiTestStatusEl) {
+                        this.geminiTestStatusEl.style.background = 'rgba(239, 68, 68, 0.15)';
+                        this.geminiTestStatusEl.style.border = '1px solid #ef4444';
+                        this.geminiTestStatusEl.style.color = '#fca5a5';
+                        this.geminiTestStatusEl.textContent = `✕ Gemini API Error: ${res.error}`;
+                    }
+                }
+            });
+        }
+
+        // Gemini Save Key Button
+        if (this.geminiSaveKeyBtnEl) {
+            this.geminiSaveKeyBtnEl.addEventListener('click', () => {
+                const key = this.geminiApiKeyInputEl ? this.geminiApiKeyInputEl.value.trim() : '';
+                const model = this.geminiModelSelectEl ? this.geminiModelSelectEl.value : 'gemini-1.5-flash';
+                this.gemini.setApiKey(key);
+                this.gemini.setModel(model);
+                this.updateGeminiStatus();
+                if (this.geminiModalEl) this.geminiModalEl.style.display = 'none';
+                this.showToast(key ? `🤖 Gemini AI DM Connected (${model})!` : '🎮 Standalone Local Campaign Mode Active');
+            });
+        }
+
+        // Gemini Clear Key Button
+        if (this.geminiClearKeyBtnEl) {
+            this.geminiClearKeyBtnEl.addEventListener('click', () => {
+                this.gemini.setApiKey('');
+                if (this.geminiApiKeyInputEl) this.geminiApiKeyInputEl.value = '';
+                if (this.geminiTestStatusEl) this.geminiTestStatusEl.style.display = 'none';
+                this.updateGeminiStatus();
+                this.showToast('Gemini API key removed. Running offline campaign.');
             });
         }
 
         if (this.geminiCloseBtnEl) {
             this.geminiCloseBtnEl.addEventListener('click', () => {
-                this.geminiModalEl.style.display = 'none';
-            });
-        }
-
-        if (this.geminiSaveKeyBtnEl) {
-            this.geminiSaveKeyBtnEl.addEventListener('click', () => {
-                const key = this.geminiApiKeyInputEl.value.trim();
-                const model = this.geminiModelSelectEl ? this.geminiModelSelectEl.value : 'gemini-flash-latest';
-                this.gemini.setApiKey(key);
-                this.gemini.setModel(model);
-                this.updateGeminiStatus();
-                this.geminiModalEl.style.display = 'none';
-                alert(key ? `Connected! Using ${model} as AI Dungeon Master.` : 'Gemini API Key removed. Playing in local campaign mode.');
+                if (this.geminiModalEl) this.geminiModalEl.style.display = 'none';
             });
         }
 
@@ -680,10 +748,7 @@ class ShinobiRPGApp {
         // Mobile Voice Settings Button
         if (this.mobileVoiceBtnEl) {
             this.mobileVoiceBtnEl.addEventListener('click', () => {
-                if (this.voiceModalEl) {
-                    this.voiceModalEl.style.display = 'flex';
-                    this.populateVoiceDropdown();
-                }
+                if (this.voiceModalEl) this.voiceModalEl.style.display = 'flex';
             });
         }
 
@@ -701,6 +766,10 @@ class ShinobiRPGApp {
                 btn.addEventListener('click', () => {
                     const tab = btn.dataset.tab;
                     if (!tab) return;
+                    if (tab === 'audio') {
+                        if (this.voiceModalEl) this.voiceModalEl.style.display = 'flex';
+                        return;
+                    }
                     this.mobileNavBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     if (this.appLayoutEl) {

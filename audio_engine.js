@@ -202,12 +202,59 @@ class ShinobiAudioEngine {
     }
 
     setElevenLabsConfig(key, voiceId, engine) {
-        this.elevenLabsKey = key.trim();
-        this.elevenLabsVoiceId = voiceId;
-        this.engineType = engine || (this.elevenLabsKey ? 'elevenlabs' : 'browser');
-        localStorage.setItem('naruto_elevenlabs_key', this.elevenLabsKey);
+        this.elevenLabsKey = (key || '').trim();
+        this.elevenLabsVoiceId = voiceId || 'EXAVITQu4vr4xnSDxMaL';
+        this.engineType = engine || (this.elevenLabsKey ? 'elevenlabs' : 'voice_pack');
+        if (this.elevenLabsKey) {
+            localStorage.setItem('naruto_elevenlabs_key', this.elevenLabsKey);
+        } else {
+            localStorage.removeItem('naruto_elevenlabs_key');
+        }
         localStorage.setItem('naruto_elevenlabs_voice_id', this.elevenLabsVoiceId);
         localStorage.setItem('naruto_voice_engine', this.engineType);
+    }
+
+    async testElevenLabs(testKey, testVoiceId) {
+        const key = (testKey || this.elevenLabsKey || '').trim();
+        const voiceId = testVoiceId || this.elevenLabsVoiceId || 'EXAVITQu4vr4xnSDxMaL';
+        if (!key) {
+            return { success: false, error: 'Please enter an ElevenLabs API Key first.' };
+        }
+        const start = Date.now();
+        try {
+            const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+                method: 'POST',
+                headers: {
+                    'xi-api-key': key,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: "I am ready, shinobi... Team Seven's trial begins now.",
+                    model_id: 'eleven_turbo_v2_5',
+                    voice_settings: {
+                        stability: 0.5,
+                        similarity_boost: 0.8
+                    }
+                })
+            });
+            const latencyMs = Date.now() - start;
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                const msg = errData.detail?.message || errData.message || `ElevenLabs HTTP ${res.status}`;
+                return { success: false, error: msg, status: res.status };
+            }
+            const blob = await res.blob();
+            const audioUrl = URL.createObjectURL(blob);
+            if (this.currentAudio) {
+                this.currentAudio.pause();
+            }
+            this.currentAudio = new Audio(audioUrl);
+            this.currentAudio.volume = Math.min(1.0, this.voiceVolume || 1.0);
+            await this.currentAudio.play();
+            return { success: true, latencyMs, voiceId };
+        } catch (err) {
+            return { success: false, error: err.message };
+        }
     }
 
     notifyState(state) {

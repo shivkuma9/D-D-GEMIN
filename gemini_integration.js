@@ -3,7 +3,7 @@ class GeminiDMConnector {
     constructor(stateManager) {
         this.state = stateManager;
         this.apiKey = localStorage.getItem('gemini_dm_api_key') || '';
-        this.model = localStorage.getItem('gemini_dm_model') || 'gemini-flash-latest';
+        this.model = localStorage.getItem('gemini_dm_model') || 'gemini-1.5-flash';
         this.enabled = !!this.apiKey;
     }
 
@@ -18,8 +18,45 @@ class GeminiDMConnector {
     }
 
     setModel(modelName) {
-        this.model = modelName || 'gemini-flash-latest';
+        this.model = modelName || 'gemini-1.5-flash';
         localStorage.setItem('gemini_dm_model', this.model);
+    }
+
+    async testConnection(testKey, testModel) {
+        const key = (testKey || this.apiKey || '').trim();
+        const model = testModel || this.model || 'gemini-1.5-flash';
+        if (!key) {
+            return { success: false, error: 'Please enter a Google Gemini API Key first.' };
+        }
+        const start = Date.now();
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{
+                        role: 'user',
+                        parts: [{ text: 'Respond with exactly: "ONLINE"' }]
+                    }],
+                    generationConfig: {
+                        maxOutputTokens: 20,
+                        temperature: 0.1
+                    }
+                })
+            });
+            const latencyMs = Date.now() - start;
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                const msg = errData.error?.message || `HTTP ${res.status}: ${res.statusText}`;
+                return { success: false, error: msg, status: res.status };
+            }
+            const data = await res.json();
+            const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'ONLINE';
+            return { success: true, latencyMs, model, reply };
+        } catch (err) {
+            return { success: false, error: err.message };
+        }
     }
 
     async promptDungeonMaster(userAction, currentSceneNarrative) {
