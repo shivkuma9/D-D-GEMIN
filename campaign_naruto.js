@@ -862,8 +862,508 @@ He points at the four of you:
 Naruto bursts into ecstatic cheers, throwing his arms around you in a bear hug! Sasuke offers a subtle nod of respect, and Sakura wipes her tears with a radiant smile.
 
 Your Senju lineage remains hidden, but your power and tactical brilliance have earned the eternal loyalty of your squad. The Land of Waves, the Chunin Exams, and the fate of the shinobi world lie ahead!`,
-            options: [] // Saga complete screen
+            options: [
+                {
+                    approach: 'mind',
+                    tag: '🚢 EMBARK ON ACT III: LAND OF WAVES',
+                    label: 'Report to Lord Third at the Hokage Residence to receive your first C-Rank mission: Escorting Bridge Builder Tazuna!',
+                    actionType: 'advance',
+                    nextNode: 'waves_ch1_tazuna_assignment'
+                }
+            ]
         }
+,
+
+    // ACT III: LAND OF WAVES SAGA
+    {
+            "id": "waves_ch1_tazuna_assignment",
+            "title": "Act III: Mission C-Rank — Escorting the Bridge Builder",
+            "act": "Act III - Land of Waves: Prologue",
+            "location": "Hokage Administration Office, Konoha",
+            "atmosphere": "The third Hokage smoking his pipe, Naruto complaining about weed-pulling chores, and a drunken bridge builder squinting skeptically at Team 7.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch1_tazuna_assignment.mp3",
+            "illustration": {
+                    "title": "The Drunken Architect",
+                    "badge": "C-RANK MISSION",
+                    "badgeClass": "threat-moderate",
+                    "icon": "📜",
+                    "quote": "\"What?! A bunch of snot-nosed brats? Especially the runt with the stupid face and the pretty boy in royal blue armor.\"",
+                    "tags": [
+                            "Tazuna Escort",
+                            "Lord Third",
+                            "Leaving Konoha"
+                    ]
+            },
+            "narrative": "Tired of chasing lost cats and pulling weeds, Naruto slams his fists on the Third Hokage's desk demanding a real mission!\nLord Third chuckles through a haze of pipe smoke: \"Very well. If you insist on testing your mettle, you are assigned a C-Rank escort mission.\"\n\nThe door swings open with a loud creak. In stumbles Tazuna, a gruff, sun-baked master bridge builder reeking of cheap rice wine:\n\"What is this? A bunch of snot-nosed brats? Especially that noisy little runt over there, and the silver-haired pretty boy in the fancy fur collar. Hey runt, are you even real ninja?\"\n\nNaruto immediately tries to tackle Tazuna, but you step forward with cool composure. Your amber-gold serpentine eyes catch the old man's gaze. Sakura sighs in relief, looking at you with admiration, while Sasuke folds his arms with quiet focus.\n\nThe Land of Waves beckons!",
+            "options": [
+                    {
+                            "approach": "charm",
+                            "tag": "💋 SUAVE SENJU REASSURANCE",
+                            "label": "Step forward with royal charisma, winking at Sakura while assuring Tazuna that Team 7 will guard his life to the last breath.",
+                            "actionType": "check",
+                            "stat": "charm",
+                            "dc": 12,
+                            "successNode": "waves_ch2_demon_brothers_ambush",
+                            "failNode": "waves_ch2_demon_brothers_ambush"
+                    },
+                    {
+                            "approach": "mind",
+                            "tag": "🔍 SENSORY & TACTICAL RECON",
+                            "label": "Use your thermal sensory perception to notice Tazuna's shaking hands and alcohol habit, deducing he is hiding grave danger.",
+                            "actionType": "check",
+                            "stat": "serpentSense",
+                            "dc": 13,
+                            "successNode": "waves_ch2_demon_brothers_ambush",
+                            "failNode": "waves_ch2_demon_brothers_ambush"
+                    },
+                    {
+                            "approach": "force",
+                            "tag": "🗡️ SHINOBI AURA INTIMIDATION",
+                            "label": "Release a sliver of dense hydro-chakra that rattles the sake bottle in his grip, silencing his doubts instantly.",
+                            "actionType": "check",
+                            "stat": "ninjutsu",
+                            "dc": 12,
+                            "successNode": "waves_ch2_demon_brothers_ambush",
+                            "failNode": "waves_ch2_demon_brothers_ambush"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch2_demon_brothers_ambush",
+            "title": "Act III: The Puddle Ambush — Demon Brothers of the Mist",
+            "act": "Act III - Land of Waves: Encounter",
+            "location": "Dense Woodlands on Fire Country Border",
+            "atmosphere": "A glaring rain puddle on a bone-dry summer day, spiked chains whistling through the air, Kakashi shredded into pieces.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch2_demon_brothers_ambush.mp3",
+            "illustration": {
+                    "title": "Assassins of the Bloody Mist",
+                    "badge": "CHUNIN AMBUSH",
+                    "badgeClass": "threat-high",
+                    "icon": "⛓️",
+                    "quote": "\"One down! Now for the bridge builder and the pink-haired girl!\"",
+                    "tags": [
+                            "Demon Brothers",
+                            "Poison Chains",
+                            "First Blood"
+                    ]
+            },
+            "narrative": "Several miles outside the village gates, the afternoon sun beats down on a bone-dry dirt path. Yet just ahead lies a solitary puddle of rainwater.\nBefore anyone can speak, the puddle erupts!\n\nTwo lethal chunin assassins from the Hidden Mist—the Demon Brothers, Gozu and Meizu—burst from the water! Their poisoned spiked chains wrap violently around Kakashi-sensei's chest!\n*SPLATTER!*\nIn a sickening spray of blood, Kakashi is torn into bloody chunks before your eyes!\n\n\"One down!\" Gozu snarls with demonic laughter, lunging straight for Tazuna and a petrified Sakura!\nNaruto freezes in sheer shock, his legs trembling! Sasuke draws his shuriken—but the assassins are closing in on Sakura within seconds!",
+            "options": [
+                    {
+                            "approach": "ninjutsu",
+                            "tag": "🐍 HIDDEN SHADOW WATER SNAKES",
+                            "label": "Fire twin pressurized hydro-vipers from your sleeves to entangle the spiked chain and violently rip it away!",
+                            "actionType": "check",
+                            "stat": "ninjutsu",
+                            "dc": 13,
+                            "successNode": "waves_ch2_snake_chain_counter",
+                            "failNode": "waves_ch2_snake_chain_counter"
+                    },
+                    {
+                            "approach": "charm",
+                            "tag": "🛡️ KNIGHT IN BLUE ARMOR FOR SAKURA",
+                            "label": "Flash-step directly in front of Sakura with a swirling water shield: \"Stay behind me, Sakura-chan. I've got you.\"",
+                            "actionType": "check",
+                            "stat": "charm",
+                            "dc": 13,
+                            "successNode": "waves_ch2_protect_sakura_flirt",
+                            "failNode": "waves_ch2_protect_sakura_flirt"
+                    },
+                    {
+                            "approach": "force",
+                            "tag": "💥 SURGING IMPACT FIST COUNTER",
+                            "label": "Charge Gozu head-on and shatter his poison claw gauntlet with condensed hydraulic concussive force!",
+                            "actionType": "check",
+                            "stat": "taijutsu",
+                            "dc": 14,
+                            "successNode": "waves_ch2_snake_chain_counter",
+                            "failNode": "waves_ch2_snake_chain_counter"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch2_snake_chain_counter",
+            "title": "Act III: Twin Serpents Snap the Chain",
+            "act": "Act III - Land of Waves: Counter-Attack",
+            "location": "Woodland Highway Edge",
+            "atmosphere": "Hissing pressurized water serpents coiling around steel chains, Sasuke pinning the chain to a tree, Kakashi smiling from the shadows.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch2_snake_chain_counter.mp3",
+            "illustration": {
+                    "title": "Chains Shattered",
+                    "badge": "TACTICAL COUNTER",
+                    "badgeClass": "threat-moderate",
+                    "icon": "🐍",
+                    "quote": "\"Excellent reflexes, Shivkumar. And Sasuke, clean pinning work.\"",
+                    "tags": [
+                            "Chain Broken",
+                            "Kakashi Feint",
+                            "Team Synergy"
+                    ]
+            },
+            "narrative": "*SHHHH-KRAK!*\nTwin serpents of solid pressurized water burst from your sleeves, coiling tightly around the Demon Brothers' spiked chain like titanium vices!\nWith a violent twist of your wrists, you channel Senju hydraulic force, wrenching the chain straight from their hands!\n\nSasuke leaps into the air with lethal precision, driving a kunai and shuriken through the chain links to pin them permanently into an ancient oak trunk!\nGozu and Meizu lunge forward unarmed—only for Kakashi to appear behind them in a blur of motion, locking both assassins in chokeholds!\n\n\"Sorry I didn't help sooner, kids,\" Kakashi winks casually. \"I was letting you show what you learned. Excellent reflexes, Shivkumar. And Sasuke, clean pinning work.\"\nNaruto drops to his knees, clutching his hand in shame, while Sakura breathes a heavy sigh of relief: \"Sensei... you're alive!\"",
+            "options": [
+                    {
+                            "approach": "mind",
+                            "tag": "🚢 CROSS THE TIDAL ESTUARY",
+                            "label": "Interrogate the captured assassins and board the muffled rowboat into the fog of the Land of Waves.",
+                            "actionType": "advance",
+                            "nextNode": "waves_ch3_mist_crossing_recon"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch2_protect_sakura_flirt",
+            "title": "Act III: Knight of the Senju",
+            "act": "Act III - Land of Waves: Chivalric Defense",
+            "location": "Woodland Highway Edge",
+            "atmosphere": "A swirling barrier of water deflecting poison claws, Sakura blushing furiously against your shoulder, Sasuke glaring with cold annoyance.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch2_protect_sakura_flirt.mp3",
+            "illustration": {
+                    "title": "Shielding Sakura",
+                    "badge": "ROMANTIC BOND +15",
+                    "badgeClass": "threat-low",
+                    "icon": "💖",
+                    "quote": "\"S-Shivkumar-kun...! You... protected me!\"",
+                    "tags": [
+                            "Sakura Affection",
+                            "Sasuke Jealousy",
+                            "Water Shield"
+                    ]
+            },
+            "narrative": "*CLANG-SHHH!*\nIn a spray of mist, you slide directly between Sakura and Gozu's poisoned claws! Your hydro-cloak and steel forearm armor deflect the strike with a deafening metallic ring!\n\"Stay behind me, Sakura-chan,\" you murmur with a confident, flirtatious smirk. \"A gentleman never lets a petal fall from a cherry blossom.\"\n\nSakura's cheeks flush bright crimson, her emerald eyes glowing with heartstruck adoration: \"S-Shivkumar-kun...!\" (+15 Sakura Affection!)\nSasuke's jaw clenches with an unmistakable flash of jealousy as he flips forward to dispatch the second assassin: \"Hmph. Stop flirting and focus on the enemy.\"\n\nKakashi materializes from the brush, subduing both brothers in an instant:\n\"My, my... chivalry on the battlefield. You certainly inherited the legendary Senju charm, Shivkumar. But don't make Sasuke too jealous.\"",
+            "options": [
+                    {
+                            "approach": "mind",
+                            "tag": "🚢 CROSS THE TIDAL ESTUARY",
+                            "label": "Board the muffled rowboat across the fog-shrouded river into the Land of Waves.",
+                            "actionType": "advance",
+                            "nextNode": "waves_ch3_mist_crossing_recon"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch3_mist_crossing_recon",
+            "title": "Act III: Shrouded Waters — Crossing into the Mist",
+            "act": "Act III - Land of Waves: Infiltration",
+            "location": "Tidal River Estuary, Land of Waves Border",
+            "atmosphere": "A muffled wooden rowboat gliding through thick, ghostly white fog, the sound of oar strokes silenced, unseen predators lurking.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch3_mist_crossing_recon.mp3",
+            "illustration": {
+                    "title": "Silent Rowboat in Fog",
+                    "badge": "MIST INFILTRATION",
+                    "badgeClass": "threat-moderate",
+                    "icon": "🌫️",
+                    "quote": "\"Gato is a ruthless monster... without this bridge, our people will starve to death.\"",
+                    "tags": [
+                            "Tazuna Confession",
+                            "Ryuuchi Heat Sense",
+                            "Silent Waters"
+                    ]
+            },
+            "narrative": "Under a ceiling of dense, suffocating white fog, your small wooden rowboat glides silently across the river. The boatman cuts the engine to avoid drawing patrol boats.\nSitting with his head hung in shame, Tazuna confesses everything:\n\"The truth is... a corrupt shipping magnate named Gato has placed a stranglehold on our country. He controls all maritime trade. The bridge I am building is our people's only hope for survival. When I couldn't afford B-rank protection, I had to lie to the Leaf.\"\n\nKakashi sighs: \"An escort against rogue ninja makes this a B-Rank mission at minimum. But we cannot abandon you now.\"\nSuddenly, your Hebi bloodline begins to pulse. Your thermal sensory perception detects a massive, icy chakra signature vibrating through the fog ahead!",
+            "options": [
+                    {
+                            "approach": "mind",
+                            "tag": "🐍 SERPENT THERMAL SENSING",
+                            "label": "Focus your amber-gold serpentine slit eyes, tracking body heat signatures through the heavy mist to anticipate the ambush.",
+                            "actionType": "check",
+                            "stat": "serpentSense",
+                            "dc": 13,
+                            "successNode": "waves_ch4_zabuza_arrival",
+                            "failNode": "waves_ch4_zabuza_arrival"
+                    },
+                    {
+                            "approach": "tactics",
+                            "tag": "📐 DIAMOND DEFENSE FORMATION",
+                            "label": "Organize Naruto, Sasuke, and Sakura into an equilateral bodyguard formation around Tazuna before stepping ashore.",
+                            "actionType": "check",
+                            "stat": "tactics",
+                            "dc": 13,
+                            "successNode": "waves_ch4_zabuza_arrival",
+                            "failNode": "waves_ch4_zabuza_arrival"
+                    },
+                    {
+                            "approach": "charm",
+                            "tag": "🤝 RALLY SQUAD SPIRIT",
+                            "label": "Place a warm hand on Naruto and Sakura's shoulders, reassuring them that Team 7 will conquer whatever lurks in the mist.",
+                            "actionType": "check",
+                            "stat": "charm",
+                            "dc": 12,
+                            "successNode": "waves_ch4_zabuza_arrival",
+                            "failNode": "waves_ch4_zabuza_arrival"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch4_zabuza_arrival",
+            "title": "Act III: The Demon of the Hidden Mist Appears",
+            "act": "Act III - Land of Waves: Apex Threat",
+            "location": "Foggy Forest Clearing near Land of Waves Coast",
+            "atmosphere": "The massive Kubikiribocho cleaver spinning through mist and impaling an oak trunk, Kakashi revealing the crimson Sharingan eye.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch4_zabuza_arrival.mp3",
+            "illustration": {
+                    "title": "Zabuza Momochi Unleashed",
+                    "badge": "S-RANK ROGUE NINJA",
+                    "badgeClass": "threat-extreme",
+                    "icon": "🗡️",
+                    "quote": "\"Kakashi of the Sharingan eye... hand over the old man and maybe I will let your brats live.\"",
+                    "tags": [
+                            "Executioner Blade",
+                            "Sharingan Revealed",
+                            "Silent Killing"
+                    ]
+            },
+            "narrative": "*SHRRRRRR-WHOOSH!*\nA sound like a hurricane cleaving through timber echoes above! A colossal iron broadsword—the legendary Kubikiribocho—spins horizontally through the fog!\n\"EVERYONE DUCK!\" Kakashi screams!\n\nThe massive blade bites deep into an ancient cedar tree. A figure silently lands atop its hilt—a shirtless assassin wrapped in bandages, wearing the Mist forehead protector angled sideways.\n\"Well, well...\" Zabuza Momochi rasps, his killing intent washing over you like liquid ice. \"Kakashi of the Sharingan eye. It's an honor to cross blades with the Copy Ninja.\"\n\nKakashi lifts his forehead protector, uncovering his left eye: the blazing red, three-tomoe Sharingan!\n\"Stay back, Team 7!\" Kakashi barks. \"Protect Tazuna! This man is an elite of the Seven Swordsmen of the Mist!\"\nZabuza vanishes into pure white mist: *\"Larynx, spine, lungs, liver, jugular, subclavian artery... which one should I carve open first?\"*",
+            "options": [
+                    {
+                            "approach": "ninjutsu",
+                            "tag": "🐉 WATER DRAGON BULLET DUEL",
+                            "label": "Call upon your Tobirama lineage, pulling the moisture from the thick mist into a roaring water dragon to intercept Zabuza!",
+                            "actionType": "check",
+                            "stat": "ninjutsu",
+                            "dc": 14,
+                            "successNode": "waves_ch4_water_dragon_clash",
+                            "failNode": "waves_ch4_water_dragon_clash"
+                    },
+                    {
+                            "approach": "tactics",
+                            "tag": "🛡️ INTERCEPT WATER CLONES",
+                            "label": "Detect the faint ripple of water behind Tazuna and strike down Zabuza's clone before his blade cuts the old man down!",
+                            "actionType": "check",
+                            "stat": "tactics",
+                            "dc": 14,
+                            "successNode": "waves_ch4_water_dragon_clash",
+                            "failNode": "waves_ch4_water_dragon_clash"
+                    },
+                    {
+                            "approach": "agility",
+                            "tag": "⚡ SLITHERING SHADOW FLANK",
+                            "label": "Use your Serpentine Surge to slide through the mist beneath Zabuza's blind spot alongside Kakashi's Sharingan counter!",
+                            "actionType": "check",
+                            "stat": "agility",
+                            "dc": 15,
+                            "successNode": "waves_ch4_water_dragon_clash",
+                            "failNode": "waves_ch4_water_dragon_clash"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch4_water_dragon_clash",
+            "title": "Act III: Dragons of the River Mist",
+            "act": "Act III - Land of Waves: Torrential Clash",
+            "location": "Riverbank Duel Ground",
+            "atmosphere": "Two colossal serpentine water dragons roaring into each other, torrents of water washing over the clearing, Kakashi trapped in a floating sphere.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch4_water_dragon_clash.mp3",
+            "illustration": {
+                    "title": "Water Prison Sealed",
+                    "badge": "SENSEI CAPTURED",
+                    "badgeClass": "threat-extreme",
+                    "icon": "💧",
+                    "quote": "\"A Senju brat who molds water without forty seals?! What a prize!\"",
+                    "tags": [
+                            "Water Prison Jutsu",
+                            "Kakashi Trapped",
+                            "Crisis"
+                    ]
+            },
+            "narrative": "*ROOOOAAAAR!*\nMassive geysers of water erupt from the lake! Your hydro-chakra commands the river currents with ancient Senju precision, forming a roaring dragon that smashes against Zabuza's water technique with cataclysmic force!\nZabuza's eyes widen with venomous shock:\n\"What?! A Genin brat who conjures water dragons without forty hand-seals?! You carry the blood of the Second Hokage!\"\n\nZabuza uses the blinding splash of water to execute a sinister feint. Before Kakashi can react on the slick lake surface, Zabuza surges behind him, sealing his hands into a floating, pressurized sphere of water!\n*Water Prison Jutsu!*\n\nKakashi is trapped inside the sphere, unable to breathe or weave seals! Zabuza maintains the prison with one hand, while his water clone grins menacingly at Team 7:\n\"Run, all of you!\" Kakashi shouts through the water barrier. \"You cannot defeat him! Take Tazuna and run!\"",
+            "options": [
+                    {
+                            "approach": "force",
+                            "tag": "⚡ LAUNCH TEAM 7 RESCUE PLAN",
+                            "label": "Stand firm with Naruto and Sasuke to execute the ultimate cooperative feint to break Zabuza's water prison!",
+                            "actionType": "advance",
+                            "nextNode": "waves_ch5_water_prison_rescue"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch5_water_prison_rescue",
+            "title": "Act III: The Water Prison Breakthrough",
+            "act": "Act III - Land of Waves: Tactical Climax",
+            "location": "Lake Center, Land of Waves",
+            "atmosphere": "A Demon Wind Shuriken sailing through mist, a shadow clone disguised as steel, water serpents snapping at Zabuza's wrist.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch5_water_prison_rescue.mp3",
+            "illustration": {
+                    "title": "The Fuma Shuriken Feint",
+                    "badge": "PRISON SHATTERED",
+                    "badgeClass": "threat-high",
+                    "icon": "⭐",
+                    "quote": "\"Senju ninja never leave their sensei behind. Naruto, Sasuke, now!\"",
+                    "tags": [
+                            "Fuma Shuriken Combo",
+                            "Prison Broken",
+                            "Kakashi Freed"
+                    ]
+            },
+            "narrative": "\"Run?\" you shout across the water, your silver hair whipping in the wind. \"Senju ninja never abandon their comrades!\"\nNaruto grins wildly: \"Damn right! Sasuke, let's do that thing!\"\n\nSasuke unclasps a giant Demon Wind Shuriken (Fuma Shuriken). He leaps into the air and hurls it directly at Zabuza's clone!\nZabuza catches it easily with one hand—only for a second shuriken to emerge from its shadow!\nZabuza leaps to dodge—and that second shuriken transforms with a puff of smoke into Naruto, who hurls a kunai right at Zabuza's eye!\n\nAt that exact split second, your twin pressurized water serpents erupt from beneath the lake surface, snapping around Zabuza's wrist that holds the Water Prison!\nForced to let go or lose his arm, Zabuza breaks the seal!\n\n*SPLASH!*\nKakashi bursts from the water sphere, his Sharingan blazing with fury:\n\"Shivkumar, Naruto, Sasuke... outstanding work. Now it's my turn!\"",
+            "options": [
+                    {
+                            "approach": "mind",
+                            "tag": "🌲 ADVANCE TO CHAKRA TREE CLIMBING",
+                            "label": "Watch Kakashi unleash the Great Waterfall Jutsu and prepare for the mysterious masked hunter-nin.",
+                            "actionType": "advance",
+                            "nextNode": "waves_ch6_tree_climbing_training"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch6_tree_climbing_training",
+            "title": "Act III: The Masked Tracker & Chakra Tree Climbing",
+            "act": "Act III - Land of Waves: Training Arc",
+            "location": "Tazuna's Coastal House & Deep Forest",
+            "atmosphere": "Two senbon needles piercing Zabuza's neck, Kakashi collapsing from chakra exhaustion, Team 7 running vertically up giant trees.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch6_tree_climbing_training.mp3",
+            "illustration": {
+                    "title": "Vertical Tree Walking",
+                    "badge": "CHAKRA MASTERY",
+                    "badgeClass": "threat-moderate",
+                    "icon": "🌲",
+                    "quote": "\"Focus your chakra into the soles of your feet... not too little, not too much.\"",
+                    "tags": [
+                            "Haku Deception",
+                            "Chakra Control",
+                            "Sakura Bonding"
+                    ]
+            },
+            "narrative": "Just as Kakashi prepares to finish Zabuza with a kunai, two senbon needles pierce Zabuza's neck! A mysterious masked Hunter-nin (Haku) appears in a tree, claiming the kill and vanishing with the body.\nMoments later, Kakashi collapses face-first into the dirt from Sharingan exhaustion!\n\nResting at Tazuna's home, Kakashi drops a bombshell: Hunter-nin dispose of bodies on the spot—Haku actually saved Zabuza using temporary death needles! Zabuza is still alive!\nTo prepare for the rematch, Kakashi sends Team 7 into the forest:\n\"You must learn vertical Tree-Climbing by focusing precise chakra to the soles of your feet.\"\n\nYou stride toward a towering oak. With your Senju chakra control, you walk smoothly up the vertical trunk all the way to the canopy, waving down at Sasuke and Naruto!\nSasuke grinds his teeth with fierce competitive fire, while Sakura cheers your name with starry eyes!",
+            "options": [
+                    {
+                            "approach": "chakra",
+                            "tag": "⚡ ADVANCED CANOPY SENSORY",
+                            "label": "Perch atop the canopy and meditate, honing your thermal sensory vision to detect Haku's ice chakra signatures.",
+                            "actionType": "check",
+                            "stat": "chakraReserves",
+                            "dc": 13,
+                            "successNode": "waves_ch7_ice_mirrors_bridge",
+                            "failNode": "waves_ch7_ice_mirrors_bridge"
+                    },
+                    {
+                            "approach": "charm",
+                            "tag": "🌸 PRIVATE TUTORING WITH SAKURA",
+                            "label": "Help Sakura with chakra dampening under the cherry blossoms, teasing her gently about your upcoming victory.",
+                            "actionType": "check",
+                            "stat": "charm",
+                            "dc": 14,
+                            "successNode": "waves_ch7_ice_mirrors_bridge",
+                            "failNode": "waves_ch7_ice_mirrors_bridge"
+                    },
+                    {
+                            "approach": "tactics",
+                            "tag": "🔥 PUSH SASUKE'S RIVALRY",
+                            "label": "Challenge Sasuke to a race to the summit, fueling his Uchiha pride to awaken his Sharingan faster.",
+                            "actionType": "check",
+                            "stat": "tactics",
+                            "dc": 13,
+                            "successNode": "waves_ch7_ice_mirrors_bridge",
+                            "failNode": "waves_ch7_ice_mirrors_bridge"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch7_ice_mirrors_bridge",
+            "title": "Act III: Blood on the Mist — Crystal Ice Mirrors",
+            "act": "Act III - Land of Waves: The Final Battle",
+            "location": "The Great Naruto Bridge, High Over the Sea",
+            "atmosphere": "Twenty floating mirrors of solid ice, senbon needles flying faster than the eye can see, Sasuke and Naruto bleeding inside the dome.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch7_ice_mirrors_bridge.mp3",
+            "illustration": {
+                    "title": "Dome of Ice Mirrors",
+                    "badge": "KEKKEI GENKAI",
+                    "badgeClass": "threat-extreme",
+                    "icon": "❄️",
+                    "quote": "\"Secret Jutsu: Crystal Ice Mirrors. In here, your speed is nothing compared to light.\"",
+                    "tags": [
+                            "Haku Kekkei Genkai",
+                            "Ice Dome",
+                            "Sasuke & Naruto Trapped"
+                    ]
+            },
+            "narrative": "One week later, a thick mist blankets the Great Bridge. The bridge workers lie unconscious, and Zabuza stands waiting alongside his masked partner, Haku!\nKakashi engages Zabuza in a furious clash of blade and Sharingan, while Haku traps Naruto and Sasuke inside an inescapable dome of twenty floating ice mirrors!\n\n*Secret Jutsu: Crystal Ice Mirrors!*\nMoving between the reflective surfaces at near light-speed, Haku unleashes a relentless barrage of senbon needles! Blood spatters against the ice as Sasuke and Naruto collapse back-to-back, punctured and bleeding!\nOutside the dome, Sakura guards Tazuna with trembling hands: \"Shivkumar-kun! Sasuke and Naruto are going to die in there!\"\n\nYour amber-gold serpentine slit eyes narrow. You can sense Haku's body heat shifting between the frozen mirrors!",
+            "options": [
+                    {
+                            "approach": "force",
+                            "tag": "💥 SERPENT SENSE & SURGING IMPACT FIST",
+                            "label": "Track Haku's true thermal body heat between mirror jumps and shatter the central ice mirror with a full-power Surging Fist!",
+                            "actionType": "check",
+                            "stat": "taijutsu",
+                            "dc": 15,
+                            "successNode": "waves_ch8_bridge_triumph",
+                            "failNode": "waves_ch8_bridge_triumph"
+                    },
+                    {
+                            "approach": "ninjutsu",
+                            "tag": "🌊 DUAL WATER SNAKE BREACH",
+                            "label": "Channel twin hydro-vipers deep under the bridge surface, flooding the ice dome with boiling pressurized water to melt the mirrors!",
+                            "actionType": "check",
+                            "stat": "ninjutsu",
+                            "dc": 15,
+                            "successNode": "waves_ch8_bridge_triumph",
+                            "failNode": "waves_ch8_bridge_triumph"
+                    },
+                    {
+                            "approach": "charm",
+                            "tag": "🕊️ APPEAL TO HAKU'S TRUE HEART",
+                            "label": "Speak to Haku as a fellow orphan of war: \"You are not just a tool, Haku! Do not throw away your life for Gato's greed!\"",
+                            "actionType": "check",
+                            "stat": "charm",
+                            "dc": 14,
+                            "successNode": "waves_ch8_bridge_triumph",
+                            "failNode": "waves_ch8_bridge_triumph"
+                    }
+            ]
+    },
+
+    {
+            "id": "waves_ch8_bridge_triumph",
+            "title": "Act III: The Bridge of Heroes & The Demon's Tears",
+            "act": "Act III - Land of Waves: Epilogue",
+            "location": "The Great Naruto Bridge (Sunlight Breaking Fog)",
+            "atmosphere": "Falling snow in early summer, Zabuza cutting through Gato's mercenary army with a kunai in his teeth, the Great Bridge completed.",
+            "image": "assets/team7_bell_test_arena.jpg",
+            "audio": "assets/audio/narration/waves_ch8_bridge_triumph.mp3",
+            "illustration": {
+                    "title": "Tears of the Demon",
+                    "badge": "ACT III COMPLETED",
+                    "badgeClass": "threat-low",
+                    "icon": "🏆",
+                    "quote": "\"Boy... your words cut deeper than any blade. Farewell, Haku.\"",
+                    "tags": [
+                            "Zabuza Redemption",
+                            "Bridge of Hope",
+                            "To Chunin Exams"
+                    ]
+            },
+            "narrative": "*SHATTER!*\nThe ice mirror dome explodes into millions of glittering crystals! Naruto unleashes the orange demonic chakra of the Nine-Tails, while Sasuke awakens the dual-tomoe Sharingan!\nAcross the bridge, Kakashi charges forward with the chirping lightning of the Chidori! Haku throws his body in front of Zabuza, taking the lethal lightning thrust through his chest to protect his master!\n\nJust then, the grotesque billionaire Gato arrives with a horde of a hundred cutthroat mercenaries! Gato laughs and kicks Haku's lifeless body!\nNaruto screams in tears: \"He loved you, Zabuza! And you treat him like an old tool?!\"\n\nTears stream down Zabuza's battle-scarred face beneath his bandages:\n\"Boy... your words cut deeper than any blade.\"\nClenching a single kunai between his teeth, the Demon of the Mist charges solo into Gato's army like an enraged dragon, slaying dozens and decapitating Gato on the edge of the bridge!\n\nAs early summer snow begins to fall gently over the sea, Kakashi places Zabuza beside Haku for their final rest.\nThe bridge is saved. Tazuna wipes tears from his eyes, carving the bridge's true name into the master pillar:\n**THE GREAT NARUTO & SENJU BRIDGE OF HOPE!**\n\nTeam 7 returns home to Konoha as legendary heroes. The Chunin Exams await!",
+            "options": [
+                    {
+                            "approach": "mind",
+                            "tag": "📜 ADVANCE TO ACT IV: THE CHUNIN EXAMS",
+                            "label": "Return to the Hidden Leaf Village and register Team 7 for the Chunin Selection Exams and the Forest of Death!",
+                            "actionType": "advance",
+                            "nextNode": "waves_ch8_bridge_triumph"
+                    }
+            ]
+    }
     ]
 };
 
