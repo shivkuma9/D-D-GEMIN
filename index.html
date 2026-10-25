@@ -364,14 +364,44 @@
                 Say goodbye to robotic voices! Choose from natural human neural voices, download offline voice packs, or connect ElevenLabs for Hollywood anime narration.
             </p>
 
-            <!-- Guide Box: How to get real human voices -->
-            <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 0.75rem; font-size: 0.76rem; color: #bae6fd; line-height: 1.45;">
-                <div style="font-weight: bold; margin-bottom: 0.3rem; color: #38bdf8; display: flex; align-items: center; gap: 0.3rem;">
-                    <span>💡</span> <span>PRO-TIPS: How to get Ultra-Realistic Voices</span>
+            <!-- Studio Voice Package Status & Character Clip Player -->
+            <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.35); border-radius: 8px; padding: 0.8rem; font-size: 0.78rem; line-height: 1.45;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                    <span style="font-weight: bold; color: #4ade80; display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem;">
+                        <span>📦</span> <span>STUDIO VOICE PACKAGE: INSTALLED & ACTIVE</span>
+                    </span>
+                    <button type="button" id="toggle-voice-pack-btn" class="pill-btn active" style="padding: 0.25rem 0.75rem; background: #22c55e; color: #0f172a; font-weight: bold; border-radius: 20px; font-size: 0.7rem; border: none; cursor: pointer;">
+                        VOICE PACK ON
+                    </button>
                 </div>
-                <div><strong>• Instant Free Natural Voice:</strong> Open this game in <strong>Microsoft Edge</strong>. Edge automatically comes with 40+ free Natural Voices (Microsoft Guy Natural, Christopher, Jenny) that sound like real human audiobook narrators!</div>
-                <div style="margin-top: 0.3rem;"><strong>• Windows Offline Voice Pack:</strong> In Windows Settings &rarr; <em>Time & Language &rarr; Speech</em>, click <em>"Add voices"</em> and install the <strong>English Natural Voice Pack</strong>.</div>
-                <div style="margin-top: 0.3rem;"><strong>• ElevenLabs AI Studio:</strong> Enter a free ElevenLabs API Key below for studio anime character voice acting.</div>
+                <div style="color: #bbf7d0; font-size: 0.72rem; margin-bottom: 0.5rem;">
+                    18 Chapter Studio Narrations + 8 Shinobi Character Clips pre-installed in project. Real human audio files play automatically without robotic speech!
+                </div>
+
+                <!-- Character Clips Preview Grid -->
+                <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #86efac; font-weight: bold; margin-bottom: 0.3rem;">
+                    CLICK TO PREVIEW SHINOBI VOICE ACTORS:
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem;" id="char-clips-grid">
+                    <button type="button" class="char-clip-btn" data-clip="kakashi_ready_start" style="padding: 0.35rem 0.5rem; font-size: 0.68rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 4px; color: #fff; cursor: pointer; text-align: left;">
+                        ▶️ Kakashi: "Ready... START!"
+                    </button>
+                    <button type="button" class="char-clip-btn" data-clip="kakashi_thousand_years" style="padding: 0.35rem 0.5rem; font-size: 0.68rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 4px; color: #fff; cursor: pointer; text-align: left;">
+                        ▶️ Kakashi: "1,000 Years Death!"
+                    </button>
+                    <button type="button" class="char-clip-btn" data-clip="naruto_challenge" style="padding: 0.35rem 0.5rem; font-size: 0.68rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 4px; color: #fff; cursor: pointer; text-align: left;">
+                        ▶️ Naruto: "Fair and square!"
+                    </button>
+                    <button type="button" class="char-clip-btn" data-clip="naruto_got_bell" style="padding: 0.35rem 0.5rem; font-size: 0.68rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 4px; color: #fff; cursor: pointer; text-align: left;">
+                        ▶️ Naruto: "I got a silver bell!"
+                    </button>
+                    <button type="button" class="char-clip-btn" data-clip="sasuke_avenger" style="padding: 0.35rem 0.5rem; font-size: 0.68rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 4px; color: #fff; cursor: pointer; text-align: left;">
+                        ▶️ Sasuke: "Not bad, Senju."
+                    </button>
+                    <button type="button" class="char-clip-btn" data-clip="kunoichi_guide" style="padding: 0.35rem 0.5rem; font-size: 0.68rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 4px; color: #fff; cursor: pointer; text-align: left;">
+                        ▶️ Kunoichi: "I am your guide..."
+                    </button>
+                </div>
             </div>
 
             <!-- Voice Persona Presets (Alluring Female / Sweet / Sensei) -->

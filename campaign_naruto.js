@@ -12,6 +12,7 @@ const NarutoCampaignData = {
             location: 'Training Ground 3, Konoha',
             atmosphere: 'Cold morning mist clinging to the pine needles, Kakashi standing relaxed with his hand on his weapon pouch, Naruto screaming a battle cry.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch1_bell_test_start.mp3',
             illustration: {
                 title: 'The Bell Test Commences',
                 badge: 'BELL TRIAL ACTIVE',
@@ -81,6 +82,7 @@ You have seconds to decide your approach. How do you play this opening round, Sh
             location: 'Center Stumps, Training Ground 3',
             atmosphere: 'High-speed wind turbulence, water spraying across pine needles, Kakashi\'s lone visible eye widening with sharp recognition.',
             image: 'assets/surging_impact_fist.jpg',
+            audio: 'assets/audio/narration/ch2_flank_success.mp3',
             illustration: {
                 title: 'Surging Impact Fist Unleashed',
                 badge: 'JONIN DEFLECTION',
@@ -140,6 +142,7 @@ Naruto picks his jaw up off the floor: "Whoa, Sanju! You actually pushed him bac
             location: 'Training Ground 3 Clearing',
             atmosphere: 'A bizarre silence, two fingers formed into a Tiger seal, Naruto launching skyward.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch2_flank_fail.mp3',
             illustration: {
                 title: 'Secret Leaf Taijutsu',
                 badge: 'TACTICAL COUNTER',
@@ -190,6 +193,7 @@ You pivot immediately, using your water chakra to cushion the back-draft. Kakash
             location: 'Underbrush of the Naka Riverbank',
             atmosphere: 'Submerged in crystal cold water, eyes watching shadows through reeds, memories crashing into the mind like a tidal surge.',
             image: 'assets/surging_impact_fist.jpg',
+            audio: 'assets/audio/narration/ch2_clone_intel_success.mp3',
             illustration: {
                 title: 'Water-Shadow Telemetry',
                 badge: 'CLONE MEMORY SYNC',
@@ -245,6 +249,7 @@ You resurface silently behind a mossy boulder, your chakra fully intact and arme
             location: 'Training Ground 3 River Edge',
             atmosphere: 'Crackling blue sparks of lightning chakra, water steam rising in the morning air, Kakashi standing vigilant.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch2_clone_intel_fail.mp3',
             illustration: {
                 title: 'Clone Dispersed by Lightning',
                 badge: 'LIGHTNING COUNTER',
@@ -298,6 +303,7 @@ You must choose your next tactical move immediately before he corners you in the
             location: 'High Cedar Canopy, Training Ground 3',
             atmosphere: 'Rustling cedar leaves, shadows masking three Genin, Sasuke\'s eyes narrowing with intense calculation.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch2_stealth_pact_success.mp3',
             illustration: {
                 title: 'Canopy Pact Formed',
                 badge: 'SQUAD ACCORD',
@@ -349,6 +355,7 @@ Sakura nods with newfound determination: "I'll cover the retreat angle with kuna
             location: 'Canopy Edge, Training Ground 3',
             atmosphere: 'Tense shinobi standoff in the branches, Sasuke clenching his shuriken holster with stubborn pride.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch2_stealth_pact_fail.mp3',
             illustration: {
                 title: 'Sasuke Rejects the Pact',
                 badge: 'PRIDE CLASH',
@@ -400,6 +407,7 @@ Sasuke is thrown toward the riverbank, his breath knocked out. You and Sakura mu
             location: 'Naka River Rapids, Training Ground 3',
             atmosphere: 'Foaming river spray catching the morning sun, shoes locked onto the rushing current with perfect chakra control, Kakashi pocketing his book.',
             image: 'assets/surging_impact_fist.jpg',
+            audio: 'assets/audio/narration/ch3_water_surface_battle.mp3',
             illustration: {
                 title: 'Water Surface Standoff',
                 badge: 'SENJU DOMAIN',
@@ -451,6 +459,7 @@ Kakashi reaches into his pouch and finally slips *Make-Out Paradise* away. He en
             location: 'Center Stumps, Training Ground 3',
             atmosphere: 'A sudden sinking sensation underfoot, the ground cracking open, Kakashi materializing from the soil.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch3_kakashi_subterranean.mp3',
             illustration: {
                 title: 'Double Suicide Decapitation',
                 badge: 'EARTH AMBUSH',
@@ -498,6 +507,7 @@ Kakashi emerges from the dirt, brushing soil from his vest: "Impressive water-di
             location: 'Training Ground 3 Clearing',
             atmosphere: 'Superheated steam billowing through pine needles, blinding white fog, the rhythmic chime of silver bells ringing in the mist.',
             image: 'assets/surging_impact_fist.jpg',
+            audio: 'assets/audio/narration/ch3_sasuke_fireball_combo.mp3',
             illustration: {
                 title: 'Fire & Water Thermal Blast',
                 badge: 'ELEMENTAL STEAM',
@@ -548,6 +558,7 @@ Sasuke shouts through the steam: "Senju! Go for the bells now!"`,
             location: 'Forest Clearing Edge',
             atmosphere: 'Smoke dissipating, Sasuke clenching his trembling fists, realizing the limits of solo combat.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch3_sasuke_hesitation.mp3',
             illustration: {
                 title: 'Hesitation Exploited',
                 badge: 'TACTICAL WAKE-UP',
@@ -587,6 +598,7 @@ Sasuke looks at your outstretched hand, swallows his pride, and takes it! (+30 T
             location: 'Sandy Bank of Training Ground 3',
             atmosphere: 'River water lapping against the shore, four Genin catching their breath, the ticking clock echoing.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch3_river_regroup.mp3',
             illustration: {
                 title: 'Team 7 Regroups',
                 badge: 'UNITED AT LAST',
@@ -625,6 +637,7 @@ Naruto grins, giving a thumbs-up. Sasuke adjusts his shuriken holster and smirks
             location: 'Center Meadow, Training Ground 3',
             atmosphere: 'A sharp metallic snap, two silver bells tumbling through the air, Naruto diving with arms wide open.',
             image: 'assets/surging_impact_fist.jpg',
+            audio: 'assets/audio/narration/ch3_counter_graze.mp3',
             illustration: {
                 title: 'Bell Cord Severed',
                 badge: 'BELL DETACHED',
@@ -664,6 +677,7 @@ Kakashi lands five paces back, his hand on his hip, completely taken aback: "You
             location: 'Cedar Perimeter, Training Ground 3',
             atmosphere: 'Glistening transparent wires vibrating with water chakra, Kakashi momentarily bound, two bells dropping into your hand.',
             image: 'assets/surging_impact_fist.jpg',
+            audio: 'assets/audio/narration/ch3_wire_bell_snag.mp3',
             illustration: {
                 title: 'Ninja Wire Snare',
                 badge: 'JONIN BOUND',
@@ -703,6 +717,7 @@ Right on cue, the noon alarm clock across the meadow begins to ring!`,
             location: 'Clearing Center, Training Ground 3',
             atmosphere: 'A severed wire spinning to the dirt, Kakashi spinning a kunai on his index finger with effortless poise.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch3_wire_detected.mp3',
             illustration: {
                 title: 'Wire Severed by Kunai',
                 badge: 'KUNAI INTERCEPT',
@@ -738,6 +753,7 @@ From both flanks, Sasuke and Naruto dive in unison, their hands outstretched tow
             location: 'Cedar Roots, Training Ground 3',
             atmosphere: 'Sasuke breathing heavily, resting his back against tree bark, looking down at his bruised hands.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch3_sasuke_pride_reject.mp3',
             illustration: {
                 title: 'Sasuke Acknowledges the Need for Teamwork',
                 badge: 'WALL OF REALITY',
@@ -773,6 +789,7 @@ Sasuke takes a long sip of water, then looks up at you with renewed resolve:
             location: 'Training Ground 3 Forest Perimeter',
             atmosphere: 'Alarm clock ticking closer to noon, Sakura bandaging Naruto, Sasuke clenching his fists, Shivkumar drawing the battle plan in the dirt.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch3_teamwork_revelation.mp3',
             illustration: {
                 title: 'The Real Meaning of the Test',
                 badge: 'TEAMWORK AWAKENED',
@@ -817,6 +834,7 @@ With only twenty minutes left before the noon alarm chimes, Team 7 prepares thei
             location: 'Training Ground 3 Memorial Stone',
             atmosphere: 'The noon alarm clock blaring loudly, Kakashi standing tied up in ninja wire with two bells missing from his belt, an astonished smile behind his mask.',
             image: 'assets/team7_bell_test_arena.jpg',
+            audio: 'assets/audio/narration/ch4_bells_secured.mp3',
             illustration: {
                 title: 'The Jonin Outmaneuvered',
                 badge: 'TRIAL PASSED',

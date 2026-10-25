@@ -84,6 +84,7 @@ class ShinobiRPGApp {
         this.elevenLabsTestBtnEl = document.getElementById('elevenlabs-test-btn');
         this.voiceSaveBtnEl = document.getElementById('voice-save-btn');
         this.voiceBoostBtnEl = document.getElementById('voice-boost-btn');
+        this.toggleVoicePackBtnEl = document.getElementById('toggle-voice-pack-btn');
 
         // Gemini Live Settings
         this.geminiSettingsBtnEl = document.getElementById('gemini-settings-btn');
@@ -133,9 +134,13 @@ class ShinobiRPGApp {
 
         if (state === 'speaking') {
             this.narrationStatusIndicatorEl.classList.add('speaking');
-            const persona = this.audio.PERSONA_PRESETS[this.audio.currentPersona];
-            const pName = persona ? (persona.gender === 'female' ? 'Kunoichi' : 'Sensei') : 'Narrator';
-            if (this.narrationStateLabelEl) this.narrationStateLabelEl.textContent = `Speaking (${pName})...`;
+            if (this.audio.activeAudioSource === 'voice_pack') {
+                if (this.narrationStateLabelEl) this.narrationStateLabelEl.textContent = 'Playing Voice Pack (MP3)...';
+            } else {
+                const persona = this.audio.PERSONA_PRESETS[this.audio.currentPersona];
+                const pName = persona ? (persona.gender === 'female' ? 'Kunoichi' : 'Sensei') : 'Narrator';
+                if (this.narrationStateLabelEl) this.narrationStateLabelEl.textContent = `Speaking (${pName})...`;
+            }
             if (this.narratePlayLabelEl) this.narratePlayLabelEl.textContent = 'Replay';
             if (this.narratePauseLabelEl) this.narratePauseLabelEl.textContent = 'Pause';
             if (this.narratePauseBtnEl) this.narratePauseBtnEl.classList.remove('active');
@@ -159,6 +164,14 @@ class ShinobiRPGApp {
         this.voiceBoostBtnEl.textContent = isBoost ? 'BOOST ON' : 'BOOST OFF';
         this.voiceBoostBtnEl.style.background = isBoost ? 'var(--chakra-water)' : 'rgba(100, 116, 139, 0.4)';
         this.voiceBoostBtnEl.style.color = isBoost ? '#0f172a' : '#fff';
+    }
+
+    updateVoicePackUI() {
+        if (!this.toggleVoicePackBtnEl) return;
+        const active = this.audio.useStudioVoicePack;
+        this.toggleVoicePackBtnEl.textContent = active ? 'VOICE PACK ON' : 'VOICE PACK OFF';
+        this.toggleVoicePackBtnEl.style.background = active ? '#22c55e' : 'rgba(100, 116, 139, 0.4)';
+        this.toggleVoicePackBtnEl.style.color = active ? '#0f172a' : '#fff';
     }
 
     checkAuth() {
@@ -200,7 +213,7 @@ class ShinobiRPGApp {
             const node = this.campaign.chapters.find(c => c.id === this.currentNode) || this.campaign.chapters[0];
             if (this.audio.voiceEnabled && node && node.narrative) {
                 setTimeout(() => {
-                    this.audio.speak(node.narrative);
+                    this.audio.speak(node.narrative, { nodeId: node.id, audio: node.audio });
                 }, 300);
             }
         } else {
@@ -293,9 +306,10 @@ class ShinobiRPGApp {
         if (this.narratePlayBtnEl) {
             this.narratePlayBtnEl.addEventListener('click', () => {
                 const node = this.campaign.chapters.find(c => c.id === this.currentNode) || this.campaign.chapters[0];
-                const textToSpeak = (node && node.narrative) ? node.narrative : this.audio.lastSpokenText;
+                const textToSpeak = (this.narrativeBodyEl && this.narrativeBodyEl.textContent) ? this.narrativeBodyEl.textContent : (node ? node.narrative : this.audio.lastSpokenText);
+                const isDynamic = this.state.savedNarrative && this.state.savedNarrative === textToSpeak;
                 if (textToSpeak) {
-                    this.audio.speak(textToSpeak);
+                    this.audio.speak(textToSpeak, { nodeId: isDynamic ? null : (node ? node.id : null), audio: isDynamic ? null : (node ? node.audio : null) });
                 }
             });
         }
@@ -381,6 +395,7 @@ class ShinobiRPGApp {
                     const volPct = Math.round((this.audio.voiceVolume || 1.0) * 100);
                     if (this.volValEl) this.volValEl.textContent = `${volPct}% ${volPct >= 100 ? '(LOUD)' : ''}`;
                     this.updateVoiceBoostUI();
+                    this.updateVoicePackUI();
                 }
             });
         }
@@ -396,6 +411,32 @@ class ShinobiRPGApp {
                 this.audio.speak(this.audio.voiceBoost ? "Loud voice boost activated. Voice volume and presence maximized!" : "Voice boost normal.");
             });
         }
+
+        // Master Studio Voice Pack Toggle Button
+        if (this.toggleVoicePackBtnEl) {
+            this.updateVoicePackUI();
+            this.toggleVoicePackBtnEl.addEventListener('click', () => {
+                this.audio.useStudioVoicePack = !this.audio.useStudioVoicePack;
+                localStorage.setItem('naruto_use_voice_pack', this.audio.useStudioVoicePack ? 'true' : 'false');
+                this.updateVoicePackUI();
+                if (this.audio.useStudioVoicePack) {
+                    this.audio.playCharacterClip('kunoichi_guide');
+                } else {
+                    this.audio.speak("Studio Voice Pack disabled. Using browser speech synthesis.");
+                }
+            });
+        }
+
+        // Character Voice Clip Preview Buttons
+        const charClipBtns = document.querySelectorAll('.char-clip-btn');
+        charClipBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const clip = btn.getAttribute('data-clip');
+                if (clip) {
+                    this.audio.playCharacterClip(clip);
+                }
+            });
+        });
 
         // Persona Preset Buttons (Sultry Female, Sweet, Femme Fatale, Sensei)
         const personaBtns = document.querySelectorAll('.persona-btn');
@@ -730,7 +771,8 @@ class ShinobiRPGApp {
         if (this.audio.voiceEnabled && this.isAuthenticated) {
             setTimeout(() => {
                 const textToSpeak = (this.narrativeBodyEl && this.narrativeBodyEl.textContent) ? this.narrativeBodyEl.textContent : node.narrative;
-                this.audio.speak(textToSpeak);
+                const isDynamic = this.state.savedNarrative && this.state.savedNarrative === textToSpeak;
+                this.audio.speak(textToSpeak, { nodeId: isDynamic ? null : node.id, audio: isDynamic ? null : node.audio });
             }, 200);
         }
 

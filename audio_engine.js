@@ -54,6 +54,8 @@ class ShinobiAudioEngine {
         this.elevenLabsVoiceId = localStorage.getItem('naruto_elevenlabs_voice_id') || this.PERSONA_PRESETS[this.currentPersona].elevenVoiceId;
         this.selectedVoiceURI = localStorage.getItem('naruto_selected_voice_uri') || '';
         this.voiceBoost = localStorage.getItem('naruto_voice_boost') !== 'false'; // Default TRUE for loud, crystal-clear voice!
+        this.useStudioVoicePack = localStorage.getItem('naruto_use_voice_pack') !== 'false'; // Default TRUE for high-quality recorded studio MP3s!
+        this.activeAudioSource = 'voice_pack'; // 'voice_pack', 'browser', 'elevenlabs'
         
         const preset = this.PERSONA_PRESETS[this.currentPersona] || this.PERSONA_PRESETS.sultry_female;
         this.voiceRate = parseFloat(localStorage.getItem('naruto_voice_rate')) || preset.rate;
@@ -262,6 +264,73 @@ class ShinobiAudioEngine {
         }
     }
 
+    playAudioFile(filePath, onEndCallback = null) {
+        this.stopSpeech();
+        try {
+            this.currentAudio = new Audio(filePath);
+            
+            if (this.ctx) {
+                this.ensureContext();
+                try {
+                    const source = this.ctx.createMediaElementSource(this.currentAudio);
+                    const gainNode = this.ctx.createGain();
+                    gainNode.gain.value = (this.voiceVolume || 1.0) * (this.voiceBoost ? 1.5 : 1.1);
+                    source.connect(gainNode);
+                    gainNode.connect(this.ctx.destination);
+                } catch (e) {
+                    this.currentAudio.volume = Math.min(1.0, this.voiceVolume || 1.0);
+                }
+            } else {
+                this.currentAudio.volume = Math.min(1.0, this.voiceVolume || 1.0);
+            }
+
+            this.currentAudio.onplay = () => {
+                this.isSpeaking = true;
+                this.isPaused = false;
+                this.notifyState('speaking');
+            };
+            this.currentAudio.onpause = () => {
+                if (this.isPaused) {
+                    this.notifyState('paused');
+                }
+            };
+            this.currentAudio.onended = () => {
+                this.isSpeaking = false;
+                this.isPaused = false;
+                this.notifyState('ended');
+                if (typeof onEndCallback === 'function') onEndCallback();
+            };
+            this.currentAudio.onerror = (e) => {
+                console.warn('Voice package audio file fallback to TTS:', filePath);
+                this.isSpeaking = false;
+                this.isPaused = false;
+                this.notifyState('stopped');
+                if (this.lastSpokenText) {
+                    this.speakTTS(this.lastSpokenText);
+                }
+            };
+
+            const p = this.currentAudio.play();
+            if (p && p.catch) {
+                p.catch(err => {
+                    console.warn('Audio play catch:', err.message);
+                    if (this.lastSpokenText) {
+                        this.speakTTS(this.lastSpokenText);
+                    }
+                });
+            }
+            return true;
+        } catch (err) {
+            console.error('playAudioFile error:', err);
+            return false;
+        }
+    }
+
+    playCharacterClip(clipName) {
+        const path = `assets/audio/characters/${clipName}.mp3`;
+        return this.playAudioFile(path);
+    }
+
     async speak(text, options = {}) {
         if (!this.voiceEnabled) return;
         this.stopSpeech();
@@ -275,16 +344,30 @@ class ShinobiAudioEngine {
             .trim();
 
         if (!cleanText) return;
-
         this.lastSpokenText = cleanText;
 
-        // Try ElevenLabs AI Voice if configured
+        // 1. If Studio Voice Pack is enabled and chapter/node is available
+        const nodeId = options.nodeId || options.chapterId;
+        if (this.useStudioVoicePack && nodeId) {
+            const audioPath = options.audio || `assets/audio/narration/${nodeId}.mp3`;
+            this.activeAudioSource = 'voice_pack';
+            const started = this.playAudioFile(audioPath);
+            if (started) return;
+        }
+
+        // 2. Try ElevenLabs AI Voice if configured
         if (this.engineType === 'elevenlabs' && this.elevenLabsKey) {
+            this.activeAudioSource = 'elevenlabs';
             const success = await this.playElevenLabs(cleanText);
             if (success) return;
         }
 
-        // Native Natural SpeechSynthesis
+        // 3. Fallback to Natural SpeechSynthesis
+        this.activeAudioSource = 'browser';
+        this.speakTTS(cleanText, options);
+    }
+
+    speakTTS(cleanText, options = {}) {
         if (!('speechSynthesis' in window)) return;
 
         const utterance = new SpeechSynthesisUtterance(cleanText);
@@ -294,7 +377,6 @@ class ShinobiAudioEngine {
 
         utterance.rate = options.rate || this.voiceRate || 0.98;
         utterance.pitch = options.pitch || this.voicePitch || 1.02;
-        // Maximum volume strictly 1.0 so speech is never muffled or small
         utterance.volume = 1.0;
 
         utterance.onstart = () => {
