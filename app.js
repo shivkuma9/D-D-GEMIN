@@ -42,6 +42,8 @@ class ShinobiRPGApp {
         this.statAgilityEl = document.getElementById('stat-agility');
         this.statReservesEl = document.getElementById('stat-reserves');
         this.statTacticsEl = document.getElementById('stat-tactics');
+        this.statCharmEl = document.getElementById('stat-charm');
+        this.statSerpentEl = document.getElementById('stat-serpent');
 
         // Jutsu & Inventory
         this.jutsuListEl = document.getElementById('jutsu-list');
@@ -672,6 +674,8 @@ class ShinobiRPGApp {
         if (this.statAgilityEl) this.statAgilityEl.textContent = char.stats.agility;
         if (this.statReservesEl) this.statReservesEl.textContent = char.stats.chakraReserves;
         if (this.statTacticsEl) this.statTacticsEl.textContent = char.stats.tactics;
+        if (this.statCharmEl) this.statCharmEl.textContent = char.stats.charm || 82;
+        if (this.statSerpentEl) this.statSerpentEl.textContent = char.stats.serpentSense || 75;
 
         // Jutsus
         if (this.jutsuListEl) {
@@ -724,6 +728,21 @@ class ShinobiRPGApp {
                         </div>
                         <div class="trust-bar">
                             <div class="trust-fill" style="width: ${member.trust}%;"></div>
+                        </div>
+                    ` : ''}
+                    ${member.affection !== undefined ? `
+                        <div class="trust-row" style="margin-top: 4px;">
+                            <span style="color: #fb7185;">💖 Romance Affection:</span>
+                            <span style="color: #fda4af; font-weight: bold;">${member.affection}% (Rank ${member.romanceRank || 'C'})</span>
+                        </div>
+                        <div class="trust-bar" style="background: rgba(244, 63, 94, 0.2);">
+                            <div class="trust-fill" style="width: ${member.affection}%; background: linear-gradient(90deg, #f43f5e, #fb7185);"></div>
+                        </div>
+                    ` : ''}
+                    ${member.rivalry ? `
+                        <div style="font-size: 0.7rem; color: #fbbf24; margin-top: 4px; display: flex; justify-content: space-between;">
+                            <span>⚔️ Rivalry: <strong>${member.rivalry}</strong></span>
+                            <span>Jealousy: ${member.jealousy || 0}%</span>
                         </div>
                     ` : ''}
                 `;

@@ -1,4 +1,4 @@
-// character_state.js - Shinobi State Management Engine with Tobirama Lineage & Full Game Progress Persistence
+// character_state.js - Shinobi State Management Engine with Tobirama Grandson & Hebi Snake Clan Lineage + Romance/Rivalry System
 class ShinobiStateManager {
     constructor() {
         this.STORAGE_KEY = 'gemini_dnd_shinobi_save';
@@ -22,10 +22,10 @@ class ShinobiStateManager {
 
     getDefaultCharacter() {
         return {
-            name: 'Shivkumar Sanju',
-            clan: 'Senju Clan (Direct Lineage of the 2nd Hokage)',
-            title: 'Heir of Tobirama // Water Prodigy',
-            nature: 'Water (Suiton)',
+            name: 'Shivkumar Senju',
+            clan: 'Senju-Hebi Hybrid (Grandson of 2nd Hokage Tobirama × Ancient Snake Clan)',
+            title: 'Grandson of Tobirama // Serpentine Water Prodigy',
+            nature: 'Water Release (Suiton) + Serpentine Chakra (Hebi)',
             rank: 'Genin',
             level: 1,
             exp: 0,
@@ -36,14 +36,17 @@ class ShinobiStateManager {
             maxChakra: 100,
             ryo: 2400,
             avatar: 'assets/shivkumar_senju_portrait.jpg',
-            appearance: 'Striking physical resemblance to the Second Hokage (Tobirama Senju): spiky silver hair, crimson facial marks on both cheeks and chin, dark blue lacquered samurai armor over black mesh, white fur collar mantle, and Konoha forehead protector with steel happuri face-guards.',
+            appearance: 'Striking physical resemblance to the Second Hokage (Tobirama Senju): spiky silver hair, crimson facial marks on both cheeks and chin, piercing amber-gold serpentine slit eyes, dark blue lacquered samurai armor over black mesh, white fur collar mantle, and Konoha forehead protector with steel happuri face-guards.',
+            personality: 'Calculating tactical genius with a hidden charming rogue side (reminiscent of Jiraiya); loves teasing and flirting with kunoichi while engaging in tense romantic rivalry with Naruto and Sasuke.',
             stats: {
-                ninjutsu: 68,
+                ninjutsu: 70,
                 taijutsu: 72,
-                genjutsu: 45,
-                agility: 66,
-                chakraReserves: 85,
-                tactics: 78
+                genjutsu: 48,
+                agility: 68,
+                chakraReserves: 88,
+                tactics: 78,
+                charm: 82,        // Flirtation, charisma, persuasion, and romantic allure
+                serpentSense: 75  // Thermal sensory vision, venom resistance, stealth detection
             },
             jutsus: [
                 {
@@ -51,21 +54,35 @@ class ShinobiStateManager {
                     name: 'Water Release: Surging Impact Fist',
                     cost: 20,
                     type: 'Taijutsu + Ninjutsu',
-                    desc: 'Condensed hydro-chakra detonates a split-second after impact, bypassing guards with heavy crushing force.'
+                    desc: 'Condensed hydro-chakra detonates inside the target on contact with heavy hydraulic crushing force.'
+                },
+                {
+                    id: 'hidden_water_snakes',
+                    name: 'Hidden Shadow Water Snake Hands',
+                    cost: 25,
+                    type: 'Hebi + Suiton Bloodline',
+                    desc: 'Twin pressurized water serpents lash out from sleeves to grapple, disarm weapons, or constrict enemy ninja.'
+                },
+                {
+                    id: 'slithering_surge',
+                    name: 'Water Release: Slithering Surge',
+                    cost: 15,
+                    type: 'Serpentine Evasion',
+                    desc: 'Liquefies movement along the ground or river, effortlessly slipping out of enemy holds with fluid serpentine agility.'
                 },
                 {
                     id: 'water_shadow_clone',
                     name: 'Water-Shadow Clone Jutsu',
                     cost: 25,
-                    type: 'Ninjutsu Forbidden Variant',
-                    desc: 'Physical clone derived from Tobirama Senju\'s forbidden jutsu scrolls that transmits memories and bursts into a torrent when destroyed.'
+                    type: 'Tobirama Forbidden Variant',
+                    desc: 'Ancestral forbidden clone technique that relays memories and bursts into a blinding torrent when struck.'
                 },
                 {
                     id: 'body_substitution',
                     name: 'Body Replacement Technique (Kawarimi)',
                     cost: 10,
                     type: 'Evasion',
-                    desc: 'Rapidly swaps position with a training log to avoid lethal direct damage.'
+                    desc: 'Instantly swaps positions with a log or decoy to avoid lethal damage.'
                 }
             ],
             inventory: [
@@ -82,7 +99,9 @@ class ShinobiStateManager {
                     hp: 120,
                     maxHp: 120,
                     trust: 35,
-                    status: 'Charging head-on with clones',
+                    rivalry: 'Friendly Rival',
+                    jealousy: 10,
+                    status: 'Charging head-on with clones; suspicious of your smooth talk',
                     avatar: '🍜'
                 },
                 sasuke: {
@@ -91,7 +110,9 @@ class ShinobiStateManager {
                     hp: 95,
                     maxHp: 95,
                     trust: 15,
-                    status: 'Stealthed in tree foliage',
+                    rivalry: 'Tense Romantic & Combat Rival',
+                    jealousy: 25,
+                    status: 'Stealthed in foliage; glaring coldly when you flirt',
                     avatar: '🔥'
                 },
                 sakura: {
@@ -99,9 +120,33 @@ class ShinobiStateManager {
                     role: 'Tactical Trainee',
                     hp: 80,
                     maxHp: 80,
-                    trust: 20,
-                    status: 'Hidden in underbrush',
+                    trust: 25,
+                    affection: 30,
+                    romanceRank: 'C',
+                    status: 'Blushing at your forward Senju charm; glancing between you and Sasuke',
                     avatar: '🌸'
+                },
+                hinata: {
+                    name: 'Hinata Hyuga',
+                    role: 'Byakugan Princess',
+                    hp: 85,
+                    maxHp: 85,
+                    trust: 20,
+                    affection: 25,
+                    romanceRank: 'C',
+                    status: 'Peeking shyly from behind trees; charmed by your royal presence',
+                    avatar: '💜'
+                },
+                ino: {
+                    name: 'Ino Yamanaka',
+                    role: 'Mind Transmission Specialist',
+                    hp: 80,
+                    maxHp: 80,
+                    trust: 20,
+                    affection: 25,
+                    romanceRank: 'C',
+                    status: 'Smirking at your suave confidence; playfully teasing Sasuke about you',
+                    avatar: '💐'
                 },
                 kakashi: {
                     name: 'Kakashi Hatake',
@@ -109,7 +154,8 @@ class ShinobiStateManager {
                     hp: 400,
                     maxHp: 400,
                     bells: 3,
-                    status: 'Reading Icha Icha Paradise',
+                    trust: 40,
+                    status: 'Reading Icha Icha Paradise; chuckling at your womanizing charm',
                     avatar: '📖'
                 }
             }
@@ -130,8 +176,9 @@ class ShinobiStateManager {
             this.character.stats.taijutsu += 3;
             this.character.stats.agility += 2;
             this.character.stats.chakraReserves += 4;
+            this.character.stats.charm += 2;
             this.save();
-            return true; // Leveled up
+            return true;
         }
         this.save();
         return false;
@@ -152,6 +199,18 @@ class ShinobiStateManager {
     modifyPartyTrust(memberKey, delta) {
         if (this.character.party[memberKey]) {
             this.character.party[memberKey].trust = Math.max(0, Math.min(100, this.character.party[memberKey].trust + delta));
+            this.save();
+        }
+    }
+
+    modifyAffection(targetKey, delta) {
+        if (this.character.party[targetKey] && this.character.party[targetKey].affection !== undefined) {
+            this.character.party[targetKey].affection = Math.max(0, Math.min(100, this.character.party[targetKey].affection + delta));
+            const aff = this.character.party[targetKey].affection;
+            if (aff >= 90) this.character.party[targetKey].romanceRank = 'S';
+            else if (aff >= 60) this.character.party[targetKey].romanceRank = 'A';
+            else if (aff >= 30) this.character.party[targetKey].romanceRank = 'B';
+            else this.character.party[targetKey].romanceRank = 'C';
             this.save();
         }
     }
@@ -195,7 +254,21 @@ class ShinobiStateManager {
             const raw = localStorage.getItem(this.STORAGE_KEY);
             if (raw) {
                 const parsed = JSON.parse(raw);
-                if (parsed.character) this.character = parsed.character;
+                if (parsed.character) {
+                    // Merge with default to guarantee new stats (charm, serpentSense) and jutsus are present
+                    this.character = {
+                        ...this.getDefaultCharacter(),
+                        ...parsed.character,
+                        stats: {
+                            ...this.getDefaultCharacter().stats,
+                            ...(parsed.character.stats || {})
+                        },
+                        party: {
+                            ...this.getDefaultCharacter().party,
+                            ...(parsed.character.party || {})
+                        }
+                    };
+                }
                 if (parsed.mission) this.mission = parsed.mission;
                 if (parsed.history) this.history = parsed.history;
                 if (parsed.currentNode) this.currentNode = parsed.currentNode;
