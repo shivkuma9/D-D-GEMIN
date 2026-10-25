@@ -51,6 +51,9 @@
             <button class="pill-btn" id="manual-dice-btn" title="Roll D20 Check with Dynamic Attributes">
                 <span>🎲</span> <span>ROLL D20</span>
             </button>
+            <button class="pill-btn" id="bgm-toggle-btn" title="Toggle Atmospheric Shinobi BGM">
+                <span>🎵</span> <span id="bgm-label">BGM ON</span>
+            </button>
             <button class="pill-btn" id="voice-settings-btn" title="Configure Realistic Voice Studio & Sound FX">
                 <span>🎙️</span> <span>VOICE STUDIO</span>
             </button>
@@ -326,6 +329,29 @@
             </div>
             <button type="button" class="pill-btn active" id="dice-close-btn" style="margin-top: 0.5rem; background: #0284c7; color: #fff; padding: 0.4rem 1.2rem; cursor: pointer;">
                 <span>✅</span> <span>CONTINUE</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Romance Support Event Modal -->
+    <div class="modal-backdrop" id="romance-modal">
+        <div class="modal-content" style="border: 2px solid #f43f5e; box-shadow: 0 0 35px rgba(244, 63, 94, 0.4); max-width: 580px;">
+            <button class="modal-close-btn" id="romance-close-btn">✕</button>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="font-size: 2.2rem;" id="romance-modal-avatar">🌸</span>
+                <div>
+                    <h3 id="romance-modal-title" style="margin: 0; font-family: var(--font-heading); color: #fda4af;">TWILIGHT CONFESSION</h3>
+                    <span id="romance-modal-subtitle" style="font-size: 0.72rem; color: #f43f5e; font-family: var(--font-mono); font-weight: bold;">SPECIAL KUNOICHI SUPPORT EVENT</span>
+                </div>
+            </div>
+            <div id="romance-modal-dialogue" style="font-size: 0.88rem; line-height: 1.6; color: #f1f5f9; background: rgba(0,0,0,0.45); padding: 1rem; border-radius: 8px; border: 1px solid rgba(244, 63, 94, 0.25); max-height: 250px; overflow-y: auto;">
+                <!-- Romance dialogue here -->
+            </div>
+            <div id="romance-modal-reward" style="font-family: var(--font-mono); font-size: 0.8rem; color: #4ade80; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.5rem 0.8rem; border-radius: 6px;">
+                <!-- Reward text here -->
+            </div>
+            <button type="button" class="freeform-btn" id="romance-accept-btn" style="justify-content: center; background: linear-gradient(135deg, #f43f5e, #be123c); border-color: #fda4af;">
+                <span>❤️</span> <span>CHERISH THIS BOND & ACCEPT BLESSING</span>
             </button>
         </div>
     </div>

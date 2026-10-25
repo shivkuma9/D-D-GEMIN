@@ -116,6 +116,18 @@ class ShinobiRPGApp {
         this.appLayoutEl = document.querySelector('.app-layout');
         this.mobileNavBtns = document.querySelectorAll('.mobile-nav-btn[data-tab]');
 
+        // BGM Music & Romance Modal Elements
+        this.bgmToggleBtnEl = document.getElementById('bgm-toggle-btn');
+        this.bgmLabelEl = document.getElementById('bgm-label');
+        this.romanceModalEl = document.getElementById('romance-modal');
+        this.romanceCloseBtnEl = document.getElementById('romance-close-btn');
+        this.romanceAcceptBtnEl = document.getElementById('romance-accept-btn');
+        this.romanceModalAvatarEl = document.getElementById('romance-modal-avatar');
+        this.romanceModalTitleEl = document.getElementById('romance-modal-title');
+        this.romanceModalSubtitleEl = document.getElementById('romance-modal-subtitle');
+        this.romanceModalDialogueEl = document.getElementById('romance-modal-dialogue');
+        this.romanceModalRewardEl = document.getElementById('romance-modal-reward');
+
         // Security Gatekeeper Elements
         this.lockGateBackdropEl = document.getElementById('lock-gate-backdrop');
         this.lockGateCardEl = document.getElementById('lock-gate-card');
@@ -699,6 +711,23 @@ class ShinobiRPGApp {
                 });
             });
         }
+
+        // BGM Toggle Button
+        if (this.bgmToggleBtnEl) {
+            this.bgmToggleBtnEl.addEventListener('click', () => {
+                const active = this.audio.toggleBgm();
+                if (this.bgmLabelEl) this.bgmLabelEl.textContent = active ? 'BGM ON' : 'BGM OFF';
+                this.bgmToggleBtnEl.style.background = active ? 'rgba(56, 189, 248, 0.2)' : 'rgba(100, 116, 139, 0.3)';
+                this.showToast(active ? '🎵 Shinobi Ambient BGM: Playing' : '🔇 Shinobi BGM: Muted');
+            });
+        }
+
+        // Romance Date Modal Close / Accept
+        const closeRomanceModal = () => {
+            if (this.romanceModalEl) this.romanceModalEl.style.display = 'none';
+        };
+        if (this.romanceCloseBtnEl) this.romanceCloseBtnEl.addEventListener('click', closeRomanceModal);
+        if (this.romanceAcceptBtnEl) this.romanceAcceptBtnEl.addEventListener('click', closeRomanceModal);
     }
 
     renderAll() {
@@ -844,6 +873,9 @@ class ShinobiRPGApp {
                         <div class="trust-bar" style="background: rgba(244, 63, 94, 0.2);">
                             <div class="trust-fill" style="width: ${member.affection}%; background: linear-gradient(90deg, #f43f5e, #fb7185);"></div>
                         </div>
+                        <button type="button" class="romance-date-btn" data-kunoichi="${key}" style="margin-top: 0.45rem; width: 100%; background: linear-gradient(135deg, #f43f5e, #be123c); border: 1px solid #fda4af; color: #fff; font-size: 0.72rem; padding: 0.35rem 0.5rem; border-radius: 4px; cursor: pointer; font-family: var(--font-mono); font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 0.35rem; transition: transform 0.15s ease;">
+                            <span>💖</span> <span>DATE / SPEND TIME</span>
+                        </button>
                     ` : ''}
                     ${member.rivalry ? `
                         <div style="font-size: 0.7rem; color: #fbbf24; margin-top: 4px; display: flex; justify-content: space-between;">
@@ -854,6 +886,28 @@ class ShinobiRPGApp {
                 `;
                 this.teamContainerEl.appendChild(card);
             }
+
+            // Bind Romance Date Buttons
+            const dateBtns = this.teamContainerEl.querySelectorAll('.romance-date-btn');
+            dateBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const kunoichiKey = btn.dataset.kunoichi;
+                    const res = this.state.triggerRomanceDate(kunoichiKey);
+                    if (res && res.success && res.event) {
+                        const ev = res.event;
+                        if (this.romanceModalTitleEl) this.romanceModalTitleEl.textContent = ev.title;
+                        if (this.romanceModalAvatarEl) this.romanceModalAvatarEl.textContent = this.state.character.party[kunoichiKey].avatar || '💖';
+                        if (this.romanceModalDialogueEl) this.romanceModalDialogueEl.textContent = ev.dialogue;
+                        if (this.romanceModalRewardEl) this.romanceModalRewardEl.textContent = `🎁 REWARD: ${ev.rewardText}`;
+                        if (this.romanceModalEl) this.romanceModalEl.style.display = 'flex';
+                        this.audio.playBellJingle();
+                        this.renderCharacterPanel();
+                        this.renderTeamPanel();
+                        this.showToast(`💖 Support Event Cleared with ${ev.kunoichiName}!`);
+                    }
+                });
+            });
         }
 
         if (this.bellsCounterEl) {

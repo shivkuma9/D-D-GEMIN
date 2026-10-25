@@ -150,6 +150,17 @@ class ShinobiStateManager {
                     status: 'Smirking at your suave confidence; playfully teasing Sasuke about you',
                     avatar: '💐'
                 },
+                temari: {
+                    name: 'Temari of the Sand',
+                    role: 'Iron Wind Princess',
+                    hp: 95,
+                    maxHp: 95,
+                    trust: 15,
+                    affection: 20,
+                    romanceRank: 'C',
+                    status: 'Folding her arms with a flustered smirk; impressed by your smooth disarm',
+                    avatar: '🌪️'
+                },
                 kakashi: {
                     name: 'Kakashi Hatake',
                     role: 'Jonin Instructor (Copy Ninja)',
@@ -279,6 +290,71 @@ class ShinobiStateManager {
             this.character.inventory.push(item);
         }
         this.save();
+    }
+
+    triggerRomanceDate(kunoichiKey) {
+        const kunoichi = this.character.party[kunoichiKey];
+        if (!kunoichi || kunoichi.affection === undefined) {
+            return { success: false, message: 'Invalid kunoichi target.' };
+        }
+
+        let event = null;
+        if (kunoichiKey === 'sakura') {
+            event = {
+                title: '🌸 Twilight by the Naka River — Sakura\'s Confession',
+                kunoichiName: 'Sakura Haruno',
+                dialogue: `The summer evening breeze carries the gentle scent of cherry blossoms along the rushing Naka River. Sakura walks beside you in her soft crimson qipao dress, her short shorn hair catching the golden twilight.\n\n"Shivkumar-kun..." she whispers, her green eyes looking softly up into your amber gaze. "During the Forest of Death, when you held me and shielded me from the Sound ninja... I felt a warmth I've never known before. I used to think of Sasuke as my whole world, but you... you actually see me, protect me, and believe in my strength."\n\nSakura shyly steps closer, resting her head against your white fur mantle collar:\n"Promise me you won't leave me behind, Shivkumar-kun."\n\nYou gently wrap your arm around her shoulders, whispering sweet rogue reassurances that make her heart flutter.`,
+                rewardText: '+15 Max Chakra & Cherry Blossom Healing Charm added to pouch!',
+                buff: () => {
+                    this.character.maxChakra += 15;
+                    this.character.chakra = this.character.maxChakra;
+                    this.modifyAffection('sakura', 15);
+                    this.addItem({ id: 'sakura_charm', name: 'Cherry Blossom Charm', count: 1, icon: '🌸', heals: 50, desc: 'Crafted with Sakura\'s love; heals +50 HP in emergency' });
+                }
+            };
+        } else if (kunoichiKey === 'hinata') {
+            event = {
+                title: '💜 Moonlight in the Hyuga Bamboo Grove — Hinata\'s Bento',
+                kunoichiName: 'Hinata Hyuga',
+                dialogue: `The pale silver moonlight casts long shadows across the stone lanterns of the Hyuga estate. Hinata waits timidly by the bamboo garden gate, clutching a lacquered wooden bento box wrapped in purple silk cloth.\n\nHer delicate cheeks burn crimson as you approach with a confident Senju smile:\n"S-Shivkumar-kun... you came! I... I made this bento for you... to thank you for standing up to Neji-niisan and wiping the blood from my lips at the hospital..."\n\nYou take the bento box and gently touch her fingers. Hinata's breath hitches, her lavender Byakugan eyes glowing with profound devotion:\n"Whenever you look at me with your warm amber eyes, I feel like I have the courage to become a proud shinobi. Please... let me stay by your side forever."\n\nYou wipe a stray tear from her cheek and kiss her forehead, sending her heart into joyful overdrive!`,
+                rewardText: '+10 Agility & Hyuga Restorative Herbal Salve added to pouch!',
+                buff: () => {
+                    this.character.stats.agility += 5;
+                    this.modifyAffection('hinata', 15);
+                    this.addItem({ id: 'hinata_salve', name: 'Hyuga Herbal Salve', count: 1, icon: '💜', heals: 60, desc: 'Secret clan ointment made with love; restores +60 HP & cures status' });
+                }
+            };
+        } else if (kunoichiKey === 'ino') {
+            event = {
+                title: '💐 Petals & Perfume — Ino\'s Secret Flower Date',
+                kunoichiName: 'Ino Yamanaka',
+                dialogue: `Inside the fragrant greenhouse behind the Yamanaka Flower Shop, colorful orchids and jasmine bloom under the evening lamps. Ino sits atop a cedar table, playfully swinging her slender legs in her purple crop top and high-slit skirt.\n\n"Well, well! Look who snuck out to see me, Prince Senju!" Ino giggles, stepping up on her tiptoes to gently tuck an azure blue cosmos blossom behind your ear.\n\nHer hands linger around your neck as she leans in close, her sapphire eyes sparkling with flirtatious boldness:\n"You know, Sakura still hasn't figured out why I've been smiling all week. Sasuke might have his brooding looks, but you... you're smooth, royal, dangerous, and utterly captivating, Shivkumar-kun. Tell me I'm your favorite kunoichi?"\n\nYou wrap your hands around her waist, flashing your rogue Jiraiya-style smirk, drawing a delighted gasp from the blonde beauty!`,
+                rewardText: '+10 Charm & Mind-Focus Battle Incense added to pouch!',
+                buff: () => {
+                    this.character.stats.charm = (this.character.stats.charm || 80) + 5;
+                    this.modifyAffection('ino', 15);
+                    this.addItem({ id: 'ino_incense', name: 'Mind-Focus Incense', count: 1, icon: '💐', restores: 40, desc: 'Yamanaka secret incense; restores +40 Chakra' });
+                }
+            };
+        } else if (kunoichiKey === 'temari') {
+            event = {
+                title: '🌪️ Sand & Starlight — Temari\'s Secret Overlook',
+                kunoichiName: 'Temari of the Sand',
+                dialogue: `High atop the cliff overlooking the Great Naruto Bridge road, Temari leans against the iron frame of her giant fan, gazing out over the misty sea under the starlit sky.\n\nAs you step out of the shadows, she turns with a startled smirk, her four blonde pigtails dancing in the breeze:\n"Hmph. You really have no fear, do you, silver-hair? Sneaking out to meet an enemy kunoichi on the border?"\n\nYou step closer with effortless charm, holding out two chilled bottles of rice soda. Temari takes a bottle, her cheeks blushing lightly in the moonlight:\n"You're quite the rogue, you know that? Back in the forest, when you whispered in my ear and disarmed my fan... nobody has ever made me feel flustered like that. If you ever come to the Hidden Sand, Shivkumar... you better look for me first."\n\nYou clink your bottle against hers, sharing an intimate, electric smile under the stars.`,
+                rewardText: '+10 Tactics & Wind-Cutting Steel Fan added to pouch!',
+                buff: () => {
+                    this.character.stats.tactics += 5;
+                    this.modifyAffection('temari', 15);
+                    this.addItem({ id: 'temari_fan', name: 'Desert Wind Charm', count: 1, icon: '🌪️', desc: 'A keepsake from Temari; grants +10 Evasion against wind attacks' });
+                }
+            };
+        }
+
+        if (event) {
+            event.buff();
+            this.save();
+        }
+        return { success: true, event };
     }
 
     saveCurrentLocation(nodeId, narrativeText = null, dynamicChoices = null) {

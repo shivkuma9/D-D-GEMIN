@@ -1937,8 +1937,8 @@ Your Senju lineage remains hidden, but your power and tactical brilliance have e
                 "actionType": "check",
                 "stat": "charm",
                 "dc": 14,
-                "successNode": "chunin_ch11_finals_qualification",
-                "failNode": "chunin_ch11_finals_qualification"
+                "successNode": "finals_ch1_jiraiya_toad_training",
+                "failNode": "finals_ch1_jiraiya_toad_training"
             },
             {
                 "approach": "chakra",
@@ -1947,8 +1947,8 @@ Your Senju lineage remains hidden, but your power and tactical brilliance have e
                 "actionType": "check",
                 "stat": "chakraReserves",
                 "dc": 15,
-                "successNode": "chunin_ch11_finals_qualification",
-                "failNode": "chunin_ch11_finals_qualification"
+                "successNode": "finals_ch1_jiraiya_toad_training",
+                "failNode": "finals_ch1_jiraiya_toad_training"
             },
             {
                 "approach": "mind",
@@ -1957,8 +1957,608 @@ Your Senju lineage remains hidden, but your power and tactical brilliance have e
                 "actionType": "check",
                 "stat": "ninjutsu",
                 "dc": 15,
-                "successNode": "chunin_ch11_finals_qualification",
-                "failNode": "chunin_ch11_finals_qualification"
+                "successNode": "finals_ch1_jiraiya_toad_training",
+                "failNode": "finals_ch1_jiraiya_toad_training"
+            }
+        ]
+    }
+,
+
+{
+        "id": "finals_ch1_jiraiya_toad_training",
+        "title": "Act V: The Toad Sage's Crucible — 30 Days of Hell",
+        "act": "Act V - Finals & Konoha Crush: Sage Training",
+        "location": "Mount Myoboku Gorge & Konoha Hot Springs",
+        "atmosphere": "Boiling steam from thermal vents; waterfalls crashing 300 feet down; Jiraiya chuckling atop an enormous toad with a smoking pipe.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch1_jiraiya_toad_training.mp3",
+        "illustration": {
+            "title": "Crucible of the Sannin",
+            "badge": "ACT V COMMENCES",
+            "badgeClass": "threat-moderate",
+            "icon": "🐸",
+            "quote": "\"To tap into your true monstrous chakra, kid, you have to stand at death's door! Now jump!\"",
+            "tags": [
+                "Jiraiya",
+                "Hot Springs",
+                "Toad Summoning",
+                "Ancestral Suiton"
+            ]
+        },
+        "narrative": "With one month until the Chunin Exam Finals, Kakashi takes Sasuke into isolation to train his Sharingan, leaving Naruto and you to train under Master Jiraiya!\n\nJiraiya drags you out of the village to the jagged gorges of Mount Myoboku's foothills.\n\"Kid! You carry Tobirama's tactical brain and the bloodline of the ancient serpents. But against Gaara of the Desert and foreign jonin, standard genin techniques are child's play!\"\n\nJiraiya unrolls an enormous blood-stained summoning contract scroll:\n\"Sign your name in blood and stamp your thumbprints! If you can master this, you'll summon battle-ready warrior toads to stand toe-to-toe with colossal beasts!\"\n\nFor three grueling weeks, Jiraiya pushes you past exhaustion. He forces you to walk on boiling thermal geysers, balances you over bottomless abysses, and teaches you how to mold high-pressure water vortexes that can crush boulders.\n\nDuring evening breaks at the hot springs, Jiraiya reads his *Icha Icha* drafts, laughing uproariously as you offer charming rogue tips on women. The bond between Master and student burns with fierce Will of Fire!",
+        "options": [
+            {
+                "approach": "chakra",
+                "tag": "🐸 TOAD SUMMONING BLOODLINE PACT",
+                "label": "Smear your blood across the ancestral scroll, molding your massive Senju chakra to summon battle toad Gamakichi from the spirit realm!",
+                "actionType": "check",
+                "stat": "chakraReserves",
+                "dc": 15,
+                "successNode": "finals_ch2_hinata_neji_defense",
+                "failNode": "finals_ch2_hinata_neji_defense"
+            },
+            {
+                "approach": "ninjutsu",
+                "tag": "🌊 WATER RELEASE: HYDRAULIC VORTEX CANNON",
+                "label": "Channel Tobirama's ancestral water compression technique, forming a swirling drill of boiling spring water that splits a granite cliff in two!",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 15,
+                "successNode": "finals_ch2_hinata_neji_defense",
+                "failNode": "finals_ch2_hinata_neji_defense"
+            },
+            {
+                "approach": "charm",
+                "tag": "💋 ROGUE CONNOISSEUR CAMARADERIE",
+                "label": "Exchange witty kunoichi observations and tactical flirtation notes with Jiraiya over sake, winning the Sannin's deepest paternal affection (+20 Jiraiya Trust).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 14,
+                "successNode": "finals_ch2_hinata_neji_defense",
+                "failNode": "finals_ch2_hinata_neji_defense"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch2_hinata_neji_defense",
+        "title": "Act V: Gentle Heart, Iron Fist — Defending Hinata Hyuga",
+        "act": "Act V - Finals & Konoha Crush: The Hyuga Feud",
+        "location": "Konoha Central Hospital Gardens",
+        "atmosphere": "Cherry petals falling around stone lanterns; Hinata practicing gentle palm strikes in bandages; Neji watching coldly from the bamboo fence.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch2_hinata_neji_defense.mp3",
+        "illustration": {
+            "title": "Lavender Courage",
+            "badge": "ROMANCE BOND UNLOCKED",
+            "badgeClass": "threat-moderate",
+            "icon": "🌸",
+            "quote": "\"S-Shivkumar-kun... whenever you look at me with your warm amber eyes, I feel like I can change my destiny...\"",
+            "tags": [
+                "Hinata Hyuga",
+                "Neji Defiance",
+                "Romance Bond",
+                "Gentle Fist"
+            ]
+        },
+        "narrative": "While walking through the hospital grounds, you hear the sharp whistling of palm strikes.\nIn the courtyard, Hinata Hyuga stands in linen bandages, her delicate hands trembling as she strikes a wooden practice post. Fresh blood seeps through her shoulder from her preliminary duel against Neji.\n\nFrom the shadows of the bamboo grove, Neji Hyuga steps forward, his Byakugan veins pulsing with cold condescension:\n\"Pathetic, Hinata-sama. A drop-out of the main branch cannot alter fate. The caged bird remains trapped until death.\"\n\nTears well in Hinata's lavender eyes. Her knees buckle, and she begins to collapse toward the stone path!\n\nBefore she can touch the ground, you glide forward with serpentine grace, wrapping a strong arm around her waist and catching her against your chest.\nYou pull out a soft silk handkerchief, gently wiping the crimson blood from her trembling lip.\n\nHinata's porcelain face flushes deep crimson, her heart fluttering rapidly against your armor:\n\"Sh-Shivkumar-kun...!\"\n\nYou turn your piercing amber snake eyes upon Neji, your voice ringing with the commanding steel of the Second Hokage:\n\"Caged birds only stay caged when they lack the fangs to break their prison, Neji. Hinata has more courage in her little finger than you have in your entire fatalist philosophy. Walk away before I shatter that cage for you.\"\n\nNeji scowls bitterly and retreats into the shadows. Hinata gazes up into your eyes with tears of blooming love (+25 Hinata Romance Affection)!",
+        "options": [
+            {
+                "approach": "charm",
+                "tag": "💖 GENTLE MOONLIGHT CONFESSION",
+                "label": "Hold Hinata close, offering sweet, tender words of belief that make her shy heart melt with everlasting devotion (+25 Hinata Affection).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 13,
+                "successNode": "finals_ch3_tournament_matches",
+                "failNode": "finals_ch3_tournament_matches"
+            },
+            {
+                "approach": "chakra",
+                "tag": "🌿 SENJU HEALING EMBRACE",
+                "label": "Channel soothing Suiton regenerative chakra into Hinata's bruised tenketsu chakra points, fully healing her internal organs (+35 Hinata HP).",
+                "actionType": "check",
+                "stat": "chakraReserves",
+                "dc": 14,
+                "successNode": "finals_ch3_tournament_matches",
+                "failNode": "finals_ch3_tournament_matches"
+            },
+            {
+                "approach": "mind",
+                "tag": "👁️ BYAKUGAN TACTICAL ANALYSIS",
+                "label": "Analyze Neji's Gentle Fist posture and rotational blind-spot to formulate a winning strategy for Naruto's upcoming duel.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "finals_ch3_tournament_matches",
+                "failNode": "finals_ch3_tournament_matches"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch3_tournament_matches",
+        "title": "Act V: The Finals Arena — Destiny Defied",
+        "act": "Act V - Finals & Konoha Crush: The Arena Opens",
+        "location": "Konoha Grand Stadium Arena",
+        "atmosphere": "Tens of thousands of roaring spectators; flags of the Five Great Nations whipping in the wind; Lord Hokage and the Kazekage seated on the high throne balcony.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch3_tournament_matches.mp3",
+        "illustration": {
+            "title": "Destiny Shattered",
+            "badge": "FINALS COMMENCE",
+            "badgeClass": "threat-high",
+            "icon": "🏟️",
+            "quote": "\"I will never give up! I will change the Hyuga destiny with my own two hands!\"",
+            "tags": [
+                "Naruto vs Neji",
+                "Shikamaru vs Temari",
+                "Grand Stadium"
+            ]
+        },
+        "narrative": "The morning of the Chunin Finals arrives! The massive stone arena is packed with thousands of roaring shinobi, feudal daimyo, and foreign merchants.\nOn the VIP balcony, Lord Third Hokage Hiruzen Sarutobi welcomes the Kazekage of the Hidden Sand.\n\nChief Proctor Genma Shiranui chews his senbon needle in the center ring:\n\"First Match: **Naruto Uzumaki vs. Neji Hyuga**! Begin!\"\n\nNeji strikes with devastating Eight Trigrams Sixty-Four Palms, shutting down Naruto's chakra networks.\nYet Naruto refuses to surrender! Channeling furious red Nine-Tails fox chakra, Naruto blasts Neji through the dirt floor with a subterranean uppercut, proving that destiny can be broken!\nIn the stands, Hinata weeps with joyful pride, while Sakura cheers at your side.\n\nNext comes **Shikamaru Nara vs. Temari**!\nTemari dominates the arena with hurricane gusts from her iron fan, but Shikamaru calculates the stadium shadow angles with his 200-IQ tactical mind, trapping Temari in his Shadow Possession!\nYet just as victory is his, Shikamaru raises his hand and groans:\n\"I forfeit. I'm completely out of chakra, and women are just too troublesome.\"\nThe entire crowd facepalms, while Temari stares at him in stunned fascination.\n\nNow, all eyes turn to the final match: **Sasuke Uchiha vs. Gaara of the Desert**!",
+        "options": [
+            {
+                "approach": "tactics",
+                "tag": "🧠 SHADOW & SAND CALCULATION",
+                "label": "Study Shikamaru's shadow geometry and Temari's fan aerodynamics, committing every tactical parameter to your battlefield memory.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "finals_ch4_sasuke_vs_gaara_chidori",
+                "failNode": "finals_ch4_sasuke_vs_gaara_chidori"
+            },
+            {
+                "approach": "mind",
+                "tag": "🐍 SERPENT SENSORY ARENA SCAN",
+                "label": "Extend thermal sensory vision across the VIP roof, detecting unnatural cold chakra signatures disguised among the Kazekage's ANBU guards.",
+                "actionType": "check",
+                "stat": "serpentSense",
+                "dc": 15,
+                "successNode": "finals_ch4_sasuke_vs_gaara_chidori",
+                "failNode": "finals_ch4_sasuke_vs_gaara_chidori"
+            },
+            {
+                "approach": "charm",
+                "tag": "🌸 BALCONY REASSURANCE TO KUNOICHI",
+                "label": "Sit between Sakura and Ino on the spectator bench, playfully offering them candied dango while Sasuke's absence causes stadium murmurs.",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 13,
+                "successNode": "finals_ch4_sasuke_vs_gaara_chidori",
+                "failNode": "finals_ch4_sasuke_vs_gaara_chidori"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch4_sasuke_vs_gaara_chidori",
+        "title": "Act V: Flash of Lightning — The Chidori Pierces the Sand",
+        "act": "Act V - Finals & Konoha Crush: The Lightning Strike",
+        "location": "Arena Floor — The Sand Sphere of Death",
+        "atmosphere": "Whistling electric ozone; sand swirling into an impenetrable hardened dome; a piercing chirp of a thousand birds filling the stadium.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch4_sasuke_vs_gaara_chidori.mp3",
+        "illustration": {
+            "title": "Chirp of a Thousand Birds",
+            "badge": "LIGHTNING BREAKTHROUGH",
+            "badgeClass": "threat-critical",
+            "icon": "⚡",
+            "quote": "\"My blood... It's my own blood! MOTHER!!\"",
+            "tags": [
+                "Sasuke Chidori",
+                "Gaara Sand Shield",
+                "Blood of the Beast"
+            ]
+        },
+        "narrative": "Just as Genma is about to disqualify Sasuke for tardiness, a swirl of green leaves manifests in the center of the arena!\nKakashi and Sasuke appear back-to-back. Sasuke is clad in sleek black shinobi rompers, his eyes hardened with deadly focus.\n\nThe battle begins!\nUsing Rock Lee's blistering taijutsu speed mastered during his month of training, Sasuke bypasses Gaara's automatic sand defense, battering the sand demon across the arena!\n\nPanicked and bleeding, Gaara curls into a fetal position as his sand forms an impenetrable, spiked sphere. An eye of sand floats overhead. Inside the sphere, Gaara begins transforming into the grotesque One-Tailed beast!\n\nSasuke leaps up the stadium wall.\nHe weaves hand seals: *Ox, Rabbit, Monkey!*\nBlinding blue lightning erupts around Sasuke's right hand, chirping with the deafening roar of ten thousand birds—the **Chidori**!\n\nSasuke sprints down the wall at hypersonic velocity.\n**THUNDERCLAP!**\nSasuke thrusts his lightning hand clean through the reinforced sand sphere!\nInside, Gaara's unhinged shriek of agonizing terror echoes through the entire stadium:\n\"MY BLOOD!! IT'S MY BLOOD!! MOTHER, HE DREW MY BLOOD!!\"\n\nSuddenly, white feathers begin drifting from the sky like silent snow. The invasion has begun!",
+        "options": [
+            {
+                "approach": "taijutsu",
+                "tag": "⚡ LIGHTNING SPEED REACTION",
+                "label": "Leap down to the arena floor with water-cushioned boots to back up Sasuke before the bleeding sand sphere erupts into shrapnel.",
+                "actionType": "check",
+                "stat": "taijutsu",
+                "dc": 15,
+                "successNode": "finals_ch5_temple_of_nirvana_invasion",
+                "failNode": "finals_ch5_temple_of_nirvana_invasion"
+            },
+            {
+                "approach": "mind",
+                "tag": "🐍 FEATHER GENJUTSU DISPEL",
+                "label": "Release your chakra flow with a sharp Kai seal to shatter Kabuto's Temple of Nirvana genjutsu before the sleeping mist reaches Sakura and Ino.",
+                "actionType": "check",
+                "stat": "genjutsu",
+                "dc": 14,
+                "successNode": "finals_ch5_temple_of_nirvana_invasion",
+                "failNode": "finals_ch5_temple_of_nirvana_invasion"
+            },
+            {
+                "approach": "tactics",
+                "tag": "🛡️ DEFENSIVE SHIELD FORMATION",
+                "label": "Coordinate with Kakashi and Guy to establish an immediate defensive perimeter around the civilian spectators.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "finals_ch5_temple_of_nirvana_invasion",
+                "failNode": "finals_ch5_temple_of_nirvana_invasion"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch5_temple_of_nirvana_invasion",
+        "title": "Act V: The Fall of the Leaf — Operation Konoha Crush",
+        "act": "Act V - Finals & Konoha Crush: The Invasion Begins",
+        "location": "Stadium Rooftop & Outer Village Perimeter",
+        "atmosphere": "Smoke plumes rising across the village; explosions shattering the outer gates; giant summon snakes battering the stone walls.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch5_temple_of_nirvana_invasion.mp3",
+        "illustration": {
+            "title": "The Serpent Strikes the Leaf",
+            "badge": "WAR BREAKS OUT",
+            "badgeClass": "threat-critical",
+            "icon": "🔥",
+            "quote": "\"Today, the Hidden Leaf Village burns to the ground!\"",
+            "tags": [
+                "Konoha Crush",
+                "Kabuto Genjutsu",
+                "Giant Snakes",
+                "Sound & Sand"
+            ]
+        },
+        "narrative": "The arena descends into total war!\nKabuto Disguised as an ANBU operative detonates the Temple of Nirvana Genjutsu, putting eighty percent of the stadium spectators to sleep!\n\nOn the outer village perimeter, explosions thunder like earthquake tremors. An enormous three-headed summon snake crashes through the defensive ramparts, crushing buildings as Hidden Sand and Sound ninja swarm the streets!\n\nOn the VIP balcony, the Kazekage seizes Lord Third Hokage by the neck, holding a kunai to his throat and leaping onto the tiled roof!\nThe Kazekage sheds his ceremonial robes and face veil—revealing the sinister pale face of **Orochimaru**!\n\nFour Sound ninja—Jirobo, Kidomaru, Sakon, and Tayuya—leap to the four corners of the roof, slamming their palms down:\n**Ninpō: Four Violet Flames Barrier!**\nA towering wall of purple energy seals Orochimaru and the Third Hokage inside. Any ANBU guard who touches the purple flames is instantly incinerated!\n\nIn the arena below, Temari and Kankuro drag bleeding, half-transformed Gaara out of the arena into the forest. Sasuke darts after them in pursuit!\nKakashi barks orders to you, Naruto, and Sakura:\n\"Shivkumar, Naruto, Sakura! This is your first official A-Rank mission: Track Sasuke and stop Gaara before he fully awakens the demon!\"",
+        "options": [
+            {
+                "approach": "agility",
+                "tag": "💨 SLITHERING CANOPY PURSUIT",
+                "label": "Lead Naruto and Sakura through the treetops at breakneck velocity, tracking Sasuke's lightning trail and Gaara's blood scent.",
+                "actionType": "check",
+                "stat": "agility",
+                "dc": 14,
+                "successNode": "finals_ch6_four_violet_flames_barrier",
+                "failNode": "finals_ch6_four_violet_flames_barrier"
+            },
+            {
+                "approach": "ninjutsu",
+                "tag": "🌊 GIANT WATER SNAKE WALL BREACH",
+                "label": "Summon twin giant water serpents to intercept a squad of Sound invaders, obliterating their advance to clear a safe path for your cell.",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 15,
+                "successNode": "finals_ch6_four_violet_flames_barrier",
+                "failNode": "finals_ch6_four_violet_flames_barrier"
+            },
+            {
+                "approach": "charm",
+                "tag": "🌸 CALM COURAGE FOR SAKURA",
+                "label": "Take Sakura's trembling hand as you leap across the rooftops, reassuring her with calm Senju majesty (+15 Sakura Affection).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 13,
+                "successNode": "finals_ch6_four_violet_flames_barrier",
+                "failNode": "finals_ch6_four_violet_flames_barrier"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch6_four_violet_flames_barrier",
+        "title": "Act V: The Sannin's Betrayal — Four Violet Flames Barrier",
+        "act": "Act V - Finals & Konoha Crush: Duel on the Rooftop",
+        "location": "Stadium Tile Rooftop — Inside the Purple Barrier",
+        "atmosphere": "Scorching purple flames crackling; Lord Third shedding his heavy armor; Orochimaru cackling with unholy triumph.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch6_four_violet_flames_barrier.mp3",
+        "illustration": {
+            "title": "Master and Disciple",
+            "badge": "HOKAGE CRUCIBLE",
+            "badgeClass": "threat-critical",
+            "icon": "🗡️",
+            "quote": "\"I will teach you my final lesson, Orochimaru: The Will of Fire never extinguishes!\"",
+            "tags": [
+                "Hiruzen Sarutobi",
+                "Orochimaru Duel",
+                "Purple Barrier"
+            ]
+        },
+        "narrative": "Trapped inside the blazing violet barrier, the elderly Third Hokage sheds his ceremonial white robes, revealing black mesh armor and steel gauntlets.\n\nOrochimaru licks his lips with sickening delight:\n\"Sensei... I am going to destroy everything you ever built. The wind that blows through the windmill will burn this village to ash!\"\n\nHiruzen's eyes harden with sorrow and resolve:\n\"Orochimaru... you were once my greatest student. But you have forgotten that the Hokage's true power is not jutsu, but the love for the village and its people!\"\n\nHiruzen bites his thumb, slamming his palms to the roof tiles:\n**Summoning Jutsu: Monkey King Enma!**\nThe legendary ape warrior bursts forth in white smoke, transforming into the unbreakable Adamantine Staff!\n\nHiruzen charges forward, trading blinding blows with Orochimaru's legendary Kusanagi blade!\nYet Orochimaru merely smirks as he weaves the forbidden hand seals of the dead:\n*Tiger, Snake, Dragon!*\n\n\"Let us see if your Will of Fire can defeat the men who created this village, Sarutobi Sensei!\"",
+        "options": [
+            {
+                "approach": "tactics",
+                "tag": "📜 FORBIDDEN SEALING OBSERVATION",
+                "label": "Analyze Orochimaru's forbidden hand seal frequency through the barrier, recognizing the terrifying signature of Edo Tensei.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 15,
+                "successNode": "finals_ch7_edo_tensei_grandfathers",
+                "failNode": "finals_ch7_edo_tensei_grandfathers"
+            },
+            {
+                "approach": "mind",
+                "tag": "🐍 HEBI SOUL RESONANCE",
+                "label": "Feel the unnatural disturbance in the spirit world through your Hebi bloodline, sensing the ancient souls being forcibly summoned from the afterlife.",
+                "actionType": "check",
+                "stat": "serpentSense",
+                "dc": 15,
+                "successNode": "finals_ch7_edo_tensei_grandfathers",
+                "failNode": "finals_ch7_edo_tensei_grandfathers"
+            },
+            {
+                "approach": "chakra",
+                "tag": "⚡ BARRIER CHAKRA DISRUPTION",
+                "label": "Test the purple flames with a high-pressure jet of Suiton water, calculating how much chakra is required to puncture the barrier.",
+                "actionType": "check",
+                "stat": "chakraReserves",
+                "dc": 14,
+                "successNode": "finals_ch7_edo_tensei_grandfathers",
+                "failNode": "finals_ch7_edo_tensei_grandfathers"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch7_edo_tensei_grandfathers",
+        "title": "Act V: Forbidden Reanimation — The Ancestral Clashes",
+        "act": "Act V - Finals & Konoha Crush: The Reanimated Hokage",
+        "location": "Stadium Rooftop — The Shadow of Legends",
+        "atmosphere": "Two wooden coffins rising from the tiles; dust motes swirling around reanimated eyes; Lord Third weeping in grief.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch7_edo_tensei_grandfathers.mp3",
+        "illustration": {
+            "title": "Grandfathers of the Leaf",
+            "badge": "LEGENDARY BLOODLINE",
+            "badgeClass": "threat-critical",
+            "icon": "👑",
+            "quote": "\"Tobirama... look across the barrier. That boy carrying your silver hair and cheek marks... is he your kin?!\"",
+            "tags": [
+                "Hashirama Senju",
+                "Tobirama Senju",
+                "Edo Tensei",
+                "Grandfather"
+            ]
+        },
+        "narrative": "Two massive wooden coffins erupt from the rooftop tiles!\nThe first coffin lid falls forward: **Hashirama Senju, the First Hokage**!\nThe second coffin lid falls forward: **Tobirama Senju, the Second Hokage**—your own grandfather!\n\nBefore Orochimaru drives control talismans into their skulls, the two legendary founders blink, looking around the burning village in grief.\nHashirama sighs: \"Sarutobi... you have grown so old. And this village we built... it is in flames.\"\n\nTobirama's crimson gaze scans the battlefield. His piercing eyes suddenly lock onto you across the barrier!\nHe sees your spiky silver hair, the crimson red facial marks on your cheeks and chin, and the majestic dark blue armor with the white fur collar mantle.\n\nTobirama's eyes widen with unmistakable ancestral pride:\n\"Hashirama... look across the barrier. That boy... he carries my exact bloodline, my silver hair, and the facial markings of our house! And yet... he carries the amber slit eyes of the ancient Hebi Clan.\"\n\nTobirama calls out with a deep, echoing voice across the flames:\n\"Grandson! I do not know what dark art has bound my soul, but stand proud! Do not let our village fall! Show them the true might of the Senju water!\"\n\nOrochimaru drives the control kunai into their heads, wiping their consciousness.\nHashirama unleashes *Deep Forest Emergence*, while Tobirama floods the rooftop with colossal water dragons!\nLord Third bites his lips, resolving to use the forbidden **Reaper Death Seal** to lay his masters to rest!",
+        "options": [
+            {
+                "approach": "ninjutsu",
+                "tag": "🌊 TOBIRAMA WATER RESONANCE SALUTE",
+                "label": "Raise your hands in a matching Tiger seal, mirroring your grandfather's water dragon frequency to honor your lineage (+50 Combat Power)!",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 15,
+                "successNode": "finals_ch8_gaara_pursuit_forest",
+                "failNode": "finals_ch8_gaara_pursuit_forest"
+            },
+            {
+                "approach": "tactics",
+                "tag": "🔥 TOBIRAMA WILL OF FIRE VOW",
+                "label": "Bow respectfully to your reanimated grandfather: \"Sleep peacefully, Grandfather! I will protect this village with my life!\"",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "finals_ch8_gaara_pursuit_forest",
+                "failNode": "finals_ch8_gaara_pursuit_forest"
+            },
+            {
+                "approach": "agility",
+                "tag": "🏃 HURRY TO SAVE SASUKE & GAARA",
+                "label": "Turn toward the forest canopy, accelerating with full serpentine velocity to catch up to Sasuke before Gaara transforms completely.",
+                "actionType": "check",
+                "stat": "agility",
+                "dc": 14,
+                "successNode": "finals_ch8_gaara_pursuit_forest",
+                "failNode": "finals_ch8_gaara_pursuit_forest"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch8_gaara_pursuit_forest",
+        "title": "Act V: Forest Pursuit — Shadows of the Sand Siblings",
+        "act": "Act V - Finals & Konoha Crush: The Jungle Chase",
+        "location": "Deep Redwood Forest — 5 Miles North of the Village",
+        "atmosphere": "Branches snapping under heavy footfalls; Temari swinging her giant fan to blow down ancient trees; sand dripping like acid from Gaara's body.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch8_gaara_pursuit_forest.mp3",
+        "illustration": {
+            "title": "Scent of the Sand Vipers",
+            "badge": "PURSUIT CELL",
+            "badgeClass": "threat-high",
+            "icon": "🌲",
+            "quote": "\"You Leaf ninja don't understand... When Gaara transforms into that monster, nobody survives!\"",
+            "tags": [
+                "Temari",
+                "Kankuro",
+                "Shino Aburame",
+                "Sasuke Tracking"
+            ]
+        },
+        "narrative": "You, Naruto, and Sakura leap through the canopy at blinding speed, tracking Sasuke's lightning chakra trail!\n\nAhead, Kankuro drops behind a cedar trunk to ambush your squad with his poison puppet Crow.\nBefore you can engage, Shino Aburame drops from the leaves, adjusting his glasses:\n\"Leave this puppet master to me. Why? Because my parasitic destruction bugs will feast on his chakra strings. Move forward!\"\n\nA half-mile further, Temari lands on a thick bough, brandishing her three-star iron fan:\n\"This is as far as you go, Leaf brats! My brother Gaara is unstable—if you approach him, he will butcher you all!\"\n\nTemari swings her fan, unleashing sweeping razor wind scythes that cleave twenty ancient oaks in half!\nSakura gasps as she is pinned down by debris.\n\nYou flash a confident rogue smile, liquefying your movement along the falling trunks. In a blink, you glide behind Temari, wrapping an arm around her waist and disarming her fan with effortless flirtatious mastery:\n\"Such fierce beauty, Temari. But we aren't here to hurt your brother—we're here to stop him from destroying himself.\"\n\nTemari's face burns crimson red with startled attraction, her breath hitching as your amber eyes meet hers (+20 Temari Affection)!\nBefore she can recover, an earth-shattering roar shakes the very foundation of the forest!",
+        "options": [
+            {
+                "approach": "charm",
+                "tag": "💋 SUAVE DISARM ON TEMARI",
+                "label": "Whisper smoothly into Temari's ear, leaving her completely flustered and unable to stop your advance (+20 Temari Affection).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 14,
+                "successNode": "finals_ch9_shukaku_sand_titan",
+                "failNode": "finals_ch9_shukaku_sand_titan"
+            },
+            {
+                "approach": "ninjutsu",
+                "tag": "🌊 WATER PRISON IMMOBILIZATION",
+                "label": "Trap Temari gently in a floating sphere of water to neutralize her wind fan without harming her.",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 14,
+                "successNode": "finals_ch9_shukaku_sand_titan",
+                "failNode": "finals_ch9_shukaku_sand_titan"
+            },
+            {
+                "approach": "agility",
+                "tag": "💨 LIGHTNING-SPEED FOREST SPRINT",
+                "label": "Leap past the wind scythes, carrying Sakura and Naruto past the barrier toward the site of Gaara's terrifying roar.",
+                "actionType": "check",
+                "stat": "agility",
+                "dc": 14,
+                "successNode": "finals_ch9_shukaku_sand_titan",
+                "failNode": "finals_ch9_shukaku_sand_titan"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch9_shukaku_sand_titan",
+        "title": "Act V: The Sand Titan Awakes — One-Tailed Shukaku",
+        "act": "Act V - Finals & Konoha Crush: The Demon Awakens",
+        "location": "Shattered Forest Basin — Crater of the Sand Beast",
+        "atmosphere": "The forest basin flattened into a desert; sand swirling five stories high; Sasuke paralyzed by the Curse Mark; Sakura pinned to a giant tree trunk.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch9_shukaku_sand_titan.mp3",
+        "illustration": {
+            "title": "The Monster of the Sand",
+            "badge": "EXTREME PERIL",
+            "badgeClass": "threat-critical",
+            "icon": "⏳",
+            "quote": "\"I will kill you all! My existence will be proven by your spilled blood!\"",
+            "tags": [
+                "One-Tail Shukaku",
+                "Sakura Pinned",
+                "Curse Mark Collapse"
+            ]
+        },
+        "narrative": "You break into the clearing—and the sight freezes your blood!\n\nSasuke lies collapsed against a shattered boulder, screaming in agony as the black flame markings of the Curse Mark consume his body, burning out his chakra after his third Chidori!\n\nAbove him towers Gaara—now transformed into a terrifying, fifty-foot-tall half-beast with a monstrous sand claw and a jagged tail!\nGaara's eye blazes with pure psychopathic madness:\n\"My mother... she whispers to me! She wants the blood of everyone who loves!\"\n\nGaara lashes a massive sand arm across the clearing. Sakura leaps forward with a kunai to shield Sasuke—and the sand violently slams her against an ancient tree trunk, pinning her ten feet off the ground under crushing stone-hard sand!\n\n\"Sakura!!\" Naruto screams in tears, his body shaking with terror at the colossal monster.\n\nGaara buries his torso into the sand crest of the beast, weaving the final sleep seal:\n**Feigning Sleep Technique!**\nGaara's head drops limp as he falls asleep.\n\n**ROOOAAARRRRR!!**\nThe ground shatters as the colossal, mountain-sized **One-Tailed Shukaku** fully awakens, its giant sandy belly thundering as it cackles with manic, ear-splitting glee:\n\"HAHAHAHA!! FINALLY! I'M OUT!! LET'S KILL EVERY LIVING THING IN SIGHT!!\"",
+        "options": [
+            {
+                "approach": "taijutsu",
+                "tag": "🥊 DIVERGENT SURGING IMPACT DIVE",
+                "label": "Leap directly toward the giant tree trunk, detonating a full-power hydraulic Surging Fist to shatter the sand pinning Sakura before she suffocates (+25 Sakura Affection)!",
+                "actionType": "check",
+                "stat": "taijutsu",
+                "dc": 15,
+                "successNode": "finals_ch10_gamabunta_water_clash",
+                "failNode": "finals_ch10_gamabunta_water_clash"
+            },
+            {
+                "approach": "chakra",
+                "tag": "🌀 NINE-TAILS & SENJU INSPIRATION",
+                "label": "Slap Naruto's cheek, igniting his dormant Nine-Tails pride: \"Naruto! Sakura's life is on the line! Summon the Chief Toad now!\"",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "finals_ch10_gamabunta_water_clash",
+                "failNode": "finals_ch10_gamabunta_water_clash"
+            },
+            {
+                "approach": "ninjutsu",
+                "tag": "🌊 HEAVY WATER DRAGON BARRAGE",
+                "label": "Channel an ocean of water chakra from the underground river, blasting Shukaku's legs with muddy hydro-drills to slow the beast's movement.",
+                "actionType": "check",
+                "stat": "ninjutsu",
+                "dc": 15,
+                "successNode": "finals_ch10_gamabunta_water_clash",
+                "failNode": "finals_ch10_gamabunta_water_clash"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch10_gamabunta_water_clash",
+        "title": "Act V: Clash of Titans — Chief Toad vs. Sand Demon",
+        "act": "Act V - Finals & Konoha Crush: Battle of the Giants",
+        "location": "Basin of the Titans — River Torrents and Sand Dunes",
+        "atmosphere": "Two mountain-sized titans clashing; air bullets blasting craters into the earth; Gamabunta slicing through sand dunes with a massive steel tanto.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch10_gamabunta_water_clash.mp3",
+        "illustration": {
+            "title": "Duel of the Century",
+            "badge": "TITAN CLASH",
+            "badgeClass": "threat-critical",
+            "icon": "⚔️",
+            "quote": "\"Wake that little brat up, Naruto, Shivkumar! A single strike to his skull will put the beast back in the bottle!\"",
+            "tags": [
+                "Gamabunta",
+                "Shukaku",
+                "Double Headbutt",
+                "Victory"
+            ]
+        },
+        "narrative": "Naruto draws upon the crimson demonic chakra of the Nine-Tails!\nHe bites his thumb and slams his palms to the muddy earth:\n**SUMMONING JUTSU!!**\n\n**POOOOOOF!!**\nA mountain of white smoke blasts through the forest canopy!\nStanding eighty feet tall, smoking an iron pipe and wielding a gigantic steel tanto, is **Chief Toad Gamabunta**!\n\n\"What in the world is going on?!\" Gamabunta growls, eyeing the gargantuan sand raccoon. \"The One-Tailed Shukaku?!\"\n\nShukaku cackles madly, pounding his huge belly:\n**Wind Release: Sand Buckshot Air Bullets!**\nCompressed hurricane bullets rip through the forest, blowing craters thirty feet deep!\n\nYou leap atop Gamabunta's wide brow beside Naruto.\n\"Gamabunta-sama! My Suiton water jutsu can saturate Shukaku's sand, turning it to heavy, immovable mud! You and Naruto provide the opening, and we'll wake Gaara up!\"\n\nGamabunta grins: \"Hold on tight, Leaf brats!\"\nGamabunta draws his giant blade, leaping through the air and severing Shukaku's right arm!\nYou unleash a colossal torrent of pressurized river water, soaking Shukaku's torso until the sand beast groans under its own waterlogged weight!\n\nGamabunta clamps his webbed hands around Shukaku's throat.\nNaruto and you leap fifty feet into the air!\nWith a united cry of unbreakable shinobi brotherhood, Naruto and you deliver a crushing, synchronized headbutt straight into sleeping Gaara's forehead!\n\n**CRACK!!**\nGaara's eyes snap open in shock!\nThe sleep trance is broken! Shukaku howls in despair as the colossal sand titan collapses into millions of tons of inert desert mud!",
+        "options": [
+            {
+                "approach": "taijutsu",
+                "tag": "⚡ SYNCHRONIZED DOUBLE FINISHER",
+                "label": "Drive a final water-cushioned fist into Gaara's chest, sending both genin skidding across the muddy tree roots to seal the victory!",
+                "actionType": "check",
+                "stat": "taijutsu",
+                "dc": 15,
+                "successNode": "finals_ch11_reaper_death_seal_tribute",
+                "failNode": "finals_ch11_reaper_death_seal_tribute"
+            },
+            {
+                "approach": "charm",
+                "tag": "❤️ WORDS THAT SAVE A MONSTER",
+                "label": "Speak to bleeding Gaara with genuine empathy: \"We know your pain, Gaara. You are no longer alone.\" (+30 Gaara Redemption Bond).",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 14,
+                "successNode": "finals_ch11_reaper_death_seal_tribute",
+                "failNode": "finals_ch11_reaper_death_seal_tribute"
+            },
+            {
+                "approach": "chakra",
+                "tag": "🌸 RESCUE SAKURA FROM THE MUD",
+                "label": "Rush to the shattered tree bough, catching exhausted Sakura in your arms as the sand dissolves (+25 Sakura Affection).",
+                "actionType": "check",
+                "stat": "chakraReserves",
+                "dc": 14,
+                "successNode": "finals_ch11_reaper_death_seal_tribute",
+                "failNode": "finals_ch11_reaper_death_seal_tribute"
+            }
+        ]
+    },
+    {
+        "id": "finals_ch11_reaper_death_seal_tribute",
+        "title": "Act V: The Will of Fire — Legacy of the Third Hokage",
+        "act": "Act V - Finals & Konoha Crush: The Solemn Epilogue",
+        "location": "Konoha Memorial Stone & Hokage Monument",
+        "atmosphere": "Gentle summer rain falling across black umbrellas; white chrysanthemums laid on the Third Hokage's casket; Lord Third's pipe resting atop the granite memorial.",
+        "image": "assets/naruto_finals_chunin_battle_cg.jpg",
+        "audio": "assets/audio/narration/finals_ch11_reaper_death_seal_tribute.mp3",
+        "illustration": {
+            "title": "When Tree Leaves Dance",
+            "badge": "ACT V COMPLETE",
+            "badgeClass": "threat-low",
+            "icon": "🍃",
+            "quote": "\"When tree leaves dance, one shall find flames. The fire's shadow will illuminate the village, and once again, tree leaves shall bud anew.\"",
+            "tags": [
+                "Third Hokage Funeral",
+                "Will of Fire",
+                "Act V Complete",
+                "Tsunade Next"
+            ]
+        },
+        "narrative": "On the rooftop, the battle reached its tragic conclusion.\nKnowing his frail body could not defeat his reanimated masters and Orochimaru, the Third Hokage summoned the Shinigami—the God of Death!\nWith the **Reaper Death Seal**, Hiruzen sealed away the souls of Hashirama and Tobirama Senju, and severed Orochimaru's arms forever, stripping the traitor of his ability to weave jutsu!\nLord Third died with a peaceful, loving smile on his face, shielding his beloved village to his last breath.\n\nLearning that Orochimaru murdered their Kazekage, the Hidden Sand surrenders, forging a true and lasting alliance with the Leaf. Temari gazes at you from the sand convoy, her cheeks blushing as she waves farewell.\n\nTwo days later, under a gentle summer rain, the entire village gathers in mourning black.\nWhite flowers are laid upon the third Hokage's monument.\nIruka Sensei comforts weeping Naruto:\n\"When tree leaves dance, one shall find flames. The fire's shadow will illuminate the village, and once again, tree leaves shall bud anew.\"\n\nSakura stands close beside you, her hand gently squeezing yours.\nHinata approaches with a quiet blush, handing you a medicinal healing salve she crafted herself.\nIno smiles through her tears, leaning against your shoulder under the umbrella.\n\nKakashi steps forward, his single Sharingan eye looking toward the horizon:\n\"The village needs a new leader. Lord Jiraiya has agreed to find the only ninja capable of becoming the Fifth Hokage: the legendary Slug Princess, **Lady Tsunade**—your cousin of the Senju Clan, Shivkumar.\"\n\nAct V is complete! The journey to find Lady Tsunade beckons!",
+        "options": [
+            {
+                "approach": "charm",
+                "tag": "🌸 GATHERING OF THE KUNOICHI",
+                "label": "Hold hands with Sakura, Hinata, and Ino beneath the rain, swearing on your grandfather's name to protect the village with your life.",
+                "actionType": "check",
+                "stat": "charm",
+                "dc": 14,
+                "successNode": "finals_ch11_reaper_death_seal_tribute",
+                "failNode": "finals_ch11_reaper_death_seal_tribute"
+            },
+            {
+                "approach": "mind",
+                "tag": "👑 SENJU HEIR DESTINY",
+                "label": "Gaze up at the Second Hokage's stone face, embracing your bloodline destiny as the true protector of the Hidden Leaf Village.",
+                "actionType": "check",
+                "stat": "tactics",
+                "dc": 14,
+                "successNode": "finals_ch11_reaper_death_seal_tribute",
+                "failNode": "finals_ch11_reaper_death_seal_tribute"
+            },
+            {
+                "approach": "chakra",
+                "tag": "📜 ADVANCE TO ACT VI: SEARCH FOR TSUNADE",
+                "label": "Prepare your shinobi pouch and journey with Master Jiraiya to find your legendary Senju aunt, Lady Tsunade!",
+                "actionType": "advance",
+                "nextNode": "finals_ch11_reaper_death_seal_tribute"
             }
         ]
     }

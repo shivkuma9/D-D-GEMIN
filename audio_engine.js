@@ -690,6 +690,107 @@ class ShinobiAudioEngine {
             osc.stop(t + 0.5);
         });
     }
+
+    // 7. Chidori Lightning Chirp
+    playChidoriLightning() {
+        if (!this.sfxEnabled) return;
+        this.ensureContext();
+        if (!this.ctx) return;
+        for (let i = 0; i < 6; i++) {
+            const t = this.ctx.currentTime + i * 0.04;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(2800 + Math.random() * 1200, t);
+            osc.frequency.exponentialRampToValueAtTime(600, t + 0.08);
+            gain.gain.setValueAtTime(0.25 * this.sfxVolume, t);
+            gain.gain.exponentialRampToValueAtTime(0.01, t + 0.08);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.08);
+        }
+    }
+
+    // 8. Sand Coffin Crushing Impact
+    playSandCoffin() {
+        if (!this.sfxEnabled) return;
+        this.ensureContext();
+        if (!this.ctx) return;
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(80, t);
+        osc.frequency.exponentialRampToValueAtTime(20, t + 0.6);
+        gain.gain.setValueAtTime(0.6 * this.sfxVolume, t);
+        gain.gain.exponentialRampToValueAtTime(0.01, t + 0.6);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.6);
+    }
+
+    // 9. Procedural Ambient Shinobi BGM Synthesizer (Zero download lag)
+    startBgm() {
+        if (!this.bgmEnabled) return;
+        this.ensureContext();
+        if (!this.ctx || this.bgmActive) return;
+        this.bgmActive = true;
+
+        if (!this.bgmGain) {
+            this.bgmGain = this.ctx.createGain();
+            this.bgmGain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+            this.bgmGain.connect(this.ctx.destination);
+        }
+
+        const kotoScale = [220, 246.94, 261.63, 329.63, 349.23, 440, 493.88, 523.25, 659.25];
+        let step = 0;
+
+        const playKotoNote = () => {
+            if (!this.bgmActive || !this.ctx) return;
+            const t = this.ctx.currentTime;
+            const freq = kotoScale[step % kotoScale.length];
+            step = (step + Math.floor(Math.random() * 3) + 1) % kotoScale.length;
+
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, t);
+
+            gain.gain.setValueAtTime(0.08, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
+
+            osc.connect(gain);
+            gain.connect(this.bgmGain);
+
+            osc.start(t);
+            osc.stop(t + 1.25);
+
+            const nextInterval = 400 + Math.random() * 450;
+            this.bgmTimer = setTimeout(playKotoNote, nextInterval);
+        };
+
+        playKotoNote();
+    }
+
+    stopBgm() {
+        this.bgmActive = false;
+        if (this.bgmTimer) clearTimeout(this.bgmTimer);
+    }
+
+    toggleBgm() {
+        this.bgmEnabled = !this.bgmEnabled;
+        localStorage.setItem('naruto_bgm_enabled', this.bgmEnabled);
+        if (this.bgmEnabled) {
+            this.startBgm();
+        } else {
+            this.stopBgm();
+        }
+        return this.bgmEnabled;
+    }
 }
 
 window.ShinobiAudioEngine = ShinobiAudioEngine;
+
